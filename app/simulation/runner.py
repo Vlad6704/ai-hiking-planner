@@ -1,6 +1,7 @@
 import asyncio
 import os
 import time
+from typing import Literal
 from uuid import uuid4
 
 import httpx
@@ -12,12 +13,18 @@ from app.agents.tools import bind_tools
 from app.humans.approval import ApprovalRegistry
 from app.humans.simulator import HumanSimulator
 from app.messaging.bus import MessageBus
-from app.models.contracts import Forecast
+from app.models.contracts import Contract, Forecast, TripResult
 from app.observability.langsmith import Usage, session
 from app.observability.trace import TraceRecorder
 from app.tools.adapters.operator_http import HttpOperatorProvider
 from app.tools.adapters.mock import FailureSchedule
 from app.tools.operator import MockOperator, OperatorTools
+
+
+class TerminalDecision(Contract):
+    action: Literal["submit_trip_result", "continue"]
+    result: TripResult | None
+    final_message: str
 
 
 async def deliver_final(result, text, human, trace):
@@ -216,6 +223,50 @@ class SimulationRunner:
                                 and e["actor"] == actor
                                 for e in self.trace.events[first_event:]
                             )
+                            if (
+                                actor == "agent_a"
+                                and not sent
+                                and self.operator.result
+                                and not reminded
+                            ):
+                                # The same planner explicitly submits a typed decision when its chat
+                                # model formats a final response as prose instead of a tool call.
+                                decision = await self.model.with_structured_output(
+                                    TerminalDecision
+                                ).ainvoke(
+                                    [
+                                        (
+                                            "system",
+                                            "You are the travel planner. Decide whether to submit your final "
+                                            "trip result. Use only the operator reply and your draft below. If ready, "
+                                            "choose submit_trip_result and provide the exact validated terms. Format: "
+                                            "Confirmed {route_id} on {date} with {guide_id}. Reservation {reservation_id}. "
+                                            "Equipment: {comma-separated sorted items or none}.",
+                                        ),
+                                        (
+                                            "user",
+                                            f"Request ID {self.rid}. Operator reply: {content}\nYour draft: "
+                                            f"{state['messages'][-1].content}",
+                                        ),
+                                    ],
+                                    config,
+                                )
+                                if (
+                                    decision.action == "submit_trip_result"
+                                    and decision.result is not None
+                                ):
+                                    try:
+                                        await self.finalize(
+                                            decision.result, decision.final_message
+                                        )
+                                    except ValueError as exc:
+                                        self.trace.emit(
+                                            "result.rejected",
+                                            actor,
+                                            {"reason": str(exc)},
+                                        )
+                                    else:
+                                        break
                             if not sent and not reminded:
                                 reminded = True
                                 args = {
@@ -252,10 +303,10 @@ class SimulationRunner:
                     else HttpOperatorProvider(os.getenv("OPERATOR_URL"), self.client)
                 )
                 self.operator = OperatorTools(self.rid, self.approvals, self.provider)
-                model = self.model or load_model()
+                self.model = self.model or load_model()
                 for actor in self.bus.queues:
                     graph = build_agent(
-                        actor, bind_tools(self, actor), model, InMemorySaver()
+                        actor, bind_tools(self, actor), self.model, InMemorySaver()
                     )
                     jobs.append(asyncio.create_task(self.worker(actor, graph)))
                 try:

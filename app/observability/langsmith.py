@@ -1,5 +1,5 @@
 import os
-from contextlib import contextmanager
+from contextlib import closing, contextmanager
 
 from langchain_core.callbacks import BaseCallbackHandler
 from langsmith import Client, trace, tracing_context
@@ -35,7 +35,9 @@ def session(recorder):
             yield
         return
     with (
-        Client(hide_inputs=redact, hide_outputs=redact, hide_metadata=redact) as client,
+        closing(
+            Client(hide_inputs=redact, hide_outputs=redact, hide_metadata=redact)
+        ) as client,
         tracing_context(enabled=True, client=client),
         trace(
             "hiking-simulation",
