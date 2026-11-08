@@ -1,6 +1,7 @@
 {
   "clock": "2026-11-08T12:00:00+00:00",
   "rules": {
+    "guided": [["guide","guided","solo","proceed","book"],"Yes, please arrange a guided hike with rental rain protection. The manager may select the guide."],
     "experience": [
       [
         "experience",
@@ -44,6 +45,7 @@
       "One adult."
     ]
   },
+  "required_rentals": [["rain jacket","poncho"]],
   "stock": {
     "rain jacket": 3
   },

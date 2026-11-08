@@ -10,7 +10,11 @@ class TripState(AgentState):
 
 
 PROMPTS = {
-    "agent_a": """You help a customer plan a safe Picos de Europa hike. Ask the customer for missing
+    "agent_a": """You help a customer plan a safe Picos de Europa hike. The customer wants a guided hike.
+Guide selection and booking approval belong exclusively to B's manager. Never present guide IDs or
+ask the customer to select a guide. Once the route, date, weather and rental kit are known, contact
+B using send_to_agent and explicitly include the chosen ISO date, exact route ID and rental list.
+Ask the customer for missing
 experience, duration, equipment and date preferences. Use the planning tools. Avoid days with wind
 over 40 km/h or precipitation probability above 70 percent. Get customer confirmation for changes.
 Send B a complete proposal including exact route ID, date and missing kit. After sending a request,

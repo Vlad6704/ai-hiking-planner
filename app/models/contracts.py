@@ -4,7 +4,9 @@ from typing import Annotated, Generic, Literal, Self, TypeVar
 from uuid import UUID
 
 from pydantic import (
+    AwareDatetime,
     BaseModel,
+    BeforeValidator,
     ConfigDict,
     Field,
     PositiveFloat,
@@ -14,6 +16,17 @@ from pydantic import (
 
 Text = Annotated[str, Field(min_length=1)]
 Mode = Literal["mock", "real"]
+
+
+def item_name(value):
+    return (
+        " ".join(value.replace("_", " ").replace("-", " ").casefold().split())
+        if isinstance(value, str)
+        else value
+    )
+
+
+ItemName = Annotated[Text, BeforeValidator(item_name)]
 T = TypeVar("T")
 
 
@@ -50,7 +63,7 @@ class TripResult(Contract):
     date: Date | None = None
     guide_id: Text | None = None
     reservation_id: Text | None = None
-    equipment_items: list[Text] = Field(default_factory=list)
+    equipment_items: list[ItemName] = Field(default_factory=list)
     failure_reason: Text | None = None
 
     @model_validator(mode="after")
@@ -70,7 +83,7 @@ class Proposal(Contract):
     route_id: Text
     date: Date
     guide_id: Text
-    equipment: dict[Text, PositiveInt] = Field(default_factory=dict)
+    equipment: dict[ItemName, PositiveInt] = Field(default_factory=dict)
 
 
 class BookingRequest(Proposal):
@@ -102,7 +115,7 @@ class ForecastDay(Contract):
 class Forecast(Contract):
     location: Text
     days: list[ForecastDay]
-    issued_at: datetime
+    issued_at: AwareDatetime
     provider: Text
 
 
@@ -160,7 +173,7 @@ class Guide(Contract):
 
 class InventoryQuery(Contract):
     date: Date
-    items: dict[Text, PositiveInt]
+    items: dict[ItemName, PositiveInt]
 
 
 class Inventory(Contract):

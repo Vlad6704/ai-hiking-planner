@@ -16,6 +16,7 @@ from app.models.contracts import Forecast
 from app.observability.langsmith import Usage, session
 from app.observability.trace import TraceRecorder
 from app.tools.adapters.operator_http import HttpOperatorProvider
+from app.tools.adapters.mock import FailureSchedule
 from app.tools.operator import MockOperator, OperatorTools
 
 
@@ -31,7 +32,10 @@ async def deliver_final(result, text, human, trace):
         )
     mid = str(uuid4())
     parent = trace.emit("result.validated", "agent_a", {}, operation_id=mid)
-    await human.deliver("agent_a", mid, text)
+    try:
+        await human.deliver("agent_a", mid, text)
+    except Exception as exc:
+        raise RuntimeError(f"delivery_failed: {exc}") from exc
     delivery = trace.emit(
         "human.message_delivered",
         "agent_a",
@@ -51,6 +55,7 @@ async def deliver_final(result, text, human, trace):
 class SimulationRunner:
     def __init__(self, case, settings, seed, model=None):
         self.case = case
+        self.injection = FailureSchedule(case.get("failure_injection", {}), seed)
         self.settings = settings
         self.model = model
         self.rid = str(uuid4())
@@ -62,6 +67,8 @@ class SimulationRunner:
                 seed=seed,
                 model=os.getenv("HIKING_MODEL", "ollama:gemma4:26b"),
                 environment_mode=settings.mode,
+                settings=settings.model_dump(mode="json"),
+                temperature=0,
                 langsmith_trace_id=None,
             ),
             max_steps=settings.steps,
@@ -80,6 +87,7 @@ class SimulationRunner:
         self.selected = None
         self.decisions = list(case["decisions"])
         self.done = asyncio.Event()
+        self.final_lock = asyncio.Lock()
         self.usage = {actor: Usage() for actor in self.humans}
 
     def human_reply(self, actor, item):
@@ -106,6 +114,7 @@ class SimulationRunner:
                 return {"error": "Present observed available guide IDs"}
             answer = str(self.case["choice"])
             self.selected = self.approvals.select(answer, options)
+            self.approvals.records.pop(self.rid, None)
             reply.update(text=answer, guide_id=self.selected)
         elif actor == "agent_b" and data["kind"] == "approval":
             terms = data["proposal"]
@@ -129,9 +138,26 @@ class SimulationRunner:
         return reply
 
     async def finalize(self, result, text):
+        async with self.final_lock:
+            return await self._finalize(result, text)
+
+    async def _finalize(self, result, text):
         if self.result or self.bus.pending or str(result.request_id) != self.rid:
             raise ValueError("Outstanding work or invalid request ID")
         booking = self.operator.result
+        if self.operator.terms is not None and booking is None:
+            raise RuntimeError("booking_outcome_uncertain")
+        if self.operator.lock.locked() or any(
+            not queue.empty() for queue in self.bus.queues.values()
+        ):
+            raise ValueError("Outstanding operator work")
+        if "agent_b" in self.active:
+            raise ValueError("Operator turn is still active")
+        if booking:
+            approval = self.approvals.records.get(self.rid)
+            if approval is None or self.selected != booking.guide_id:
+                raise ValueError("Current approval does not match the reservation")
+            self.approvals.require(self.rid, approval[0], self.operator.terms)
         if booking or result.status == "confirmed":
             if (
                 not booking
@@ -180,14 +206,28 @@ class SimulationRunner:
                     interrupts = state.get("__interrupt__", [])
                     if not interrupts:
                         if not self.done.is_set():
-                            self.trace.emit("agent.turn_finished", actor, {"text":state["messages"][-1].content})
-                            sent = any(e["type"] == "agent.message_sent" and e["actor"] == actor
-                                       for e in self.trace.events[first_event:])
+                            self.trace.emit(
+                                "agent.turn_finished",
+                                actor,
+                                {"text": state["messages"][-1].content},
+                            )
+                            sent = any(
+                                e["type"] == "agent.message_sent"
+                                and e["actor"] == actor
+                                for e in self.trace.events[first_event:]
+                            )
                             if not sent and not reminded:
                                 reminded = True
-                                args = {"messages":[("user","Runtime: plain assistant text stays private. "
-                                        "Use the appropriate tool to contact your human, contact your peer, "
-                                        "or deliver the verified final result. No message was delivered this turn.")]}
+                                args = {
+                                    "messages": [
+                                        (
+                                            "user",
+                                            "Runtime: plain assistant text stays private. "
+                                            "Use the appropriate tool to contact your human, contact your peer, "
+                                            "or deliver the verified final result. No message was delivered this turn.",
+                                        )
+                                    ]
+                                }
                                 continue
                         break
                     answers = {i.id: self.human_reply(actor, i) for i in interrupts}

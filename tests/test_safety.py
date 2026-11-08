@@ -12,25 +12,25 @@ from app.humans.approval import ApprovalRegistry
 from app.observability.trace import TraceRecorder
 
 
-@pytest.mark.parametrize("change", ["expired","future","place","date","provider"])
+@pytest.mark.parametrize("change", ["expired", "future", "place", "date", "provider"])
 def test_fallback_eligibility(change):
     case = load_scenario("external_service_failure")
     forecast = Forecast(**case["weather"])
     now = datetime.fromisoformat(case["clock"])
-    query = WeatherQuery(date="2026-11-10",location="Picos de Europa")
-    assert fallback_weather(forecast,query,now,6).days
-    if change=="expired":
+    query = WeatherQuery(date="2026-11-10", location="Picos de Europa")
+    assert fallback_weather(forecast, query, now, 6).days
+    if change == "expired":
         now += timedelta(days=1)
-    elif change=="future":
+    elif change == "future":
         now -= timedelta(days=1)
-    elif change=="place":
-        query.location="Madrid"
-    elif change=="date":
-        query=WeatherQuery(date="2027-01-01",location=query.location)
+    elif change == "place":
+        query.location = "Madrid"
+    elif change == "date":
+        query = WeatherQuery(date="2027-01-01", location=query.location)
     else:
-        forecast.provider="unknown"
+        forecast.provider = "unknown"
     with pytest.raises(ValueError):
-        fallback_weather(forecast,query,now,6)
+        fallback_weather(forecast, query, now, 6)
 
 
 def test_uncertain_outcome():
@@ -44,26 +44,31 @@ def test_uncertain_outcome():
 
     async def run():
         rid = str(uuid4())
-        provider = LostResponse({"2026-11-10":["luis"]},{},["trail"])
+        provider = LostResponse({"2026-11-10": ["luis"]}, {}, ["trail"])
         approvals = ApprovalRegistry()
         terms = dict(route_id="trail", guide_id="luis", date="2026-11-10", equipment={})
-        req = BookingRequest(**terms,request_id=rid,idempotency_key=f"booking:{rid}",
-                             approval_ref=approvals.record(rid,terms,"Approved"))
+        req = BookingRequest(
+            **terms,
+            request_id=rid,
+            idempotency_key=f"booking:{rid}",
+            approval_ref=approvals.record(rid, terms, "Approved"),
+        )
         ops = OperatorTools(rid, approvals, provider)
         with pytest.raises(TimeoutError):
             await ops.reserve(req)
-        with pytest.raises(ValueError,match="idempotency_conflict"):
-            await ops.reserve(req.model_copy(update={"guide_id":"other"}))
+        with pytest.raises(ValueError, match="idempotency_conflict"):
+            await ops.reserve(req.model_copy(update={"guide_id": "other"}))
         assert (await ops.reserve(req)).reservation_id == f"tour-{rid}"
-        assert len(provider.created)==1
+        assert len(provider.created) == 1
+
     asyncio.run(run())
 
 
 def test_hard_trace_limit():
     recorder = TraceRecorder({}, max_steps=3)
-    recorder.emit("simulation.started","runner",{})
-    recorder.emit("tool.called","agent_a",{})
-    with pytest.raises(RuntimeError,match="step_limit"):
-        recorder.emit("tool.called","agent_a",{})
-    recorder.emit("simulation.failed","runner",{})
-    assert len(recorder.events)==3
+    recorder.emit("simulation.started", "runner", {})
+    recorder.emit("tool.called", "agent_a", {})
+    with pytest.raises(RuntimeError, match="step_limit"):
+        recorder.emit("tool.called", "agent_a", {})
+    recorder.emit("simulation.failed", "runner", {})
+    assert len(recorder.events) == 3

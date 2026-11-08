@@ -14,7 +14,9 @@ def redact(value):
     if isinstance(value, dict):
         return {
             key: "[redacted]"
-            if re.search(r"authorization|password|api[_-]?key|access_token", key, re.IGNORECASE)
+            if re.search(
+                r"authorization|password|api[_-]?key|access_token", key, re.IGNORECASE
+            )
             else redact(item)
             for key, item in value.items()
         }
@@ -22,7 +24,10 @@ def redact(value):
         return [redact(item) for item in value]
     if isinstance(value, str):
         return re.sub(
-            r"[\w.+-]+@[\w.-]+\.\w+|Bearer\s+\S+", "[redacted]", value, flags=re.IGNORECASE
+            r"[\w.+-]+@[\w.-]+\.\w+|Bearer\s+\S+",
+            "[redacted]",
+            value,
+            flags=re.IGNORECASE,
         )[:8192]
     return value
 
@@ -38,7 +43,9 @@ class TraceRecorder:
         self, kind, actor, data, *, recipient=None, caused_by=None, operation_id=None
     ):
         terminal = kind in ("simulation.completed", "simulation.failed")
-        if self.max_steps is not None and len(self.events) >= self.max_steps - int(not terminal):
+        if self.max_steps is not None and len(self.events) >= self.max_steps - int(
+            not terminal
+        ):
             raise RuntimeError("step_limit")
         event = dict(
             event_id=str(uuid4()),

@@ -15,6 +15,7 @@ class MessageBus:
         self.limit = limit
         self.count = 0
         self.pending = {}
+        self.replies = {}
         self.seen = set()
         self.queues = {agent: asyncio.Queue() for agent in PEER}
 
@@ -28,6 +29,7 @@ class MessageBus:
             original, deadline = self.pending.get(key, ({}, 0))
             if (
                 original != parent
+                or key in self.replies
                 or deadline <= time.monotonic()
                 or original.get("recipient") != sender
             ):
@@ -52,7 +54,7 @@ class MessageBus:
             operation_id=key or message["message_id"],
         )
         if key:
-            del self.pending[key]
+            self.replies[key] = message["message_id"]
         if kind == "request":
             self.pending[message["message_id"]] = (
                 message,
@@ -66,12 +68,28 @@ class MessageBus:
         while True:
             message, parent = await self.queues[agent_id].get()
             key = message["message_id"]
+            correlation = message.get("correlation_id")
             if (
                 key in self.seen
                 or message["request_id"] != self.request_id
                 or message["recipient"] != agent_id
+                or message["sender"] != PEER[agent_id]
             ):
                 continue
+            if message["type"] in ("response", "error"):
+                original, deadline = self.pending.get(correlation, ({}, 0))
+                if (
+                    self.replies.get(correlation) != key
+                    or original.get("sender") != agent_id
+                ):
+                    continue
+                self.replies.pop(correlation)
+                self.pending.pop(correlation)
+                if time.monotonic() >= deadline:
+                    self.trace.emit(
+                        "agent.message_expired", agent_id, {"message_id": key}
+                    )
+                    continue
             self.seen.add(key)
             self.trace.emit(
                 "agent.message_received",

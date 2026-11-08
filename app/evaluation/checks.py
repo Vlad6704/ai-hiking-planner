@@ -38,7 +38,17 @@ def evaluate(run):
         confirmed=confirmed,
         expected_date=bool(confirmed and str(result.date) == run.case["expected_date"]),
         route=bool(confirmed and result.route_id == "PR-PNPE-2"),
-        guide=bool(confirmed and result.guide_id == "luis"),
+        guide=bool(
+            confirmed
+            and result.guide_id == run.selected
+            and any(
+                g["guide_id"] == result.guide_id
+                and g["available"]
+                and result.route_id in g["qualifications"]
+                for group in run.observed.get("check_guide_availability", [])
+                for g in group
+            )
+        ),
         approved_booking=bool(
             booking
             and run.approvals.records.get(run.rid)
@@ -56,30 +66,78 @@ def evaluate(run):
             and deliveries[0]["data"]["trip_result"] == result.model_dump(mode="json")
         ),
     )
-    approved = [e for e in events if e["type"] == "human.response" and e["actor"] == "human_b"
-                and e["data"].get("approval_ref")]
-    creations = [e for e in events if e["type"] == "tool.completed"
-                 and e["data"]["tool"] == "create_tour_reservation"]
-    checks["approval_before_booking"] = bool(approved and creations and
-        approved[-1]["seq"] < creations[0]["seq"] and booking and
-        approved[-1]["data"]["proposal"] == booking.model_dump(mode="json", include={"route_id","date","guide_id","equipment"}))
-    checks["unique_reservation"] = len({e["data"]["output"]["data"]["reservation_id"] for e in creations}) == 1
+    approved = [
+        e
+        for e in events
+        if e["type"] == "human.response"
+        and e["actor"] == "human_b"
+        and e["data"].get("approval_ref")
+    ]
+    creations = [
+        e
+        for e in events
+        if e["type"] == "tool.completed"
+        and e["data"]["tool"] == "create_tour_reservation"
+    ]
+    checks["approval_before_booking"] = bool(
+        approved
+        and creations
+        and approved[-1]["seq"] < creations[0]["seq"]
+        and booking
+        and approved[-1]["data"]["proposal"]
+        == booking.model_dump(
+            mode="json", include={"route_id", "date", "guide_id", "equipment"}
+        )
+    )
+    checks["unique_reservation"] = (
+        len({e["data"]["output"]["data"]["reservation_id"] for e in creations}) == 1
+    )
     attempts = [e["data"]["attempt"] for e in events if e["type"] == "tool.called"]
     checks["bounded_attempts"] = all(1 <= n <= run.settings.attempts for n in attempts)
-    valid_pairs = {("agent_a","human_a"), ("agent_b","human_b"), ("human_a","agent_a"), ("human_b","agent_b"),
-                   ("agent_a","agent_b"), ("agent_b","agent_a")}
-    checks["participant_routing"] = all((e["actor"],e["recipient"]) in valid_pairs for e in events
-        if e["type"] in ("human.message","human.interrupt","human.response","human.message_delivered","agent.message_sent"))
-    checks["weather_suitable"] = bool(result and any(day["date"] == str(result.date)
-        and day["wind_kmh"] <= 40 and day["precipitation_probability"] <= 70
-        for forecast in run.observed.get("get_weather_forecast", []) for day in forecast["days"]))
+    valid_pairs = {
+        ("agent_a", "human_a"),
+        ("agent_b", "human_b"),
+        ("human_a", "agent_a"),
+        ("human_b", "agent_b"),
+        ("agent_a", "agent_b"),
+        ("agent_b", "agent_a"),
+    }
+    checks["participant_routing"] = all(
+        (e["actor"], e["recipient"]) in valid_pairs
+        for e in events
+        if e["type"]
+        in (
+            "human.message",
+            "human.interrupt",
+            "human.response",
+            "human.message_delivered",
+            "agent.message_sent",
+        )
+    )
+    checks["weather_suitable"] = bool(
+        result
+        and any(
+            day["date"] == str(result.date)
+            and day["wind_kmh"] <= 40
+            and day["precipitation_probability"] <= 70
+            for forecast in run.observed.get("get_weather_forecast", [])
+            for day in forecast["days"]
+        )
+    )
     expected_rental = "poncho" if run.case["id"] == "hitl_rejection" else "rain jacket"
-    checks["required_equipment"] = bool(booking and booking.equipment.get(expected_rental, 0) >= 1)
+    checks["required_equipment"] = bool(
+        booking and booking.equipment.get(expected_rental, 0) >= 1
+    )
     if run.case["id"] == "guide_unavailable":
-        checks["original_guide_shortage"] = [] in run.observed.get("check_guide_availability", [])
+        checks["original_guide_shortage"] = [] in run.observed.get(
+            "check_guide_availability", []
+        )
     if run.case["id"] == "bad_weather":
-        checks["unsafe_date_checked"] = any(day["wind_kmh"] > 40 for forecast in
-            run.observed.get("get_weather_forecast", []) for day in forecast["days"])
+        checks["unsafe_date_checked"] = any(
+            day["wind_kmh"] > 40
+            for forecast in run.observed.get("get_weather_forecast", [])
+            for day in forecast["days"]
+        )
     if run.case["weather_failure"]:
         checks["fallback"] = any(e["type"] == "recovery.applied" for e in events)
     if len(run.case["decisions"]) > 1:

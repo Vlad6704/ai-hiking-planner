@@ -35,9 +35,8 @@ def session(recorder):
             yield
         return
     with (
-        Client(
-        hide_inputs=redact, hide_outputs=redact, hide_metadata=redact
-    ) as client, tracing_context(enabled=True, client=client),
+        Client(hide_inputs=redact, hide_outputs=redact, hide_metadata=redact) as client,
+        tracing_context(enabled=True, client=client),
         trace(
             "hiking-simulation",
             inputs={"request_id": recorder.metadata["request_id"]},

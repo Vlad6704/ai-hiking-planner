@@ -13,6 +13,8 @@ from app.models.contracts import (
 
 
 class MockOperator:
+    idempotent_reservations = True
+
     def __init__(self, schedule, stock, routes):
         self.schedule = schedule
         self.stock = stock
@@ -76,6 +78,10 @@ class OperatorTools:
             self.approvals.require(self.request_id, request.approval_ref, terms)
             if self.result:
                 return self.result
+            if self.terms is not None and not getattr(
+                self.provider, "idempotent_reservations", False
+            ):
+                raise RuntimeError("booking_outcome_uncertain")
             if self.terms is None:
                 guides = await self.provider.guides(
                     GuideQuery(route_id=request.route_id, date=request.date)

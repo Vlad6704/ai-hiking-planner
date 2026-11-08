@@ -52,7 +52,8 @@ def bind_tools(run, actor):
 
     @tool(return_direct=True)
     async def send_to_agent(
-        content: str, kind: Literal["request", "response", "notification", "error"] = "request"
+        content: str,
+        kind: Literal["request", "response", "notification", "error"] = "request",
     ):
         """Queue a message to the other agent. End this turn after sending."""
         parent = run.incoming.get(actor)
@@ -61,6 +62,10 @@ def bind_tools(run, actor):
             # exchange can then carry a revised proposal as a fresh request.
             if parent and parent["message_id"] in run.bus.pending:
                 kind = "error" if kind == "error" else "response"
+            elif (
+                parent and parent["type"] == "request" and kind in ("response", "error")
+            ):
+                return {"error": "This request is already closed."}
             else:
                 kind = "request"
         receipt = run.bus.send(actor, content, kind, parent)
@@ -71,6 +76,8 @@ def bind_tools(run, actor):
             query = schema(**kwargs)
 
             async def call():
+                if run.settings.mode == "mock":
+                    await run.injection.before(name)
                 value = function(query)
                 return await value if inspect.isawaitable(value) else value
 
@@ -111,18 +118,38 @@ def bind_tools(run, actor):
         return select_forecast(run.forecast, query)
 
     async def book(terms):
-        days = [day for report in run.observed.get("get_weather_forecast", [])
-                for day in report["days"] if day["date"] == str(terms.date)]
-        if not days or days[-1]["wind_kmh"] > 40 or days[-1]["precipitation_probability"] > 70:
+        for alternatives in run.case["required_rentals"]:
+            if not any(terms.equipment.get(item, 0) >= 1 for item in alternatives):
+                raise ValueError(
+                    "Missing required rental: " + " or ".join(alternatives)
+                )
+        days = [
+            day
+            for report in run.observed.get("get_weather_forecast", [])
+            for day in report["days"]
+            if day["date"] == str(terms.date)
+        ]
+        if (
+            not days
+            or days[-1]["wind_kmh"] > 40
+            or days[-1]["precipitation_probability"] > 70
+        ):
             raise ValueError("A verified safe forecast is required for this date")
-        if not any(route["route_id"] == terms.route_id for routes in run.observed.get("search_hiking_routes", [])
-                   for route in routes):
+        if not any(
+            route["route_id"] == terms.route_id
+            for routes in run.observed.get("search_hiking_routes", [])
+            for route in routes
+        ):
             raise ValueError("A verified route is required")
         active = run.approvals.records.get(run.rid)
         if active is None:
             raise ValueError("missing_approval")
-        request = BookingRequest(**terms.model_dump(), request_id=run.rid,
-                                 idempotency_key=f"booking:{run.rid}", approval_ref=active[0])
+        request = BookingRequest(
+            **terms.model_dump(),
+            request_id=run.rid,
+            idempotency_key=f"booking:{run.rid}",
+            approval_ref=active[0],
+        )
         return await run.operator.reserve(request)
 
     @tool
@@ -136,7 +163,14 @@ def bind_tools(run, actor):
             return {"error": str(exc)}
         return "Delivered"
 
-    shared = [ask_human, send_to_agent]
+    @tool("ask_human")
+    def ask_customer(question: str):
+        """Ask the hiker a question about dates, experience, route preferences or owned gear."""
+        return interrupt(
+            dict(question=question, kind="question", options=[], proposal=None)
+        )
+
+    shared = [ask_customer if actor == "agent_a" else ask_human, send_to_agent]
     if actor == "agent_a":
         return shared + [
             domain(

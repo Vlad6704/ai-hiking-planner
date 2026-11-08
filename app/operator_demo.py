@@ -1,7 +1,7 @@
 import argparse
 
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 
 from app.models.contracts import BookingRequest, GuideQuery, InventoryQuery
 from app.tools.operator import MockOperator, confirmation
@@ -10,7 +10,8 @@ app = FastAPI()
 
 
 @app.post("/guides")
-async def guides(query: GuideQuery):
+async def guides(query: GuideQuery, response: Response):
+    response.headers["X-Reservation-Idempotency"] = "request-id"
     provider = MockOperator({str(query.date): ["ines", "luis"]}, {}, ["PR-PNPE-2"])
     return await provider.guides(query)
 
