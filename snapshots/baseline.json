@@ -1,0 +1,87 @@
+{
+  "clock": "2026-11-08T12:00:00+00:00",
+  "rules": {
+    "experience": [
+      [
+        "experience",
+        "experienced",
+        "beginner"
+      ],
+      "Beginner, no physical limitations."
+    ],
+    "duration": [
+      [
+        "duration",
+        "hours",
+        "difficulty"
+      ],
+      "An easy hike up to four hours."
+    ],
+    "gear": [
+      [
+        "equipment",
+        "gear",
+        "own",
+        "bring"
+      ],
+      "I have boots, water and a first aid kit. Please rent a rain jacket."
+    ],
+    "date": [
+      [
+        "date",
+        "alternative",
+        "confirm",
+        "dates"
+      ],
+      "November 10 is preferred. November 11 is acceptable if needed."
+    ],
+    "group": [
+      [
+        "group",
+        "people",
+        "party"
+      ],
+      "One adult."
+    ]
+  },
+  "stock": {
+    "rain jacket": 3
+  },
+  "choice": 2,
+  "decisions": [
+    "Approved"
+  ],
+  "guides": {
+    "2026-11-10": [
+      "ines",
+      "luis"
+    ],
+    "2026-11-11": [
+      "ines",
+      "luis"
+    ]
+  },
+  "weather": {
+    "location": "Picos de Europa",
+    "issued_at": "2026-11-08T10:00:00+00:00",
+    "provider": "approved_snapshot",
+    "days": [
+      {
+        "date": "2026-11-10",
+        "temperature_c": 15,
+        "precipitation_probability": 10,
+        "precipitation_mm": 0,
+        "wind_kmh": 8
+      },
+      {
+        "date": "2026-11-11",
+        "temperature_c": 15,
+        "precipitation_probability": 10,
+        "precipitation_mm": 0,
+        "wind_kmh": 8
+      }
+    ]
+  },
+  "fallback": false,
+  "weather_failure": false
+}

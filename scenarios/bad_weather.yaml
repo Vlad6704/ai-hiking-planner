@@ -1,0 +1,7 @@
+{
+  "id": "bad_weather",
+  "initial": "I would like an easy hike in Picos de Europa on November 10, 2026, up to four hours.",
+  "snapshot": "baseline.json",
+  "expected_date": "2026-11-11",
+  "storm": "2026-11-10"
+}

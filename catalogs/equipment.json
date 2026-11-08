@@ -1,0 +1,16 @@
+{
+  "source": "https://australianhiker.com.au/gear/multiday-gear-list/",
+  "day": [
+    "boots",
+    "water",
+    "rain jacket",
+    "first aid kit"
+  ],
+  "overnight": [
+    "shelter",
+    "sleeping bag"
+  ],
+  "recommended": [
+    "poles"
+  ]
+}

@@ -1,0 +1,187 @@
+import inspect
+from datetime import datetime
+from typing import Literal
+
+from langchain_core.tools import StructuredTool, tool
+from langgraph.types import interrupt
+
+from app.models.contracts import (
+    BookingRequest,
+    GearQuery,
+    GuideQuery,
+    InventoryQuery,
+    Proposal,
+    RouteLookup,
+    RouteQuery,
+    TripResult,
+    WeatherQuery,
+)
+from app.tools.execution import execute
+from app.tools.planning import (
+    details,
+    fallback_weather,
+    gear,
+    live_weather,
+    search,
+    select_forecast,
+)
+
+
+class ApprovedTerms(Proposal):
+    """Booking terms already presented to the manager."""
+
+
+def bind_tools(run, actor):
+    @tool
+    def ask_human(
+        question: str,
+        kind: Literal["question", "selection", "approval"] = "question",
+        options: list[str] | None = None,
+        proposal: Proposal | None = None,
+    ):
+        """Ask your assigned human. For selection supply available guide IDs in displayed order.
+        For approval supply exact route_id, date, guide_id, equipment quantities."""
+        return interrupt(
+            dict(
+                question=question,
+                kind=kind,
+                options=options or [],
+                proposal=proposal.model_dump(mode="json") if proposal else None,
+            )
+        )
+
+    @tool(return_direct=True)
+    async def send_to_agent(
+        content: str, kind: Literal["request", "response", "notification", "error"] = "request"
+    ):
+        """Queue a message to the other agent. End this turn after sending."""
+        parent = run.incoming.get(actor)
+        if kind != "notification":
+            # Replies always close the request that woke this agent. The next
+            # exchange can then carry a revised proposal as a fresh request.
+            if parent and parent["message_id"] in run.bus.pending:
+                kind = "error" if kind == "error" else "response"
+            else:
+                kind = "request"
+        receipt = run.bus.send(actor, content, kind, parent)
+        return {"queued": receipt["message_id"]}
+
+    def domain(name, description, schema, function):
+        async def invoke(**kwargs):
+            query = schema(**kwargs)
+
+            async def call():
+                value = function(query)
+                return await value if inspect.isawaitable(value) else value
+
+            fallback = None
+            if (
+                name == "get_weather_forecast"
+                and run.settings.mode == "mock"
+                and run.case["fallback"]
+            ):
+                fallback = lambda: fallback_weather(
+                    run.forecast,
+                    query,
+                    datetime.fromisoformat(run.case["clock"]),
+                    run.settings.max_weather_age_hours,
+                )
+            result = await execute(
+                name,
+                query.model_dump(mode="json"),
+                call,
+                run.settings,
+                run.trace,
+                actor,
+                fallback,
+            )
+            if result["status"] != "error":
+                run.observed.setdefault(name, []).append(result["data"])
+            return result
+
+        return StructuredTool.from_function(
+            coroutine=invoke, name=name, description=description, args_schema=schema
+        )
+
+    async def weather(query):
+        if run.settings.mode == "real":
+            return await live_weather(run.client, query)
+        if run.case["weather_failure"]:
+            raise TimeoutError()
+        return select_forecast(run.forecast, query)
+
+    async def book(terms):
+        days = [day for report in run.observed.get("get_weather_forecast", [])
+                for day in report["days"] if day["date"] == str(terms.date)]
+        if not days or days[-1]["wind_kmh"] > 40 or days[-1]["precipitation_probability"] > 70:
+            raise ValueError("A verified safe forecast is required for this date")
+        if not any(route["route_id"] == terms.route_id for routes in run.observed.get("search_hiking_routes", [])
+                   for route in routes):
+            raise ValueError("A verified route is required")
+        active = run.approvals.records.get(run.rid)
+        if active is None:
+            raise ValueError("missing_approval")
+        request = BookingRequest(**terms.model_dump(), request_id=run.rid,
+                                 idempotency_key=f"booking:{run.rid}", approval_ref=active[0])
+        return await run.operator.reserve(request)
+
+    @tool
+    async def submit_trip_result(result: TripResult, final_message: str):
+        """Deliver the terminal result. For failure send the exact reason. For confirmation use exactly:
+        Confirmed {route_id} on {date} with {guide_id}. Reservation {reservation_id}. Equipment: {items}.
+        Join sorted equipment with comma-space or use none."""
+        try:
+            await run.finalize(result, final_message)
+        except ValueError as exc:
+            return {"error": str(exc)}
+        return "Delivered"
+
+    shared = [ask_human, send_to_agent]
+    if actor == "agent_a":
+        return shared + [
+            domain(
+                "get_weather_forecast",
+                "Forecast for Picos de Europa and an ISO date or range.",
+                WeatherQuery,
+                weather,
+            ),
+            domain(
+                "search_hiking_routes",
+                "Find routes matching customer constraints.",
+                RouteQuery,
+                search,
+            ),
+            domain(
+                "get_route_details",
+                "Look up a route by exact ID.",
+                RouteLookup,
+                lambda q: details(q.route_id),
+            ),
+            domain(
+                "get_hiking_equipment",
+                "Get required and missing gear for route, forecast day and duration.",
+                GearQuery,
+                gear,
+            ),
+            submit_trip_result,
+        ]
+    return shared + [
+        domain(
+            "check_guide_availability",
+            "List qualified available guides.",
+            GuideQuery,
+            run.provider.guides,
+        ),
+        domain(
+            "check_equipment_inventory",
+            "Check quantities of rental items.",
+            InventoryQuery,
+            run.provider.inventory,
+        ),
+        domain(
+            "create_tour_reservation",
+            "Create the reservation for the exact manager-approved route, date, guide and equipment.",
+            ApprovedTerms,
+            book,
+        ),
+    ]
