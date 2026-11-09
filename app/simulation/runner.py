@@ -8,7 +8,7 @@ import httpx
 from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.types import Command
 
-from app.agents.factory import build_agent, load_model
+from app.agents.factory import build_agent, configured_model, load_model
 from app.agents.tools import bind_tools
 from app.humans.approval import ApprovalRegistry
 from app.humans.simulator import HumanSimulator
@@ -72,10 +72,10 @@ class SimulationRunner:
                 request_id=self.rid,
                 scenario_id=case["id"],
                 seed=seed,
-                model=os.getenv("HIKING_MODEL", "ollama:gemma4:26b"),
+                model=configured_model(),
                 environment_mode=settings.mode,
                 settings=settings.model_dump(mode="json"),
-                temperature=0,
+                temperature=None if configured_model() == "openai:gpt-6-luna" else 0,
                 langsmith_trace_id=None,
             ),
             max_steps=settings.steps,

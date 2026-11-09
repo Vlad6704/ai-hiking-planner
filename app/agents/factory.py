@@ -28,8 +28,14 @@ using send_to_agent with kind response and include all reservation fields. Then 
 }
 
 
+def configured_model():
+    return os.getenv("HIKING_MODEL", "openai:gpt-6-luna")
+
+
 def load_model():
-    name = os.getenv("HIKING_MODEL", "ollama:gemma4:26b")
+    name = configured_model()
+    if name == "openai:gpt-6-luna":
+        return init_chat_model(name, reasoning_effort="none", use_responses_api=False)
     if name.startswith("ollama:"):
         return ChatOllama(
             model=name.split(":", 1)[1], temperature=0, reasoning=False, num_ctx=8192

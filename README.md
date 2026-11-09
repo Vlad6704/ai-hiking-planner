@@ -4,7 +4,7 @@ Two ReAct agents arrange a hike. The planner speaks to the customer, checks weat
 
 ## Setup
 
-Install Python 3.11 or newer and uv. From the repository root run `uv sync --locked`. Both adapter modes use a real chat model with tool calling. The default is a local Ollama server with `gemma4:26b` installed. Use `ollama list` to check availability. To select another local model set `HIKING_MODEL=ollama:<model>`. An OpenAI-compatible LangChain OpenAI model can be selected with `HIKING_MODEL=openai:<model>` and the provider's `OPENAI_API_KEY`.
+Install Python 3.11 or newer and uv. From the repository root run `uv sync --locked`. Both adapter modes use a real chat model with tool calling. Set `HIKING_MODEL=openai:gpt-6-luna` and supply `OPENAI_API_KEY` for the default GPT-6 Luna configuration. The Chat Completions integration uses reasoning effort `none` to enable function calls. To use local inference, select `HIKING_MODEL=ollama:gemma4:26b` and verify the model is installed with `ollama list`. [OpenAI GPT-6 Luna model documentation](https://developers.openai.com/api/docs/models/gpt-6-luna)
 
 Set variables in the shell or copy `.env.example` to `.env`, then use `uv run --env-file .env` in place of `uv run` below. Set `LANGSMITH_TRACING=true`, `LANGSMITH_PROJECT` and `LANGSMITH_API_KEY` to enable remote tracing. Local JSON works independently.
 
