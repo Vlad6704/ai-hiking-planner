@@ -36,7 +36,11 @@ def evaluate(run):
     confirmed = bool(result and result.status == "confirmed")
     checks = dict(
         confirmed=confirmed,
-        expected_date=bool(confirmed and str(result.date) == run.case["expected_date"]),
+        expected_date=bool(
+            confirmed
+            and str(result.date)
+            in run.case.get("acceptable_dates", [run.case["expected_date"]])
+        ),
         route=bool(confirmed and result.route_id == "PR-PNPE-2"),
         guide=bool(
             confirmed

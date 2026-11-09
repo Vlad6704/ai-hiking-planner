@@ -33,4 +33,5 @@ def load_scenario(name, mode="mock"):
             f"I prefer {first}, or {first + timedelta(days=1)} if needed."
         )
         case["expected_date"] = str(first)
+        case["acceptable_dates"] = [str(first), str(first + timedelta(days=1))]
     return case

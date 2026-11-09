@@ -18,3 +18,23 @@ def test_request_reply():
         assert not bus.pending
 
     asyncio.run(run())
+
+
+def test_peer_send_in_request_turn_closes_request():
+    from app.agents.tools import bind_tools
+    from app.simulation.runner import SimulationRunner
+    from app.simulation.scenario import load_scenario
+    from app.simulation.config import Settings
+    from app.tools.operator import MockOperator
+
+    async def execute():
+        run = SimulationRunner(load_scenario("happy_path"), Settings(), 42)
+        run.provider = MockOperator({}, {}, [])
+        req = run.bus.send("agent_a", "proposal", "request")
+        run.incoming["agent_b"] = await run.bus.receive("agent_b")
+        send = next(t for t in bind_tools(run, "agent_b") if t.name == "send_to_agent")
+        await send.ainvoke({"content": "operator update", "kind": "notification"})
+        reply = await run.bus.receive("agent_a")
+        assert reply["correlation_id"] == req["message_id"] and not run.bus.pending
+
+    asyncio.run(execute())

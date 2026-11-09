@@ -57,14 +57,12 @@ def bind_tools(run, actor):
     ):
         """Queue a message to the other agent. End this turn after sending."""
         parent = run.incoming.get(actor)
-        if kind != "notification":
+        if parent and parent["message_id"] in run.bus.pending:
+            kind = "error" if kind == "error" else "response"
+        elif kind != "notification":
             # Replies always close the request that woke this agent. The next
             # exchange can then carry a revised proposal as a fresh request.
-            if parent and parent["message_id"] in run.bus.pending:
-                kind = "error" if kind == "error" else "response"
-            elif (
-                parent and parent["type"] == "request" and kind in ("response", "error")
-            ):
+            if parent and parent["type"] == "request" and kind in ("response", "error"):
                 return {"error": "This request is already closed."}
             else:
                 kind = "request"
