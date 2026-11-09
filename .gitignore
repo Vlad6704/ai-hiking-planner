@@ -3,3 +3,9 @@ __pycache__/
 .pytest_cache/
 .superpowers/
 .env
+
+# Keep the published evaluation batches. Other local runs can be regenerated.
+trajectories/*
+!trajectories/acceptance/
+!trajectories/luna-release/
+!trajectories/luna-final-real/

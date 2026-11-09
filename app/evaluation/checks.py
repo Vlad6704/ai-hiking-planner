@@ -28,6 +28,31 @@ def metrics(events):
     )
 
 
+def approved_bookings(events):
+    """Check the approval in effect when each successful booking attempt began."""
+    current = None
+    calls = {}
+    successful = 0
+    for event in events:
+        data = event["data"]
+        if event["type"] == "human.response" and event["actor"] == "human_b":
+            if "approval_ref" in data:
+                current = data["proposal"] if data["approval_ref"] else None
+            elif "selection" in data.get("matched_intent", []):
+                current = None
+        if data.get("tool") != "create_tour_reservation":
+            continue
+        if event["type"] == "tool.called":
+            calls[event["operation_id"]] = current
+        if event["type"] == "tool.completed":
+            approved = calls.get(event["operation_id"])
+            receipt = data["output"]["data"]
+            if not approved or any(receipt.get(k) != v for k, v in approved.items()):
+                return False
+            successful += 1
+    return successful > 0
+
+
 def evaluate(run):
     events = run.trace.events
     result = run.result
@@ -70,29 +95,13 @@ def evaluate(run):
             and deliveries[0]["data"]["trip_result"] == result.model_dump(mode="json")
         ),
     )
-    approved = [
-        e
-        for e in events
-        if e["type"] == "human.response"
-        and e["actor"] == "human_b"
-        and e["data"].get("approval_ref")
-    ]
     creations = [
         e
         for e in events
         if e["type"] == "tool.completed"
         and e["data"]["tool"] == "create_tour_reservation"
     ]
-    checks["approval_before_booking"] = bool(
-        approved
-        and creations
-        and approved[-1]["seq"] < creations[0]["seq"]
-        and booking
-        and approved[-1]["data"]["proposal"]
-        == booking.model_dump(
-            mode="json", include={"route_id", "date", "guide_id", "equipment"}
-        )
-    )
+    checks["approval_before_booking"] = approved_bookings(events)
     checks["unique_reservation"] = (
         len({e["data"]["output"]["data"]["reservation_id"] for e in creations}) == 1
     )

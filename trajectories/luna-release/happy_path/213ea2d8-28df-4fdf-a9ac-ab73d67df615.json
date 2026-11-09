@@ -1,0 +1,847 @@
+{
+  "metadata": {
+    "schema_version": "1",
+    "started_at": "2026-11-09T00:32:44.636860+00:00",
+    "run_id": "213ea2d8-28df-4fdf-a9ac-ab73d67df615",
+    "request_id": "6e5efd68-fe82-43bb-9f59-323a1bf7b341",
+    "scenario_id": "happy_path",
+    "seed": 42,
+    "model": "openai:gpt-6-luna",
+    "environment_mode": "mock",
+    "settings": {
+      "mode": "mock",
+      "attempts": 3,
+      "steps": 100,
+      "exchanges": 20,
+      "timeout": 180.0,
+      "peer_timeout": 90.0,
+      "tool_timeout": 10.0,
+      "max_weather_age_hours": 6.0
+    },
+    "temperature": null,
+    "langsmith_trace_id": null,
+    "finished_at": "2026-11-09T00:33:06.433957+00:00",
+    "duration_ms": 21797
+  },
+  "events": [
+    {
+      "event_id": "8fcd11cf-1e7d-4755-891f-fecc841ccd19",
+      "seq": 1,
+      "timestamp": "2026-11-09T00:32:44.636995+00:00",
+      "type": "simulation.started",
+      "actor": "runner",
+      "recipient": null,
+      "caused_by": null,
+      "operation_id": null,
+      "data": {}
+    },
+    {
+      "event_id": "756d7863-76a1-4f34-862d-e84e8cb70ff7",
+      "seq": 2,
+      "timestamp": "2026-11-09T00:32:44.686683+00:00",
+      "type": "human.message",
+      "actor": "human_a",
+      "recipient": "agent_a",
+      "caused_by": null,
+      "operation_id": null,
+      "data": {
+        "text": "I would like an easy hike in Picos de Europa on November 10, 2026, up to four hours."
+      }
+    },
+    {
+      "event_id": "e668f311-0609-4d06-996a-06d863dd3c8e",
+      "seq": 3,
+      "timestamp": "2026-11-09T00:32:46.202174+00:00",
+      "type": "human.interrupt",
+      "actor": "agent_a",
+      "recipient": "human_a",
+      "caused_by": null,
+      "operation_id": "886f16b1f35cc362299dd50e1cebd4fe",
+      "data": {
+        "question": "What hiking experience do you have, what route duration would you prefer within the four-hour limit, and what equipment do you already own? Any specific route preferences or maximum distance/elevation gain?",
+        "kind": "question",
+        "options": [],
+        "proposal": null,
+        "interaction_id": "886f16b1f35cc362299dd50e1cebd4fe"
+      }
+    },
+    {
+      "event_id": "1110580a-3cdb-4ac8-8f51-fb605516482b",
+      "seq": 4,
+      "timestamp": "2026-11-09T00:32:46.202255+00:00",
+      "type": "human.response",
+      "actor": "human_a",
+      "recipient": "agent_a",
+      "caused_by": "e668f311-0609-4d06-996a-06d863dd3c8e",
+      "operation_id": "886f16b1f35cc362299dd50e1cebd4fe",
+      "data": {
+        "matched_intent": [
+          "gear"
+        ],
+        "match_score": 1.0,
+        "interaction_id": "886f16b1f35cc362299dd50e1cebd4fe",
+        "text": "I have boots, water and a first aid kit. Please rent a rain jacket."
+      }
+    },
+    {
+      "event_id": "58f34b7c-a8b0-4ef8-876a-fbef5061841b",
+      "seq": 5,
+      "timestamp": "2026-11-09T00:32:47.623421+00:00",
+      "type": "human.interrupt",
+      "actor": "agent_a",
+      "recipient": "human_a",
+      "caused_by": null,
+      "operation_id": "aab2b9235a8d1b5d314323b0058744d3",
+      "data": {
+        "question": "What is your hiking experience, and do you have a preferred duration (up to four hours) or any route preferences? I have your owned boots, water, and first aid kit, and will note a rental rain jacket.",
+        "kind": "question",
+        "options": [],
+        "proposal": null,
+        "interaction_id": "aab2b9235a8d1b5d314323b0058744d3"
+      }
+    },
+    {
+      "event_id": "ee1d0f5c-1c28-41f9-9d9e-68fbfc067317",
+      "seq": 6,
+      "timestamp": "2026-11-09T00:32:47.623575+00:00",
+      "type": "human.response",
+      "actor": "human_a",
+      "recipient": "agent_a",
+      "caused_by": "58f34b7c-a8b0-4ef8-876a-fbef5061841b",
+      "operation_id": "aab2b9235a8d1b5d314323b0058744d3",
+      "data": {
+        "matched_intent": [
+          "experience",
+          "duration"
+        ],
+        "match_score": 1.0,
+        "interaction_id": "aab2b9235a8d1b5d314323b0058744d3",
+        "text": "Beginner, no physical limitations. An easy hike up to four hours."
+      }
+    },
+    {
+      "event_id": "e024db33-29e5-419c-bf8e-24bf2023c4cb",
+      "seq": 7,
+      "timestamp": "2026-11-09T00:32:48.722109+00:00",
+      "type": "tool.called",
+      "actor": "agent_a",
+      "recipient": null,
+      "caused_by": null,
+      "operation_id": "ac3c37d5-ff31-46b9-9649-d1ac4b1615d2",
+      "data": {
+        "tool": "search_hiking_routes",
+        "tool_call_id": "ac3c37d5-ff31-46b9-9649-d1ac4b1615d2",
+        "arguments": {
+          "location": "Picos de Europa",
+          "difficulty": "easy",
+          "max_hours": 4.0,
+          "max_km": null,
+          "max_gain_m": null
+        },
+        "mode": "mock",
+        "attempt": 1
+      }
+    },
+    {
+      "event_id": "4e0c851b-0aa4-4005-94a4-6ed6aa7b2b09",
+      "seq": 8,
+      "timestamp": "2026-11-09T00:32:48.722605+00:00",
+      "type": "tool.completed",
+      "actor": "agent_a",
+      "recipient": null,
+      "caused_by": null,
+      "operation_id": "ac3c37d5-ff31-46b9-9649-d1ac4b1615d2",
+      "data": {
+        "tool": "search_hiking_routes",
+        "tool_call_id": "ac3c37d5-ff31-46b9-9649-d1ac4b1615d2",
+        "output": {
+          "status": "success",
+          "data": [
+            {
+              "route_id": "PR-PNPE-2",
+              "name": "Covadonga Lakes circuit",
+              "difficulty": "easy",
+              "distance_km": 5.0,
+              "duration_hours": 2.5,
+              "elevation_gain_m": 50,
+              "description": "Circular trail from Buferrera via the lakes and Enol meadows.",
+              "constraints": [
+                "Fog can obscure the long circuit."
+              ],
+              "source": "https://www.miteco.gob.es/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/picos-europa/guia-visitante/ruta-lagos-covadonga.html"
+            }
+          ],
+          "source": "search_hiking_routes",
+          "mode": "mock",
+          "error": null
+        },
+        "status": "success",
+        "duration_ms": 0
+      }
+    },
+    {
+      "event_id": "c81b9884-ebbe-4f7f-9e31-89e2a57e5e15",
+      "seq": 9,
+      "timestamp": "2026-11-09T00:32:49.741086+00:00",
+      "type": "tool.called",
+      "actor": "agent_a",
+      "recipient": null,
+      "caused_by": null,
+      "operation_id": "25b0d06c-24cc-45cc-8820-6576f9db3ec8",
+      "data": {
+        "tool": "get_route_details",
+        "tool_call_id": "25b0d06c-24cc-45cc-8820-6576f9db3ec8",
+        "arguments": {
+          "route_id": "PR-PNPE-2"
+        },
+        "mode": "mock",
+        "attempt": 1
+      }
+    },
+    {
+      "event_id": "82752cd2-3f46-4582-ac01-69a04ad98647",
+      "seq": 10,
+      "timestamp": "2026-11-09T00:32:49.741459+00:00",
+      "type": "tool.completed",
+      "actor": "agent_a",
+      "recipient": null,
+      "caused_by": null,
+      "operation_id": "25b0d06c-24cc-45cc-8820-6576f9db3ec8",
+      "data": {
+        "tool": "get_route_details",
+        "tool_call_id": "25b0d06c-24cc-45cc-8820-6576f9db3ec8",
+        "output": {
+          "status": "success",
+          "data": {
+            "route_id": "PR-PNPE-2",
+            "name": "Covadonga Lakes circuit",
+            "difficulty": "easy",
+            "distance_km": 5.0,
+            "duration_hours": 2.5,
+            "elevation_gain_m": 50,
+            "description": "Circular trail from Buferrera via the lakes and Enol meadows.",
+            "constraints": [
+              "Fog can obscure the long circuit."
+            ],
+            "source": "https://www.miteco.gob.es/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/picos-europa/guia-visitante/ruta-lagos-covadonga.html"
+          },
+          "source": "get_route_details",
+          "mode": "mock",
+          "error": null
+        },
+        "status": "success",
+        "duration_ms": 0
+      }
+    },
+    {
+      "event_id": "6c6682e5-d684-428a-b659-e23905cdcfc3",
+      "seq": 11,
+      "timestamp": "2026-11-09T00:32:50.820492+00:00",
+      "type": "tool.called",
+      "actor": "agent_a",
+      "recipient": null,
+      "caused_by": null,
+      "operation_id": "2411cd0a-efe8-440a-9ebd-22d5eda99991",
+      "data": {
+        "tool": "get_weather_forecast",
+        "tool_call_id": "2411cd0a-efe8-440a-9ebd-22d5eda99991",
+        "arguments": {
+          "location": "Picos de Europa",
+          "date": "2026-11-10",
+          "end_date": null
+        },
+        "mode": "mock",
+        "attempt": 1
+      }
+    },
+    {
+      "event_id": "1ae190c5-3eae-4661-acab-e2e3ba9d046c",
+      "seq": 12,
+      "timestamp": "2026-11-09T00:32:50.820644+00:00",
+      "type": "tool.completed",
+      "actor": "agent_a",
+      "recipient": null,
+      "caused_by": null,
+      "operation_id": "2411cd0a-efe8-440a-9ebd-22d5eda99991",
+      "data": {
+        "tool": "get_weather_forecast",
+        "tool_call_id": "2411cd0a-efe8-440a-9ebd-22d5eda99991",
+        "output": {
+          "status": "success",
+          "data": {
+            "location": "Picos de Europa",
+            "days": [
+              {
+                "date": "2026-11-10",
+                "temperature_c": 15.0,
+                "precipitation_probability": 10,
+                "precipitation_mm": 0.0,
+                "wind_kmh": 8.0
+              }
+            ],
+            "issued_at": "2026-11-08T10:00:00Z",
+            "provider": "approved_snapshot"
+          },
+          "source": "get_weather_forecast",
+          "mode": "mock",
+          "error": null
+        },
+        "status": "success",
+        "duration_ms": 0
+      }
+    },
+    {
+      "event_id": "57c14502-79d0-4719-b4b2-56b180362051",
+      "seq": 13,
+      "timestamp": "2026-11-09T00:32:52.331274+00:00",
+      "type": "tool.called",
+      "actor": "agent_a",
+      "recipient": null,
+      "caused_by": null,
+      "operation_id": "c526a842-1b23-4e5f-bf2b-d18fa44ef35c",
+      "data": {
+        "tool": "get_hiking_equipment",
+        "tool_call_id": "c526a842-1b23-4e5f-bf2b-d18fa44ef35c",
+        "arguments": {
+          "route": {
+            "route_id": "PR-PNPE-2",
+            "name": "Covadonga Lakes circuit",
+            "difficulty": "easy",
+            "distance_km": 5.0,
+            "duration_hours": 2.5,
+            "elevation_gain_m": 50
+          },
+          "weather": {
+            "date": "2026-11-10",
+            "temperature_c": 15.0,
+            "precipitation_probability": 10,
+            "precipitation_mm": 0.0,
+            "wind_kmh": 8.0
+          },
+          "duration_hours": 2.5,
+          "owned": [
+            "boots",
+            "water",
+            "first aid kit"
+          ]
+        },
+        "mode": "mock",
+        "attempt": 1
+      }
+    },
+    {
+      "event_id": "7f51e31d-662c-45da-b3fb-30b3245768a6",
+      "seq": 14,
+      "timestamp": "2026-11-09T00:32:52.331622+00:00",
+      "type": "tool.completed",
+      "actor": "agent_a",
+      "recipient": null,
+      "caused_by": null,
+      "operation_id": "c526a842-1b23-4e5f-bf2b-d18fa44ef35c",
+      "data": {
+        "tool": "get_hiking_equipment",
+        "tool_call_id": "c526a842-1b23-4e5f-bf2b-d18fa44ef35c",
+        "output": {
+          "status": "success",
+          "data": {
+            "required": [
+              "boots",
+              "water",
+              "rain jacket",
+              "first aid kit"
+            ],
+            "recommended": [
+              "poles"
+            ],
+            "missing": [
+              "rain jacket"
+            ],
+            "reasons": {
+              "boots": "Trail and weather protection",
+              "water": "Trail and weather protection",
+              "rain jacket": "Trail and weather protection",
+              "first aid kit": "Trail and weather protection"
+            }
+          },
+          "source": "get_hiking_equipment",
+          "mode": "mock",
+          "error": null
+        },
+        "status": "success",
+        "duration_ms": 0
+      }
+    },
+    {
+      "event_id": "c7a3a33d-2d90-4155-93f0-2b207008a268",
+      "seq": 15,
+      "timestamp": "2026-11-09T00:32:54.860893+00:00",
+      "type": "agent.message_sent",
+      "actor": "agent_a",
+      "recipient": "agent_b",
+      "caused_by": null,
+      "operation_id": "3f87591b-ade3-4864-b38c-b377a28b51d6",
+      "data": {
+        "message_id": "3f87591b-ade3-4864-b38c-b377a28b51d6",
+        "request_id": "6e5efd68-fe82-43bb-9f59-323a1bf7b341",
+        "sender": "agent_a",
+        "recipient": "agent_b",
+        "correlation_id": null,
+        "type": "request",
+        "content": "Request ID: 6e5efd68-fe82-43bb-9f59-323a1bf7b341. Please have B's manager review/approve guide selection and booking. Customer requests an easy beginner hike in Picos de Europa on 2026-11-10, up to 4 hours; no physical limitations. Proposal: Covadonga Lakes circuit, exact route ID PR-PNPE-2, 5.0 km, 2.5 hours, 50 m gain. Forecast for 2026-11-10: 15°C, 10% precipitation probability, 0 mm precipitation, 8 km/h wind (within safe thresholds). Gear owned: boots, water, first aid kit. Missing and requested rental: rain jacket. Please confirm booking details, preserving this exact route/date and rental list.",
+        "timestamp": "2026-11-09T00:32:54.860875+00:00",
+        "destination": "agent_b"
+      }
+    },
+    {
+      "event_id": "d81deb37-1403-42b5-a07c-632c9b65d1c0",
+      "seq": 16,
+      "timestamp": "2026-11-09T00:32:54.860933+00:00",
+      "type": "agent.message_received",
+      "actor": "agent_b",
+      "recipient": null,
+      "caused_by": "c7a3a33d-2d90-4155-93f0-2b207008a268",
+      "operation_id": "3f87591b-ade3-4864-b38c-b377a28b51d6",
+      "data": {
+        "message_id": "3f87591b-ade3-4864-b38c-b377a28b51d6",
+        "request_id": "6e5efd68-fe82-43bb-9f59-323a1bf7b341",
+        "sender": "agent_a",
+        "recipient": "agent_b",
+        "correlation_id": null,
+        "type": "request",
+        "content": "Request ID: 6e5efd68-fe82-43bb-9f59-323a1bf7b341. Please have B's manager review/approve guide selection and booking. Customer requests an easy beginner hike in Picos de Europa on 2026-11-10, up to 4 hours; no physical limitations. Proposal: Covadonga Lakes circuit, exact route ID PR-PNPE-2, 5.0 km, 2.5 hours, 50 m gain. Forecast for 2026-11-10: 15°C, 10% precipitation probability, 0 mm precipitation, 8 km/h wind (within safe thresholds). Gear owned: boots, water, first aid kit. Missing and requested rental: rain jacket. Please confirm booking details, preserving this exact route/date and rental list.",
+        "timestamp": "2026-11-09T00:32:54.860875+00:00"
+      }
+    },
+    {
+      "event_id": "8bb3421d-1394-40a9-8383-7178b6fbdd3a",
+      "seq": 17,
+      "timestamp": "2026-11-09T00:32:54.870133+00:00",
+      "type": "agent.turn_finished",
+      "actor": "agent_a",
+      "recipient": null,
+      "caused_by": null,
+      "operation_id": null,
+      "data": {
+        "text": "{\"queued\": \"3f87591b-ade3-4864-b38c-b377a28b51d6\"}"
+      }
+    },
+    {
+      "event_id": "6146cd53-954e-43da-9bdb-e3a862a7ca60",
+      "seq": 18,
+      "timestamp": "2026-11-09T00:32:55.903116+00:00",
+      "type": "tool.called",
+      "actor": "agent_b",
+      "recipient": null,
+      "caused_by": null,
+      "operation_id": "2952ac13-8c13-4aa8-a5ba-1b86029399c6",
+      "data": {
+        "tool": "check_guide_availability",
+        "tool_call_id": "2952ac13-8c13-4aa8-a5ba-1b86029399c6",
+        "arguments": {
+          "route_id": "PR-PNPE-2",
+          "date": "2026-11-10",
+          "group_size": 1
+        },
+        "mode": "mock",
+        "attempt": 1
+      }
+    },
+    {
+      "event_id": "691c61a8-7de4-46e2-baea-c3f3f318e393",
+      "seq": 19,
+      "timestamp": "2026-11-09T00:32:55.903237+00:00",
+      "type": "tool.completed",
+      "actor": "agent_b",
+      "recipient": null,
+      "caused_by": null,
+      "operation_id": "2952ac13-8c13-4aa8-a5ba-1b86029399c6",
+      "data": {
+        "tool": "check_guide_availability",
+        "tool_call_id": "2952ac13-8c13-4aa8-a5ba-1b86029399c6",
+        "output": {
+          "status": "success",
+          "data": [
+            {
+              "guide_id": "ines",
+              "name": "Ines",
+              "available": true,
+              "qualifications": [
+                "PR-PNPE-2"
+              ]
+            },
+            {
+              "guide_id": "luis",
+              "name": "Luis",
+              "available": true,
+              "qualifications": [
+                "PR-PNPE-2"
+              ]
+            }
+          ],
+          "source": "check_guide_availability",
+          "mode": "mock",
+          "error": null
+        },
+        "status": "success",
+        "duration_ms": 0
+      }
+    },
+    {
+      "event_id": "9da82730-9207-4f3b-8cc7-e3ea3a198b05",
+      "seq": 20,
+      "timestamp": "2026-11-09T00:32:57.283696+00:00",
+      "type": "tool.called",
+      "actor": "agent_b",
+      "recipient": null,
+      "caused_by": null,
+      "operation_id": "0b834862-52af-4a9f-8866-c12352621c44",
+      "data": {
+        "tool": "check_equipment_inventory",
+        "tool_call_id": "0b834862-52af-4a9f-8866-c12352621c44",
+        "arguments": {
+          "date": "2026-11-10",
+          "items": {
+            "rain jacket": 1
+          }
+        },
+        "mode": "mock",
+        "attempt": 1
+      }
+    },
+    {
+      "event_id": "babcf96e-4841-4278-9f56-62e608db3565",
+      "seq": 21,
+      "timestamp": "2026-11-09T00:32:57.283844+00:00",
+      "type": "tool.completed",
+      "actor": "agent_b",
+      "recipient": null,
+      "caused_by": null,
+      "operation_id": "0b834862-52af-4a9f-8866-c12352621c44",
+      "data": {
+        "tool": "check_equipment_inventory",
+        "tool_call_id": "0b834862-52af-4a9f-8866-c12352621c44",
+        "output": {
+          "status": "success",
+          "data": {
+            "quantities": {
+              "rain jacket": 3
+            },
+            "unavailable": []
+          },
+          "source": "check_equipment_inventory",
+          "mode": "mock",
+          "error": null
+        },
+        "status": "success",
+        "duration_ms": 0
+      }
+    },
+    {
+      "event_id": "a88a2a81-b21e-454b-8220-a9103907cc62",
+      "seq": 22,
+      "timestamp": "2026-11-09T00:32:59.174525+00:00",
+      "type": "human.interrupt",
+      "actor": "agent_b",
+      "recipient": "human_b",
+      "caused_by": null,
+      "operation_id": "220a1a9448d02a2e4d92d3fe338c1eeb",
+      "data": {
+        "question": "For request 6e5efd68-fe82-43bb-9f59-323a1bf7b341, which available guide should be selected for PR-PNPE-2 on 2026-11-10?",
+        "kind": "selection",
+        "options": [
+          "ines",
+          "luis"
+        ],
+        "proposal": null,
+        "interaction_id": "220a1a9448d02a2e4d92d3fe338c1eeb"
+      }
+    },
+    {
+      "event_id": "10a24320-95e0-4476-b7d2-991007b8c6e7",
+      "seq": 23,
+      "timestamp": "2026-11-09T00:32:59.174542+00:00",
+      "type": "human.response",
+      "actor": "human_b",
+      "recipient": "agent_b",
+      "caused_by": "a88a2a81-b21e-454b-8220-a9103907cc62",
+      "operation_id": "220a1a9448d02a2e4d92d3fe338c1eeb",
+      "data": {
+        "matched_intent": [
+          "selection"
+        ],
+        "match_score": 1,
+        "interaction_id": "220a1a9448d02a2e4d92d3fe338c1eeb",
+        "text": "2",
+        "guide_id": "luis"
+      }
+    },
+    {
+      "event_id": "3021d6a5-f19b-42d9-ad5b-018d186f2847",
+      "seq": 24,
+      "timestamp": "2026-11-09T00:33:01.042969+00:00",
+      "type": "human.interrupt",
+      "actor": "agent_b",
+      "recipient": "human_b",
+      "caused_by": null,
+      "operation_id": "216717a69a406c02cadeb210b2eac343",
+      "data": {
+        "question": "Please approve this exact booking proposal for request 6e5efd68-fe82-43bb-9f59-323a1bf7b341: Covadonga Lakes circuit (route PR-PNPE-2), 2026-11-10, guide luis, renting 1 rain_jacket.",
+        "kind": "approval",
+        "options": [],
+        "proposal": {
+          "route_id": "PR-PNPE-2",
+          "date": "2026-11-10",
+          "guide_id": "luis",
+          "equipment": {
+            "rain jacket": 1
+          }
+        },
+        "interaction_id": "216717a69a406c02cadeb210b2eac343"
+      }
+    },
+    {
+      "event_id": "329b3ccd-6bdf-4ee4-991b-88e72068905b",
+      "seq": 25,
+      "timestamp": "2026-11-09T00:33:01.043018+00:00",
+      "type": "human.response",
+      "actor": "human_b",
+      "recipient": "agent_b",
+      "caused_by": "3021d6a5-f19b-42d9-ad5b-018d186f2847",
+      "operation_id": "216717a69a406c02cadeb210b2eac343",
+      "data": {
+        "matched_intent": [
+          "approval"
+        ],
+        "match_score": 1,
+        "interaction_id": "216717a69a406c02cadeb210b2eac343",
+        "text": "Approved",
+        "approval_ref": "2858f164-ea2b-4336-9bc8-7103c4107fc3",
+        "proposal": {
+          "route_id": "PR-PNPE-2",
+          "date": "2026-11-10",
+          "guide_id": "luis",
+          "equipment": {
+            "rain jacket": 1
+          }
+        }
+      }
+    },
+    {
+      "event_id": "32f2324d-f386-4972-996b-b5b7347631dc",
+      "seq": 26,
+      "timestamp": "2026-11-09T00:33:02.603994+00:00",
+      "type": "tool.called",
+      "actor": "agent_b",
+      "recipient": null,
+      "caused_by": null,
+      "operation_id": "fec0d673-fd71-4d82-9bf4-c7722a8eb6db",
+      "data": {
+        "tool": "create_tour_reservation",
+        "tool_call_id": "fec0d673-fd71-4d82-9bf4-c7722a8eb6db",
+        "arguments": {
+          "route_id": "PR-PNPE-2",
+          "date": "2026-11-10",
+          "guide_id": "luis",
+          "equipment": {
+            "rain jacket": 1
+          }
+        },
+        "mode": "mock",
+        "attempt": 1
+      }
+    },
+    {
+      "event_id": "88d26dd2-38b0-4f23-90ab-7c6926e3d1bf",
+      "seq": 27,
+      "timestamp": "2026-11-09T00:33:02.604325+00:00",
+      "type": "tool.completed",
+      "actor": "agent_b",
+      "recipient": null,
+      "caused_by": null,
+      "operation_id": "fec0d673-fd71-4d82-9bf4-c7722a8eb6db",
+      "data": {
+        "tool": "create_tour_reservation",
+        "tool_call_id": "fec0d673-fd71-4d82-9bf4-c7722a8eb6db",
+        "output": {
+          "status": "success",
+          "data": {
+            "route_id": "PR-PNPE-2",
+            "date": "2026-11-10",
+            "guide_id": "luis",
+            "equipment": {
+              "rain jacket": 1
+            },
+            "reservation_id": "tour-6e5efd68-fe82-43bb-9f59-323a1bf7b341",
+            "status": "confirmed",
+            "created_at": "2026-11-09T00:33:02.604167Z"
+          },
+          "source": "create_tour_reservation",
+          "mode": "mock",
+          "error": null
+        },
+        "status": "success",
+        "duration_ms": 0
+      }
+    },
+    {
+      "event_id": "517311c9-e871-4e5c-b6c3-4e253f33d44d",
+      "seq": 28,
+      "timestamp": "2026-11-09T00:33:04.497877+00:00",
+      "type": "agent.message_sent",
+      "actor": "agent_b",
+      "recipient": "agent_a",
+      "caused_by": null,
+      "operation_id": "3f87591b-ade3-4864-b38c-b377a28b51d6",
+      "data": {
+        "message_id": "b293d55a-5e2f-42e3-b179-48a2e9e26efa",
+        "request_id": "6e5efd68-fe82-43bb-9f59-323a1bf7b341",
+        "sender": "agent_b",
+        "recipient": "agent_a",
+        "correlation_id": "3f87591b-ade3-4864-b38c-b377a28b51d6",
+        "type": "response",
+        "content": "Request ID: 6e5efd68-fe82-43bb-9f59-323a1bf7b341. Reservation confirmed. Reservation ID: tour-6e5efd68-fe82-43bb-9f59-323a1bf7b341. Route ID: PR-PNPE-2 (Covadonga Lakes circuit). Date: 2026-11-10. Guide ID: luis. Equipment rental: 1 rain jacket. Status: confirmed.",
+        "timestamp": "2026-11-09T00:33:04.497859+00:00",
+        "destination": "agent_a"
+      }
+    },
+    {
+      "event_id": "bb88c89a-9b18-48d5-ba47-bd4c4e85b5e4",
+      "seq": 29,
+      "timestamp": "2026-11-09T00:33:04.499996+00:00",
+      "type": "agent.message_received",
+      "actor": "agent_a",
+      "recipient": null,
+      "caused_by": "517311c9-e871-4e5c-b6c3-4e253f33d44d",
+      "operation_id": "3f87591b-ade3-4864-b38c-b377a28b51d6",
+      "data": {
+        "message_id": "b293d55a-5e2f-42e3-b179-48a2e9e26efa",
+        "request_id": "6e5efd68-fe82-43bb-9f59-323a1bf7b341",
+        "sender": "agent_b",
+        "recipient": "agent_a",
+        "correlation_id": "3f87591b-ade3-4864-b38c-b377a28b51d6",
+        "type": "response",
+        "content": "Request ID: 6e5efd68-fe82-43bb-9f59-323a1bf7b341. Reservation confirmed. Reservation ID: tour-6e5efd68-fe82-43bb-9f59-323a1bf7b341. Route ID: PR-PNPE-2 (Covadonga Lakes circuit). Date: 2026-11-10. Guide ID: luis. Equipment rental: 1 rain jacket. Status: confirmed.",
+        "timestamp": "2026-11-09T00:33:04.497859+00:00"
+      }
+    },
+    {
+      "event_id": "4c69ab04-eac5-4e42-9d4a-c407ed4ffb8a",
+      "seq": 30,
+      "timestamp": "2026-11-09T00:33:04.526356+00:00",
+      "type": "agent.turn_finished",
+      "actor": "agent_b",
+      "recipient": null,
+      "caused_by": null,
+      "operation_id": null,
+      "data": {
+        "text": "{\"queued\": \"b293d55a-5e2f-42e3-b179-48a2e9e26efa\"}"
+      }
+    },
+    {
+      "event_id": "3a5711ec-0320-42d4-8994-7826b05363d1",
+      "seq": 31,
+      "timestamp": "2026-11-09T00:33:06.404974+00:00",
+      "type": "result.validated",
+      "actor": "agent_a",
+      "recipient": null,
+      "caused_by": null,
+      "operation_id": "24115b1a-3cce-4aa2-b7e6-640b9fb8f1d2",
+      "data": {}
+    },
+    {
+      "event_id": "a498d339-72e5-4bd6-ad1a-9b10da2347a8",
+      "seq": 32,
+      "timestamp": "2026-11-09T00:33:06.405003+00:00",
+      "type": "human.message_delivered",
+      "actor": "agent_a",
+      "recipient": "human_a",
+      "caused_by": "3a5711ec-0320-42d4-8994-7826b05363d1",
+      "operation_id": "24115b1a-3cce-4aa2-b7e6-640b9fb8f1d2",
+      "data": {
+        "message_id": "24115b1a-3cce-4aa2-b7e6-640b9fb8f1d2",
+        "text": "Confirmed PR-PNPE-2 on 2026-11-10 with luis. Reservation tour-6e5efd68-fe82-43bb-9f59-323a1bf7b341. Equipment: rain jacket.",
+        "message_kind": "final_result",
+        "trip_result": {
+          "request_id": "6e5efd68-fe82-43bb-9f59-323a1bf7b341",
+          "status": "confirmed",
+          "route_id": "PR-PNPE-2",
+          "date": "2026-11-10",
+          "guide_id": "luis",
+          "reservation_id": "tour-6e5efd68-fe82-43bb-9f59-323a1bf7b341",
+          "equipment_items": [
+            "rain jacket"
+          ],
+          "failure_reason": null
+        }
+      }
+    },
+    {
+      "event_id": "105bbc35-74f8-47b5-b9e5-77a95bfd3349",
+      "seq": 33,
+      "timestamp": "2026-11-09T00:33:06.405013+00:00",
+      "type": "simulation.completed",
+      "actor": "runner",
+      "recipient": null,
+      "caused_by": "a498d339-72e5-4bd6-ad1a-9b10da2347a8",
+      "operation_id": null,
+      "data": {}
+    }
+  ],
+  "result": {
+    "trip_result": {
+      "request_id": "6e5efd68-fe82-43bb-9f59-323a1bf7b341",
+      "status": "confirmed",
+      "route_id": "PR-PNPE-2",
+      "date": "2026-11-10",
+      "guide_id": "luis",
+      "reservation_id": "tour-6e5efd68-fe82-43bb-9f59-323a1bf7b341",
+      "equipment_items": [
+        "rain jacket"
+      ],
+      "failure_reason": null
+    },
+    "outcome": "completed",
+    "passed": true,
+    "checks": {
+      "confirmed": true,
+      "expected_date": true,
+      "route": true,
+      "guide": true,
+      "approved_booking": true,
+      "communication": true,
+      "within_limits": true,
+      "delivery": true,
+      "approval_before_booking": true,
+      "unique_reservation": true,
+      "bounded_attempts": true,
+      "participant_routing": true,
+      "weather_suitable": true,
+      "required_equipment": true
+    },
+    "metrics": {
+      "llm_call_count": 14,
+      "input_tokens": 21517,
+      "output_tokens": 1113,
+      "tool_failure_rate": 0.0,
+      "recovery_success_rate": null,
+      "agent_interaction_count": 2,
+      "human_matching_failure_rate": 0.0,
+      "per_agent": {
+        "agent_a": {
+          "llm_call_count": 8,
+          "input_tokens": 13742,
+          "output_tokens": 671
+        },
+        "agent_b": {
+          "llm_call_count": 6,
+          "input_tokens": 7775,
+          "output_tokens": 442
+        }
+      },
+      "task_success_rate": 1,
+      "scenario_pass_rate": 1,
+      "latency_ms": 21797
+    },
+    "error": null
+  }
+}
