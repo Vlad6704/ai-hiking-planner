@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "snapshot_date": "2026-11-09",
+  "skills": {
+    "executing-plans": {
+      "role": "primary",
+      "repository": "https://github.com/obra/superpowers",
+      "commit": "22f0b463e7a5e579904dd6211a520321035526f7",
+      "upstream_path": "skills/executing-plans",
+      "upstream_tree": "3a8438d91d9340747ffd985fdbcfe7238d6e1e57",
+      "files": {
+        "SKILL.md": {
+          "sha256": "deaf176fa179827e80f2ea3101db3ea90fdf562ebef340eba761e4687940f5f5",
+          "git_mode": "100644"
+        },
+        "scripts/task-done": {
+          "sha256": "ac0b5ebafc7d471507b7e94d88da77a11f187ba277c8d48fefaf8ff3e4fee50e",
+          "git_mode": "100755"
+        },
+        "scripts/task-start": {
+          "sha256": "4ae7ce3b6777c3240af786197836a6b4bbf3b0ee831c25f147c149ea8db54a21",
+          "git_mode": "100755"
+        }
+      }
+    },
+    "finishing-a-development-branch": {
+      "role": "supporting",
+      "repository": "https://github.com/obra/superpowers",
+      "commit": "22f0b463e7a5e579904dd6211a520321035526f7",
+      "upstream_path": "skills/finishing-a-development-branch",
+      "upstream_tree": "3b1205aa5038c71946077dd63b9e71b447729e70",
+      "files": {
+        "SKILL.md": {
+          "sha256": "8db5a922b242dd4e1bf824cb91c13b3e8d8e8a86d6ceaf7f0774eb9cce909d65",
+          "git_mode": "100644"
+        }
+      }
+    },
+    "langchain-fundamentals": {
+      "role": "primary",
+      "repository": "https://github.com/langchain-ai/langchain-skills",
+      "commit": "126c384d8552dcb476b226c244172186cc3f4328",
+      "upstream_path": "config/skills/langchain-fundamentals",
+      "upstream_tree": "64d425535583b9bd96a434be24986bca192e45f6",
+      "files": {
+        "SKILL.md": {
+          "sha256": "00dc50a19d6eec308e3c4a5b8ca237fdddeb00195e7e29d009049f5d0566f5c2",
+          "git_mode": "100644"
+        }
+      }
+    },
+    "langgraph-fundamentals": {
+      "role": "primary",
+      "repository": "https://github.com/langchain-ai/langchain-skills",
+      "commit": "126c384d8552dcb476b226c244172186cc3f4328",
+      "upstream_path": "config/skills/langgraph-fundamentals",
+      "upstream_tree": "480d57e3f5d3f0ac2d98108592a2d185f61cc2ec",
+      "files": {
+        "SKILL.md": {
+          "sha256": "193bea142c9df04abc44917fb96c0be53ec9b5c77f56670004d3c03c117fb990",
+          "git_mode": "100644"
+        },
+        "references/python.md": {
+          "sha256": "3d30871a6463f955452fdebe607248c39b6806cf07c0fe655e3783b48acc6d91",
+          "git_mode": "100644"
+        },
+        "references/typescript.md": {
+          "sha256": "8cf8577265a75a1e46a5e1dfc7599c63efb60059591593dbb92dbd51acd5d22a",
+          "git_mode": "100644"
+        }
+      }
+    },
+    "receiving-code-review": {
+      "role": "supporting",
+      "repository": "https://github.com/obra/superpowers",
+      "commit": "22f0b463e7a5e579904dd6211a520321035526f7",
+      "upstream_path": "skills/receiving-code-review",
+      "upstream_tree": "b5e154fc3ec7a6a0b1e710eebacc2168620cc428",
+      "files": {
+        "SKILL.md": {
+          "sha256": "091df1629510af1b92fc4abd6f96732ebedb4cb2c0f3457e8f2740b0504a2438",
+          "git_mode": "100644"
+        }
+      }
+    },
+    "requesting-code-review": {
+      "role": "supporting",
+      "repository": "https://github.com/obra/superpowers",
+      "commit": "22f0b463e7a5e579904dd6211a520321035526f7",
+      "upstream_path": "skills/requesting-code-review",
+      "upstream_tree": "f4a6749898702895ea4fd57c7f186cf43205b99a",
+      "files": {
+        "SKILL.md": {
+          "sha256": "2180e14a448e9410bec88e6646a2d1f0ce7fdd58de27388c1e052e929679d2bc",
+          "git_mode": "100644"
+        },
+        "code-reviewer.md": {
+          "sha256": "82e370be6b3447523816286195571e4216ba56ba1ad6ad0e87862294c4c78dcb",
+          "git_mode": "100644"
+        }
+      }
+    },
+    "subagent-driven-development": {
+      "role": "primary",
+      "repository": "https://github.com/obra/superpowers",
+      "commit": "22f0b463e7a5e579904dd6211a520321035526f7",
+      "upstream_path": "skills/subagent-driven-development",
+      "upstream_tree": "c04a61186680d4cfc6784136d0421cd4abcfb40c",
+      "files": {
+        "SKILL.md": {
+          "sha256": "1baf70e307bde682c462513c86116333f1f066168c6710f45145bf5f0b00828d",
+          "git_mode": "100644"
+        },
+        "implementer-prompt.md": {
+          "sha256": "81dd9d5a3fb0b09b96b5829f03b9796842f3199ef7591d1ba1c2db2a515f64d0",
+          "git_mode": "100644"
+        },
+        "re-review-prompt.md": {
+          "sha256": "ad54d0a10f1c2c8e656456e0a46e654af5dfe5ee6bcef63428cfd69b8dcd9311",
+          "git_mode": "100644"
+        },
+        "references/batching.md": {
+          "sha256": "b54dc7e23dbfb90db89bcb2fb3af591aabf6a271a165fbc0da4c6f9439980eac",
+          "git_mode": "100644"
+        },
+        "references/cannot-verify.md": {
+          "sha256": "e698713a15e0eabf1a2ab26ffe1bb04bf70c9d6d2e2060d44a0f9a1bdd4408bf",
+          "git_mode": "100644"
+        },
+        "references/final-review.md": {
+          "sha256": "6c9e12093e46c4ad0a203bc07709c17e3470f855f1b78e55c5e7b722a012a32c",
+          "git_mode": "100644"
+        },
+        "references/fix-loop.md": {
+          "sha256": "1938ce707915efc44021e563ebc29666329e20ad861b6c50b89f305b8f4e8d8b",
+          "git_mode": "100644"
+        },
+        "references/handling-reports.md": {
+          "sha256": "8f759cdd4936220c38aab05b6d6c48c6df8ac8f146b0f37a6d2facbf87133c67",
+          "git_mode": "100644"
+        },
+        "references/preflight.md": {
+          "sha256": "3ea21c5fc1af1a190ac8a9d19ceb0849b47bf2ffe27b87dffcc21b6a0539776c",
+          "git_mode": "100644"
+        },
+        "references/resuming.md": {
+          "sha256": "ff6e38bde2276faa2a7e93513086caded0ea10edbf2ec7f349a7e3b0d7c668c4",
+          "git_mode": "100644"
+        },
+        "scripts/review-package": {
+          "sha256": "aed7c6e09fc660417d28898ed975e84651cb9f18f4675141cd475edfb7037f3d",
+          "git_mode": "100755"
+        },
+        "scripts/sdd-repo": {
+          "sha256": "6f8256a776968d394bae679572e41ce572fd45c72074b98f9a8eb8b4f160e06f",
+          "git_mode": "100755"
+        },
+        "scripts/sdd-workspace": {
+          "sha256": "de3af5252fa595fc2000ba05cf69e06187d5c8aae9d283cced4c167ad1813061",
+          "git_mode": "100755"
+        },
+        "scripts/task-brief": {
+          "sha256": "0f244a12e146393c552ba62069d3eedcc85cb3f76de67b01f4e11219e5ebbcd8",
+          "git_mode": "100755"
+        },
+        "task-reviewer-prompt.md": {
+          "sha256": "61a04c2fb29907887d8babee1594f5e35ae26d461e7e584f5b7c283215165e08",
+          "git_mode": "100644"
+        }
+      }
+    },
+    "systematic-debugging": {
+      "role": "supporting",
+      "repository": "https://github.com/obra/superpowers",
+      "commit": "22f0b463e7a5e579904dd6211a520321035526f7",
+      "upstream_path": "skills/systematic-debugging",
+      "upstream_tree": "774f23e27e35cb0a89ede39156e7b079fbb84190",
+      "files": {
+        "SKILL.md": {
+          "sha256": "51c6435d98c83c42c96ba7c35725a0b2c376cd487fb1a4e6bd0ddbe7e33ef202",
+          "git_mode": "100644"
+        },
+        "condition-based-waiting-example.ts": {
+          "sha256": "40ae5ebe497fdf310200e43fe986552546d0a22837c0d39e855db1cfd33eb88e",
+          "git_mode": "100644"
+        },
+        "condition-based-waiting.md": {
+          "sha256": "e89fec8400d6cd50f43407cec9fab50976ba4d55d0ec2eb51c0bd68036b54c26",
+          "git_mode": "100644"
+        },
+        "defense-in-depth.md": {
+          "sha256": "1e175fb86fc357e58c6aebf5441e481e1b7868b4380c0456b63a17eefbd18ba7",
+          "git_mode": "100644"
+        },
+        "find-polluter.sh": {
+          "sha256": "dd7b8f13c4cc2a24b33ff87b18da9248f3e1c80a085c3316224f69ff0fa5c43c",
+          "git_mode": "100755"
+        },
+        "root-cause-tracing.md": {
+          "sha256": "75b933b6a8c40bdb2031b10f21654395b56ec6ab6bc7b018c18d3fe57aeb7fb8",
+          "git_mode": "100644"
+        }
+      }
+    },
+    "test-driven-development": {
+      "role": "supporting",
+      "repository": "https://github.com/obra/superpowers",
+      "commit": "22f0b463e7a5e579904dd6211a520321035526f7",
+      "upstream_path": "skills/test-driven-development",
+      "upstream_tree": "847144cf0824095922c0d4875648b9fa74877e1a",
+      "files": {
+        "SKILL.md": {
+          "sha256": "64b03fce4aee5a97a93160cea8111f3ba13a17b7c001db4bd5836d67fd10705d",
+          "git_mode": "100644"
+        },
+        "writing-good-tests.md": {
+          "sha256": "51471c853306ff92ca8bb41dcaea05f31c0e46b03651f8f3c99754b7172f4ae1",
+          "git_mode": "100644"
+        }
+      }
+    },
+    "using-git-worktrees": {
+      "role": "supporting",
+      "repository": "https://github.com/obra/superpowers",
+      "commit": "22f0b463e7a5e579904dd6211a520321035526f7",
+      "upstream_path": "skills/using-git-worktrees",
+      "upstream_tree": "d2b8357b922667a091bfe967840abf5ae84ce99c",
+      "files": {
+        "SKILL.md": {
+          "sha256": "8cfb86f121269e8f7f12361e6795c4f6738828340e28964c9229d365666c9edd",
+          "git_mode": "100644"
+        }
+      }
+    },
+    "using-superpowers": {
+      "role": "supporting",
+      "repository": "https://github.com/obra/superpowers",
+      "commit": "22f0b463e7a5e579904dd6211a520321035526f7",
+      "upstream_path": "skills/using-superpowers",
+      "upstream_tree": "4c777432715fe58984d212a36aedc6a18472e512",
+      "files": {
+        "SKILL.md": {
+          "sha256": "82c5c8866ad7f5dd4440ce66bd7806ba48a2f13771beae5cf112e53f08fe36ba",
+          "git_mode": "100644"
+        },
+        "references/antigravity-tools.md": {
+          "sha256": "4880f6de3da4e32f9659ebe7a72b9e0ebfff04e028c2ed96173f86d0387a04c0",
+          "git_mode": "100644"
+        },
+        "references/claude-code-tools.md": {
+          "sha256": "21479a3fee27448cab8748a3b5687e53bb257883bda9c070426f9a1ab5cebf1b",
+          "git_mode": "100644"
+        },
+        "references/codex-tools.md": {
+          "sha256": "1a38ad9b188c393052f58d95657a1c35ea6aafc8b5a27f198f3922912f70bbe7",
+          "git_mode": "100644"
+        },
+        "references/gemini-tools.md": {
+          "sha256": "62b9157bcb0ee3c6784e3d0da0798ddfa5872f9e0c34bea48f3079dabea71965",
+          "git_mode": "100644"
+        },
+        "references/hermes-tools.md": {
+          "sha256": "e2185c976a3c87503910e05e2aea58cc89bc8e569bb624b93df9958ac47a9190",
+          "git_mode": "100644"
+        },
+        "references/muse-tools.md": {
+          "sha256": "5a1da5c575fe18456ca71cd47ebfd8a38c745f8d82a67fe64d5b83080000eeb3",
+          "git_mode": "100644"
+        },
+        "references/pi-tools.md": {
+          "sha256": "703dbc83d23ecab9c6f388460c38abc482e9dee2fe6772a8c7a255152ad3a4d5",
+          "git_mode": "100644"
+        }
+      }
+    },
+    "verification-before-completion": {
+      "role": "supporting",
+      "repository": "https://github.com/obra/superpowers",
+      "commit": "22f0b463e7a5e579904dd6211a520321035526f7",
+      "upstream_path": "skills/verification-before-completion",
+      "upstream_tree": "a4cb0b69aaefeab540947a7f1642bdaad810e37a",
+      "files": {
+        "SKILL.md": {
+          "sha256": "2befe7fc55bcadaa3d97dd9e8efeb633d2561c0ebe74c5a8b17c4d9e7e4520b3",
+          "git_mode": "100644"
+        }
+      }
+    },
+    "writing-plans": {
+      "role": "primary",
+      "repository": "https://github.com/obra/superpowers",
+      "commit": "22f0b463e7a5e579904dd6211a520321035526f7",
+      "upstream_path": "skills/writing-plans",
+      "upstream_tree": "cc97fa00eb2ccd4f283e34eb2ba06a48e1e679f7",
+      "files": {
+        "SKILL.md": {
+          "sha256": "a6c67c1900064347c2a329990dd3c555657c51c3ec53b259a08aa01a2c26139a",
+          "git_mode": "100644"
+        }
+      }
+    }
+  },
+  "licenses": {
+    "SUPERPOWERS-LICENSE.txt": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400",
+    "LANGCHAIN-LICENSE.txt": "4ec67e4ca6e6721dba849b2ca82261597c86a61ee214bbf21416006b7b2d0478"
+  }
+}
