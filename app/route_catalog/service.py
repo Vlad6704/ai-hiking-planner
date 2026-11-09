@@ -2,6 +2,7 @@
 
 import asyncio
 import time
+import logging
 from datetime import UTC, datetime, timedelta
 from urllib.parse import urljoin
 from uuid import uuid4
@@ -11,11 +12,13 @@ import httpx
 from app.route_catalog.models import PARSER_VERSION
 from app.route_catalog.parser import Document, INDEX_URL, allowed_url, discover_routes, parse_route
 from app.route_catalog.store import CatalogStore, local_day
+from app.observability.http_logging import attach_http_logging
 
 
 class CatalogService:
     def __init__(self, store: CatalogStore, client: httpx.AsyncClient, *, clock=None, index_url=INDEX_URL):
         self.store, self.client = store, client
+        attach_http_logging(client)
         self.clock = clock or (lambda: datetime.now(UTC))
         self.index_url = index_url
         self.last_report = None
@@ -93,6 +96,7 @@ class CatalogService:
                             route.last_modified = page.headers.get("last-modified", route.last_modified)
                             return route, None
                         except (httpx.HTTPError, ValueError, KeyError, TypeError) as exc:
+                            logging.getLogger('app.catalog').exception('catalog.page_failed', extra={'fields': {'route_id': entry['route_id'], 'url': entry['url']}})
                             return None, dict(route_id=entry["route_id"], url=entry["url"], error=str(exc))
 
                 results = await asyncio.gather(*(load(entry) for entry in entries))
@@ -101,11 +105,14 @@ class CatalogService:
                 self.last_report = self.store.publish(routes, entries, complete=not errors,
                     checked_at=self.clock().isoformat(), run_id=owner, errors=errors,
                     trigger="manual" if force else "automatic", owned=True)
+                logging.getLogger('app.catalog').info('catalog.refreshed', extra={'fields': {
+                    key: self.last_report[key] for key in ('run_id', 'outcome', 'discovered', 'parsed')}})
                 return self.last_report
         except asyncio.CancelledError:
             self.store.fail_refresh(owner, "refresh_cancelled", self.clock().isoformat())
             raise
         except (httpx.HTTPError, ValueError, TimeoutError, KeyError, TypeError) as exc:
+            logging.getLogger('app.catalog').exception('catalog.refresh_failed')
             self.last_report = self.store.fail_refresh(owner, str(exc), self.clock().isoformat())
             return self.last_report
 

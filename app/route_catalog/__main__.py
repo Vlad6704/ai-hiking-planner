@@ -5,6 +5,12 @@ import asyncio
 import json
 import sqlite3
 from pathlib import Path
+import logging
+
+from app.observability.runtime_logging import configure_logging
+
+if __name__ == '__main__':
+    configure_logging('catalog')
 
 import httpx
 
@@ -34,6 +40,7 @@ async def main(argv=None):
     search.add_argument('--prefix', action='store_true')
     search.add_argument('--sort', choices=['relevance', 'name', 'distance', 'duration', 'ascent', 'descent'])
     args = parser.parse_args(argv)
+    configure_logging('catalog')
     try:
         query = RouteQuery(**{key: value for key, value in vars(args).items() if key not in ('command', 'database')}) if args.command == 'search' else None
         store = CatalogStore(args.database or database_path())
@@ -48,6 +55,7 @@ async def main(argv=None):
             print(json.dumps(dict(**result, catalog=state), ensure_ascii=False))
             return 0
     except (ValueError, OSError, sqlite3.Error) as exc:
+        logging.getLogger('app.catalog').exception('catalog.command_failed')
         print(json.dumps({'error': str(exc)}))
         return 1
 

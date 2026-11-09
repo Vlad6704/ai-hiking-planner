@@ -5,7 +5,16 @@ import asyncio
 import json
 import math
 import socket
+import logging
+import sys
 from pathlib import Path
+
+from app.observability.runtime_logging import configure_logging
+from app.observability.asyncio_logging import connection_fields, capture_asyncio_errors
+
+if __name__ == '__main__':
+    role = sys.argv[1] if len(sys.argv) > 1 and sys.argv[1] in ('operator', 'customer') else 'launcher'
+    configure_logging('manual-' + role)
 
 from app.evaluation.checks import evaluate
 from app.humans.simulator import HumanSimulator
@@ -50,10 +59,12 @@ def operator_console(port, ready_file=None):
         write_status(ready_file, "error", error=str(exc))
         raise
     with server:
+        logging.getLogger('app.manual').info('operator.listening', extra={'fields': {'local_address': server.getsockname()}})
         write_status(ready_file, "ready", port=server.getsockname()[1])
         print(f"Agent B | Tour operator | Listening on 127.0.0.1:{server.getsockname()[1]}", flush=True)
         conn, _ = server.accept()
         with conn, conn.makefile("r", encoding="utf-8") as incoming:
+            logging.getLogger('app.manual').info('manager.connected', extra={'fields': {'local_address': conn.getsockname(), 'peer_address': conn.getpeername()}})
             print("Customer terminal connected. Waiting for the operator's question.", flush=True)
             for line in incoming:
                 message = json.loads(line)
@@ -90,7 +101,8 @@ async def customer_console(port, scenario, ready_file=None, mode="mock"):
     write_status(ready_file, "starting")
     try:
         with operator_backend(mode):
-            return await connected_customer(port, scenario, ready_file, mode)
+            with capture_asyncio_errors('manual_customer'):
+                return await connected_customer(port, scenario, ready_file, mode)
     except (OSError, RuntimeError, ValueError) as exc:
         if ready_file is not None:
             try:
@@ -103,6 +115,7 @@ async def customer_console(port, scenario, ready_file=None, mode="mock"):
 async def connected_customer(port, scenario, ready_file, mode):
     try:
         reader, writer = await asyncio.open_connection("127.0.0.1", port)
+        logging.getLogger('app.manual').info('customer.connected', extra={'fields': connection_fields(writer.transport)})
     except OSError as exc:
         write_status(ready_file, "error", error=str(exc))
         raise
@@ -126,6 +139,7 @@ async def connected_customer(port, scenario, ready_file, mode):
         await writer.drain()
         return int(bool(run.error))
     finally:
+        logging.getLogger('app.manual').info('customer.disconnected', extra={'fields': connection_fields(writer.transport)})
         writer.close()
         await writer.wait_closed()
 
@@ -147,6 +161,8 @@ def main():
     if not math.isfinite(args.startup_timeout) or args.startup_timeout <= 0:
         parser.error("--startup-timeout must be a finite positive number")
     try:
+        configure_logging('manual-' + ('launcher' if args.role == 'launch' else args.role))
+        logging.getLogger('app.manual').info('manual.started', extra={'fields': {'role': args.role}})
         if args.role == "launch":
             return launch(port=args.port, scenario=args.scenario, startup_timeout=args.startup_timeout, mode=args.mode)
         if args.role == "operator":
@@ -154,6 +170,7 @@ def main():
             return 0
         return asyncio.run(customer_console(args.port, args.scenario, args.ready_file, args.mode))
     except (OSError, RuntimeError, EOFError, KeyboardInterrupt) as exc:
+        logging.getLogger('app.manual').exception('manual.failed')
         parser.exit(1, f"Manual session stopped: {exc or 'console closed'}.\n")
     finally:
         if args.keep_open:

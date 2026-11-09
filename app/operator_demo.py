@@ -1,5 +1,13 @@
 import argparse
 import sqlite3
+import logging
+from contextlib import asynccontextmanager
+
+from app.observability.runtime_logging import configure_logging, log_context
+from app.observability.asyncio_logging import capture_asyncio_errors
+
+if __name__ == '__main__':
+    configure_logging('operator-demo')
 
 import uvicorn
 from fastapi import FastAPI, Response
@@ -8,7 +16,17 @@ from app.models.contracts import BookingRequest, GuideQuery, InventoryQuery
 from app.route_catalog.store import CatalogStore, database_path
 from app.tools.operator import MockOperator, confirmation
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app):
+    with log_context(component='operator_demo'), capture_asyncio_errors('operator_demo'):
+        logging.getLogger('app.operator').info('operator.started')
+        try:
+            yield
+        finally:
+            logging.getLogger('app.operator').info('operator.stopped')
+
+
+app = FastAPI(lifespan=lifespan)
 
 
 @app.get('/health')
@@ -52,4 +70,4 @@ if __name__ == "__main__":
         description="Run the stateless hiking operator demo"
     )
     parser.add_argument("--port", type=int, default=8765)
-    uvicorn.run(app, host="127.0.0.1", port=parser.parse_args().port)
+    uvicorn.run(app, host="127.0.0.1", port=parser.parse_args().port, log_config=None)

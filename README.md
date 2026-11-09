@@ -119,6 +119,41 @@ accepts `--mode real` on the `customer` command and also manages the local demo.
 Both manual and automated modes save catalog refresh diagnostics and the content
 identity used by each route tool in their trajectories.
 
+## Runtime logs
+
+Application logging is separate from LangSmith tracing and trajectory JSON.
+Every CLI process writes UTF-8 JSON Lines immediately under repository-root
+`logs/`. Files identify the process role, PID and startup timestamp, for example
+`manual-customer-1234-20261109T180000000000Z.jsonl`. The embedded operator demo
+uses the customer process's file with `component=operator_demo`. Each file
+rotates at 5 MiB with three backups; older process logs remain available until
+you remove them. Logs are ignored by Git.
+
+Set `LOG_DIR` for another directory and `LOG_LEVEL` to `DEBUG`, `INFO` (default),
+`WARNING`, `ERROR` or `CRITICAL`. Errors also appear in stderr. HTTP/LLM library
+payload diagnostics stay disabled even at application DEBUG level. Log records
+redact configured secrets, authentication fields and URL userinfo/query strings;
+request/response bodies, human messages and prompts are not recorded.
+
+For a manual-session error, inspect the latest `manual-customer-*.jsonl` and
+`manual-operator-*.jsonl`; launcher/bootstrap failures are logged too. The
+launcher prints the log directory, and run trajectories include
+`metadata.runtime_log_path`. Match `run_id`, `request_id` and `operation_id` to
+the agent trajectory. Records include UTC timestamps, component, process and
+thread identity, plus exception type, errno/winerror and traceback for failures.
+Stacks retain frame locations and exception chains without source lines or
+locals. Validation/provider exceptions omit embedded input/body values while
+retaining error counts or status. Conversion errors and chained causes omit
+arbitrary value-bearing text while preserving frame locations, types and codes.
+
+An `asyncio.exception` record captures callback failures even when no tool fails
+and the booking completes. It includes local/peer socket addresses when the
+transport is still available, including bound transport callbacks. Null addresses
+mean the information was unavailable. HTTP records identify sanitized
+destinations, status and duration and can correlate a request with its tool.
+This adds diagnostics for connection resets; it does not change their handling,
+the event-loop implementation or booking outcomes.
+
 ## Execution and evidence
 
 Each agent has a private checkpoint thread and consumes its own queue. The bus owns message IDs and reply deadlines. Human questions interrupt the calling graph and the runner resumes that thread with the scenario answer. A successful reservation must have current resource availability and an approval for the same route, date, guide and equipment. The simulator accepts the final message before the completion event is emitted.

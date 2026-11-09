@@ -3,6 +3,7 @@ __pycache__/
 .pytest_cache/
 .superpowers/
 .env
+logs/
 data/*.sqlite3
 data/*.sqlite3-*
 

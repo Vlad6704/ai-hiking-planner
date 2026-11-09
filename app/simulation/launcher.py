@@ -10,7 +10,10 @@ import subprocess
 import sys
 import tempfile
 import time
+import logging
 from pathlib import Path
+
+from app.observability.runtime_logging import log_path
 
 
 FALLBACK = (
@@ -110,10 +113,14 @@ def launch(*, port: int = 18766, scenario: str = "happy_path", startup_timeout: 
             )
             wait_for_console(customer_file, customer, startup_timeout, "Customer")
         except BaseException:
+            logging.getLogger('app.launcher').exception('launcher.failed')
             (Path(directory) / "cancelled").touch()
             if customer is not None:
                 stop_console(customer, customer_file)
             stop_console(operator, status_file)
             raise
     print(f"Opened both manual terminals on 127.0.0.1:{status['port']}. Start in the customer window.")
+    logging.getLogger('app.launcher').info('launcher.ready', extra={'fields': {'port': status['port'], 'operator_pid': operator.pid, 'customer_pid': customer.pid}})
+    if log_path():
+        print(f'Runtime logs: {log_path().parent}')
     return 0

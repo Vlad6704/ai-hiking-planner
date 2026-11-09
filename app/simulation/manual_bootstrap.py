@@ -3,9 +3,11 @@
 import argparse
 import importlib
 import sys
+import logging
 from pathlib import Path
 
 from app.simulation.launcher import write_status
+from app.observability.runtime_logging import configure_logging
 
 
 def main() -> int:
@@ -19,6 +21,8 @@ def main() -> int:
 
     if cancelled():
         return 0
+    role = sys.argv[1] if len(sys.argv) > 1 and sys.argv[1] in ('operator', 'customer') else 'bootstrap'
+    configure_logging('manual-' + role)
     try:
         write_status(path, "starting")
     except FileNotFoundError:
@@ -28,6 +32,7 @@ def main() -> int:
     try:
         manual = importlib.import_module("app.simulation.manual")
     except Exception as exc:
+        logging.getLogger('app.manual').exception('console.import_failed')
         if cancelled():
             return 0
         try:

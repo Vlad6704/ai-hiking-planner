@@ -4,11 +4,14 @@ import os
 import socket
 import threading
 import time
+import logging
 from contextlib import contextmanager
 from urllib.parse import urlsplit
 
 import httpx
 import uvicorn
+
+from app.observability.runtime_logging import log_context
 
 DEFAULT_OPERATOR_URL = 'http://127.0.0.1:8765'
 
@@ -29,16 +32,18 @@ def start_demo(url, port):
         raise RuntimeError(f'Operator demo port {port} is occupied or unavailable. Set OPERATOR_URL to an available loopback port.') from exc
     with listener:
         server = uvicorn.Server(uvicorn.Config(
-            'app.operator_demo:app', log_level='error', access_log=False,
+            'app.operator_demo:app', log_level='error', access_log=False, log_config=None,
             timeout_graceful_shutdown=2,
         ))
         errors = []
 
         def serve():
-            try:
-                server.run(sockets=[listener])
-            except BaseException as exc:
-                errors.append(exc)
+            with log_context(component='operator_demo'):
+                try:
+                    server.run(sockets=[listener])
+                except BaseException as exc:
+                    logging.getLogger('app.operator').exception('operator.failed')
+                    errors.append(exc)
 
         thread = threading.Thread(target=serve, name='manual-operator-demo', daemon=True)
         thread.start()

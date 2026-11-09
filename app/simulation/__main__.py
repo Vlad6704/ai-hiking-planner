@@ -3,6 +3,11 @@ import asyncio
 import json
 from pathlib import Path
 
+from app.observability.runtime_logging import configure_logging
+
+if __name__ == '__main__':
+    configure_logging('simulation')
+
 from app.evaluation.checks import evaluate
 from app.simulation.config import Settings
 from app.simulation.runner import SimulationRunner
@@ -10,6 +15,7 @@ from app.simulation.scenario import load_scenario, scenarios
 
 
 async def main():
+    configure_logging('simulation')
     parser = argparse.ArgumentParser(
         description="Run the Picos de Europa multi-agent simulation"
     )

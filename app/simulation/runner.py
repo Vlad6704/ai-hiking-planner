@@ -1,5 +1,6 @@
 import asyncio
 import os
+import logging
 import time
 from datetime import datetime
 from typing import Literal
@@ -19,6 +20,9 @@ from app.route_catalog.service import CatalogService
 from app.route_catalog.store import CatalogStore, database_path
 from app.observability.langsmith import Usage, session
 from app.observability.trace import TraceRecorder
+from app.observability.asyncio_logging import capture_asyncio_errors
+from app.observability.http_logging import attach_http_logging
+from app.observability.runtime_logging import log_context, log_path
 from app.time_context import TIMEZONE, planning_date
 from app.tools.adapters.operator_http import HttpOperatorProvider
 from app.tools.adapters.mock import FailureSchedule
@@ -311,8 +315,15 @@ class SimulationRunner:
                     self.operator_idle.set()
 
     async def run(self):
-        with session(self.trace):
-            return await self._run()
+        path = log_path()
+        self.trace.metadata['runtime_log_path'] = str(path) if path else None
+        with log_context(component='simulation', run_id=self.trace.metadata['run_id'], request_id=self.rid), capture_asyncio_errors('simulation'):
+            logger = logging.getLogger('app.simulation')
+            logger.info('simulation.started', extra={'fields': {'mode': self.settings.mode}})
+            with session(self.trace):
+                result = await self._run()
+            logger.info('simulation.finished', extra={'fields': {'outcome': 'failed' if self.error else (self.result.status if self.result else 'incomplete')}})
+            return result
 
     async def _run(self):
         self.trace.emit("simulation.started", "runner", {})
@@ -321,6 +332,7 @@ class SimulationRunner:
             async with httpx.AsyncClient(
                 timeout=self.settings.tool_timeout
             ) as self.client:
+                attach_http_logging(self.client)
                 self.provider = (
                     MockOperator(self.case["guides"], self.case["stock"], ["PR-PNPE-2"])
                     if self.settings.mode == "mock"
@@ -363,6 +375,7 @@ class SimulationRunner:
                         task.cancel()
                     await asyncio.gather(*jobs, return_exceptions=True)
         except Exception as exc:
+            logging.getLogger('app.simulation').exception('simulation.failed')
             self.error = str(exc) or type(exc).__name__
             self.trace.emit(
                 "simulation.failed",

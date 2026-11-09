@@ -1099,6 +1099,83 @@ A fixed regression dataset should be used to compare prompt, model and architect
 
 # 12. Observability and JSON Trajectory
 
+## 12.0 Runtime Logging
+
+Use Python's standard-library logging independently of LangSmith and JSON
+trajectories. Persist operational logs immediately as UTF-8 JSON Lines so
+startup failures and asynchronous callback errors remain available even when
+a run never finishes or tracing is disabled. Do not replace or reinterpret
+the existing trajectory events or evaluation outcomes.
+
+### Files and configuration
+
+- Default directory: repository-root `logs/`, excluded from Git.
+- `LOG_DIR` overrides that directory; `LOG_LEVEL` defaults to `INFO` and
+  accepts `DEBUG`, `INFO`, `WARNING`, `ERROR` or `CRITICAL`.
+- Give each process its own role/PID/start-time filename. Threads in that
+  process share its handler; separate consoles never rotate the same file.
+- Rotate at 5 MiB, keeping three backup files per process log. Old process
+  logs are retained until removed by the operator.
+- Initialize logging once per process. Repeated setup must not duplicate
+  handlers. A logging-directory/configuration failure produces an explicit
+  startup error. Keep errors visible in stderr as well as the file.
+
+### Records and boundaries
+
+Each record contains UTC timestamp, severity, logger/event, process ID,
+thread name and component/role. Include run ID, request ID, actor, tool-call
+operation ID and attempt when available. Exception records include exception
+type, message, errno/winerror when present and the formatted traceback.
+Retain stack frame filenames, line numbers, function names and exception
+chains, but omit source-code lines and locals. Summarize validation/provider
+exceptions without their embedded input/body values; keep their type and
+validation count or HTTP status for diagnosis. Omit value-conversion details
+and arbitrary messages from chained causes, retaining their frames/types and
+errno/winerror codes.
+
+Log process/startup failures, console connection/disconnection, run start/end,
+tool failures/retries and catalog refresh failures. Record outbound HTTP
+method, sanitized destination, response status and duration for the planning
+and operator adapters. Never log request/response bodies, human messages,
+LLM prompts, credentials or authentication headers. Keep noisy HTTP/LLM
+library diagnostics at WARNING even when application logging uses DEBUG.
+Apply redaction to messages, exception text and structured fields, including
+URL credentials/query strings and configured secret values.
+
+Install an asyncio exception handler on both the simulation/customer loop
+and the embedded operator server loop. Capture callback failures independently
+of awaited tool errors, without suppressing them or changing event-loop type.
+Preserve a previously installed custom exception handler. Include callback/
+task identity and local/peer socket addresses when available. A callback
+context may expose its transport only through the bound callback; inspect
+that conservatively. Closed/absent transports must not break the handler;
+unavailable addresses remain explicitly unknown rather than guessed.
+
+Capture uncaught main-thread and worker-thread exceptions as well. Logging
+must not change retry policy, booking approval, terminal outcomes or network
+error propagation. Scope/reset per-run correlation to avoid IDs leaking into
+a later run. Restore scoped loop handlers after use.
+
+### Entrypoints and verification
+
+Configure process logging for the manual launcher/consoles (including the
+lightweight bootstrap), automated simulation CLI, catalog CLI and standalone
+operator demo. The background demo uses the customer process's log with its
+own component identity. Include the runtime-log path in trajectory metadata
+and document how to locate console/runtime diagnostics in README.
+
+Tests must verify valid JSON, rotation, redaction, idempotent initialization,
+context isolation, actual asyncio callback failures with transport addresses,
+handler chaining, background-loop capture and preserved awaited errors.
+Exercise startup/error logging in subprocesses and retain existing scenario,
+launcher and HTTP-adapter regression coverage. A logged cleanup warning does
+not by itself turn a successful booking into a failed run.
+
+Verified on November 9, 2026: 146 offline tests passed. Independent staged
+review passed after response-value and authorization redaction regressions
+were fixed. Controlled callback diagnostics retained both TCP endpoint
+addresses and WinError 10054; subprocess startup errors persisted to JSONL.
+
 ## 12.1 LangSmith
 
 LangSmith is the primary LLM observability platform.

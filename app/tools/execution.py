@@ -1,18 +1,25 @@
 import asyncio
 import time
 import sqlite3
+import logging
 from uuid import uuid4
 
 import httpx
 from pydantic import TypeAdapter
 
 from app.models.contracts import ToolResult
+from app.observability.runtime_logging import log_context
 
 
 async def execute(name, arguments, call, settings, trace, actor, fallback=None, metadata=None):
     operation = str(uuid4())
 
     def emit(kind, **data):
+        level = logging.ERROR if kind == 'tool.failed' else logging.WARNING if kind == 'tool.retry' else logging.DEBUG
+        fields = {key: data[key] for key in ('retryable', 'duration_ms', 'status') if key in data}
+        with log_context(actor=actor, operation_id=operation, attempt=data.get('attempt')):
+            logging.getLogger('app.tools').log(level, kind, extra={'fields': {'tool': name, **fields}},
+                                              exc_info=kind == 'tool.failed')
         return trace.emit(
             kind,
             actor,
@@ -25,7 +32,8 @@ async def execute(name, arguments, call, settings, trace, actor, fallback=None, 
         emit("tool.called", arguments=arguments, mode=settings.mode, attempt=attempt)
         try:
             async with asyncio.timeout(settings.tool_timeout):
-                data = await call()
+                with log_context(actor=actor, operation_id=operation, attempt=attempt):
+                    data = await call()
             normalized = TypeAdapter(object).dump_python(data, mode="json")
             status = "degraded" if metadata and metadata.get("catalog", {}).get("stale") else "success"
             result = ToolResult(
