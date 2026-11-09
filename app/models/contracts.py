@@ -19,11 +19,11 @@ Mode = Literal["mock", "real"]
 
 
 def item_name(value):
-    return (
-        " ".join(value.replace("_", " ").replace("-", " ").casefold().split())
-        if isinstance(value, str)
-        else value
-    )
+    if not isinstance(value, str):
+        return value
+    name = " ".join(value.replace("_", " ").replace("-", " ").casefold().split())
+    return {"waterproof poncho": "poncho", "rain poncho": "poncho",
+            "rain jackets": "rain jacket", "ponchos": "poncho"}.get(name, name)
 
 
 ItemName = Annotated[Text, BeforeValidator(item_name)]

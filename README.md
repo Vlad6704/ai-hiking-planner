@@ -19,6 +19,15 @@ uv run python -m app.simulation --all --mode mock
 
 Mock mode reads the authored scenarios and synthetic snapshots in process. The seed identifies the deterministic failure schedule. Each repetition gets new request, checkpoint, messaging, approval and booking state. The CLI prints structured checks, metrics and the trajectory path for every run. A failed check returns exit code 1.
 
+To reproduce the measured Luna batch in PowerShell, set the model and key in `.env`, then run:
+
+```powershell
+uv run --env-file .env python -m app.simulation --scenario happy_path --runs 5 --seed 42 --timeout 180 --peer-timeout 90
+foreach ($case in 'bad_weather','guide_unavailable','hitl_rejection','external_service_failure') {
+    uv run --env-file .env python -m app.simulation --scenario $case --seed 42 --timeout 180 --peer-timeout 90
+}
+```
+
 For real mode, start the stateless operator service in one terminal:
 
 ```powershell

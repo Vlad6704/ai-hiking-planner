@@ -59,6 +59,10 @@ def bind_tools(run, actor):
         parent = run.incoming.get(actor)
         if parent and parent["message_id"] in run.bus.pending:
             kind = "error" if kind == "error" else "response"
+        elif actor == "agent_b" and run.operator.result:
+            # A completed operator sends the reservation for delivery. The
+            # customer-facing agent owes no further peer reply for this notice.
+            kind = "notification"
         elif kind != "notification":
             # Replies always close the request that woke this agent. The next
             # exchange can then carry a revised proposal as a fresh request.

@@ -4,8 +4,9 @@
   "stock": {"rain jacket": 0, "poncho": 3},
   "snapshot": "baseline.json",
   "expected_date": "2026-11-10",
+  "acceptable_dates": ["2026-11-10", "2026-11-11"],
   "decisions": [
-    "Rejected. Standard rain jackets are unavailable. Offer a waterproof poncho instead and submit the revised arrangement.",
+    "Rejected. Standard rain jackets are unavailable. Check the substitute rental item ID 'poncho' for this date and submit the revised arrangement for approval.",
     "Approved"
   ]
 }
