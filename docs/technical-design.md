@@ -1,8 +1,8 @@
 # Agent Systems Engineer — Technical Design Document
 
 **Project:** Multi-Agent Hiking Trip Planning System  
-**Version:** 1.0 — Initial Design  
-**Date:** November 8, 2026  
+**Version:** 1.2 — Cross-platform manual launcher\
+**Date:** November 9, 2026\
 **Status:** V1 architecture agreed; implementation details subject to validation  
 **Target:** Anadea Agent Systems Engineer Technical Assignment
 
@@ -38,7 +38,7 @@ The initial implementation will use a **ReAct-based architecture**. More sophist
 
 ## 1.3 Scope
 
-V1 includes two independent agents, seven domain tools, agent-to-agent messaging, simulated human interactions, runtime orchestration, retries and recovery, idempotent reservations, tracing, and programmatic evaluation.
+V1 includes two independent agents, seven domain tools, agent-to-agent messaging, simulated and manual human interactions, runtime orchestration, retries and recovery, idempotent reservations, tracing, and programmatic evaluation.
 
 The following are outside V1 scope:
 
@@ -73,7 +73,9 @@ Communication restrictions:
 
 ## 2.2 High-Level Architecture
 
-**Human A Simulator ↔ Agent A ↔ Message Bus ↔ Agent B ↔ Human B Simulator**
+**Customer ↔ Agent A ↔ Message Bus ↔ Agent B ↔ Tour manager**
+
+In automated runs, scenario fixtures supply both humans' answers. In a manual test, each human has a separate terminal. The customer process hosts both agent graphs, their private checkpoint threads, the in-memory message bus and the booking state. The manager process listens on loopback for one customer process and exchanges manager prompts and answers as newline-delimited JSON. Peer messages between the agents stay on the in-memory bus.
 
 Supporting components:
 
@@ -167,6 +169,22 @@ Required information may include:
 - Additional preferences or restrictions
 
 The exact list can be adjusted by scenario and system instructions.
+
+### Date context
+
+Both agents receive the same explicit current local date and timezone in
+their system instructions. Real runs use the current date in Europe/Warsaw;
+mock runs derive it from the scenario clock in that timezone. Record this
+date context in the run metadata. Real scenario defaults use the same local
+calendar rather than the execution host's timezone.
+
+For an omitted year, use the year already established in the conversation,
+or the current year for unambiguous upcoming dates. Do not ask the customer
+to confirm the year solely because it was omitted. Inherit an established
+month and year for subsequent day-only ranges such as "13-15". Respect any
+explicit year. Clarify genuinely ambiguous or contradictory dates, including
+past dates without a clear future interpretation. An obvious nearby New Year
+transition uses the upcoming year. Send complete ISO dates to tools.
 
 ### Domain Tools
 
@@ -369,10 +387,10 @@ The interaction uses LangGraph:
 2. Tool calls `interrupt()`.
 3. Graph execution is suspended.
 4. Simulation Runner receives the interrupt.
-5. Human Simulator generates the predetermined response.
+5. The runner obtains a response from the assigned human's simulator or terminal.
 6. Runner resumes the graph using `Command(resume=answer)`.
 
-The same mechanism can later be connected to a real user interface without changing the agent's business tools.
+In manual mode the planner asks questions in the customer terminal. The operator displays questions, numbered guide IDs and proposed booking terms in the manager terminal. The manager chooses a displayed number, then types `approve` or `reject` when asked about the specific proposal. A rejection can include a requested change. Both interaction modes use the same selection validation and approval registry.
 
 ## 5.2 Human Simulator
 
@@ -499,6 +517,7 @@ Recommended common response fields:
 | `source` | Provider or fixture identifier |
 | `mode` | `real` or `mock` |
 | `error` | Error code and message when applicable |
+| `metadata` | Optional catalog freshness and refresh identity alongside route results |
 
 Operational metadata such as latency, attempts and trace identifiers is captured by the tool wrapper.
 
@@ -519,41 +538,28 @@ Operational metadata such as latency, attempts and trace identifiers is captured
 
 **Real source:** Open-Meteo API or another configured forecast provider.
 
+The Open-Meteo adapter requests explicit Celsius, millimetre and km/h units
+and the `Europe/Madrid` forecast timezone. Validate date order, response
+arrays, units and finite numeric values before returning a forecast. Invalid
+or unsupported dates and malformed provider responses produce typed errors;
+transient HTTP failures retain the common bounded retry policy.
+
+Both automated and two-console manual entrypoints accept `--mode mock|real`.
+The launcher forwards the selected mode to the customer process. Real-mode
+scenario defaults use dates inside the live forecast window. Real mode uses
+the configured HTTP operator endpoint. The manual entrypoint manages a local
+demo backend automatically as described in Section 14.1; automated scenarios
+can still use a separately started service. This remains a demonstration
+service rather than a production booking integration.
+
 **Mock source:** Recorded weather-response snapshots.
 
 **Possible errors:** timeout, service unavailable, invalid location, unsupported forecast date, malformed response.
 
-### `search_hiking_routes`
+### Route catalog and retrieval
 
-**Input:**
-- Difficulty preference
-- Maximum duration
-- Optional maximum distance
-- Optional elevation constraints
-- Location
-
-**Output:** list of candidate routes containing route ID, name, difficulty, distance, estimated duration and elevation gain.
-
-**Real source:** route catalog assembled from the official Picos de Europa resources.
-
-**Mock source:** recorded catalog fixtures.
-
-The real adapter may use a periodically updated local catalog if the source does not provide a stable public API.
-
-### `get_route_details`
-
-**Input:** `route_id`.
-
-**Output:**
-- Route description
-- Distance
-- Estimated duration
-- Elevation gain
-- Difficulty
-- Route-specific constraints
-- Source reference
-
-**Possible errors:** route not found, unavailable data, upstream error.
+The detailed feature design for `search_hiking_routes` and `get_route_details`
+is maintained in [Persistent Route Catalog and Content Search](route-catalog-design.md).
 
 ### `get_hiking_equipment`
 
@@ -569,9 +575,14 @@ The real adapter may use a periodically updated local catalog if the source does
 - Missing items
 - Reasons for recommendations
 
-**Primary content source:** Australian Hiker equipment guidance, including the Multi-Day Gear List.
+**MVP data source:** Fake (synthetic) equipment data maintained in the local
+`catalogs/equipment.json` file. Both `mock` and `real` modes use this catalog
+and deterministic recommendation rules. The MVP does not fetch or normalize
+content from Australian Hiker; the source URL in the catalog is a reference only.
 
-The service normalizes source information into a structured catalog and applies deterministic rules appropriate to the selected route.
+**Future content source:** Australian Hiker equipment guidance, including the
+Multi-Day Gear List. A future implementation can normalize this source into a
+structured catalog and apply deterministic rules appropriate to the selected route.
 
 Recommendations must distinguish day hikes from multi-day hikes.
 
@@ -639,7 +650,7 @@ Real mode must use configured external endpoints where available.
 
 The guide scheduling, inventory and booking APIs are imaginary business integrations.
 Keep their tools and HTTP adapters simple: provide a small local test service
-with three endpoints for guide availability, equipment inventory and reservation
+with three business endpoints for guide availability, equipment inventory and reservation
 creation. Availability endpoints return fixed scenario responses; the reservation
 endpoint returns a synthetic confirmation with an ID derived from the request ID.
 The service does not persist bookings, update stock or maintain reservation stores.
@@ -806,7 +817,7 @@ A seeded random generator may be used to simulate probabilistic failures while p
 
 The agents continue to use real LLM inference and standard tool calling.
 
-The environment controls human responses, mock service data and failure injection.
+The automated environment controls human responses, mock service data and failure injection. Manual runs use keyboard input for both participants and retain the selected scenario's mock services and failure settings.
 
 ## 9.2 Responsibilities
 
@@ -819,7 +830,7 @@ The Runner:
 5. Sends the initial Human A message.
 6. Coordinates pending agent messages.
 7. Handles LangGraph interruptions.
-8. Supplies Human Simulator responses.
+8. Routes each human response to the graph thread that issued the interrupt.
 9. Enforces execution limits.
 10. Detects terminal outcomes.
 11. Collects the final result and trajectory.
@@ -881,9 +892,10 @@ This prevents an intermediate conversational response from being misinterpreted 
 Before accepting completion, runtime validation checks that no mandatory pending operation or unresolved approval remains.
 
 After validating the result, the completion mechanism must deliver the final
-message to Human A through the human communication adapter. In simulation mode,
-delivery means that the Human A simulator's message sink accepts the message;
-no UI or human acknowledgment is required. The message must agree with the
+message to Human A through the human communication adapter. In automated runs,
+the customer simulator accepts the message. In manual runs, the customer adapter
+prints and flushes the final text in the planner terminal and records delivery.
+The manager terminal receives the session outcome. The message must agree with the
 validated result and summarize the confirmed trip and reservation reference,
 or explain the failure when Agent A submits a failed result.
 
@@ -1308,6 +1320,62 @@ Expected outputs:
 
 The README must explain dependency installation, environment configuration, LLM credentials, real/mock mode selection and execution commands.
 
+## 14.1 Manual test entrypoint
+
+From the project root, `uv run --env-file .env python -m app.simulation.manual`
+opens both human terminals automatically. The optional `launch` role is an
+explicit alias. The launcher uses the current Python environment, starts the
+operator first and waits up to 30 seconds for a private temporary readiness
+file written after its loopback listener is bound. It must not probe the
+listener with a TCP connection, because the operator accepts one customer.
+Only after readiness does it start the customer with the reported port and
+selected scenario. The customer acknowledges a connected, ready-for-input
+console through its own temporary status file before the launcher reports
+success. `--port 0` requests an available port; `--startup-timeout` controls
+each console's readiness deadline. An occupied port, startup error or timeout
+must prevent customer launch and produce an actionable error. If customer
+launch fails, stop the processes started for that attempt. A lightweight
+console bootstrap publishes its PID before importing the agent runtime.
+Cancellation marks the attempt before cleanup; queued consoles check the
+marker and attempt-directory lifetime before startup and after runtime
+imports, so a delayed terminal cannot start a session after a timeout.
+
+Adding `--mode real` to the same manual command must start the complete
+session without a separate service command. The customer process defaults
+`OPERATOR_URL` to `http://127.0.0.1:8765` when absent. For plain HTTP loopback
+URLs, it starts the demo backend in a daemon thread inside that process and
+waits for readiness before publishing the customer-ready status. The demo
+provides `GET /health` with its service identity. Reuse a healthy demo already
+listening at that URL; an occupied port belonging to another service is an
+explicit startup error. Configured non-loopback or custom-path endpoints
+remain externally managed. Mock mode starts no HTTP backend.
+
+The customer process stops only a demo server it started, including after
+EOF, errors or cancellation. A closed customer process cannot leave behind
+a separate demo-server process. Both human consoles still open automatically.
+The live weather and route adapters remain real; guide scheduling, inventory
+and reservation responses remain the documented synthetic HTTP demo.
+
+Windows uses a new console for each child process. macOS uses Terminal via
+AppleScript and reloads the project `.env` through `uv` when present, because
+an existing Terminal application does not inherit the launcher's shell
+environment. Use `.env` for macOS credentials. Linux requires a graphical
+desktop and an installed supported terminal (`gnome-terminal`, `konsole`,
+`x-terminal-emulator` or `xterm`). Missing terminal support must explain the
+two-command fallback below. Launches must preserve paths containing spaces
+and shell metacharacters. Automatically opened consoles wait for Enter after
+the session ends so the result remains visible.
+
+For manual startup or environments without graphical terminal support,
+start the terminals in this order from the project root.
+
+| Terminal | Command | Participant |
+|---|---|---|
+| B | `uv run python -m app.simulation.manual operator` | The tour manager selects a guide and decides whether to approve the terms. |
+| A | `uv run --env-file .env python -m app.simulation.manual customer` | The customer enters the initial request, answers the planner and receives the final result. |
+
+The default address is `127.0.0.1:18766`. Both commands accept `--port`. The customer command selects the scenario with `--scenario` (default `happy_path`) and loads the configured model. Manual runs allow 3,600 seconds overall and 900 seconds for a peer reply to accommodate typing. Each run writes `trajectories/manual/{scenario_id}/{run_id}.json`. Its evaluator compares the observed result with the fixture expectations, so a deliberate rejection can produce a failed scenario check. See the [manual test runbook](../README.md#manual-test-with-two-terminals) for the approval and rejection walkthrough.
+
 ---
 
 # 15. Acceptance Criteria
@@ -1323,6 +1391,7 @@ V1 is considered complete when:
 - [ ] All external tools support real/mock adapter interfaces.
 - [ ] Human interactions use LangGraph interrupt/resume.
 - [ ] Human Simulator supports predefined question-answer matching.
+- [ ] In a two-terminal manual test, the customer receives the confirmed reservation after the manager selects a guide and approves the displayed terms. Verify in the trajectory that a rejected proposal cannot create a reservation and revised terms require fresh approval.
 - [ ] Human B can approve, reject or select an option.
 - [ ] Agent-to-agent messaging uses asynchronous queues and correlation identifiers.
 - [ ] Technical retries and exponential backoff are implemented.

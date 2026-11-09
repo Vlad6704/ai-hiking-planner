@@ -212,6 +212,30 @@ Use `uv` for the lockfile and commands below. For each test cycle, write the nam
 - [ ] In the summary, list the five consecutive outcomes, all nine assertion results, aggregate metrics and a successful trajectory path. Inspect at least one recovery and the final delivery chain. Diagnose failed runs using event/trace IDs. If a fix changes code, fixtures, prompts or settings, label the old batch and collect a complete fresh batch for the new version. Report observed variability and justify each proposed V2 improvement with a measured bottleneck.
 - [ ] Verify the source package (repository or ZIP) contains design, README, fixtures, snapshots, tests, representative successful JSON and the evaluation summary with reachable evidence links. Confirm the README commands work from a clean install and the shared artifacts are redacted. Commit `docs: report baseline evaluation and trace findings`.
 
+### Task 13 — Manual acceptance with two agent terminals
+
+**Files:** `app/simulation/manual.py`, `app/simulation/runner.py`, `tests/test_manual.py` and the [two-terminal runbook](../README.md#manual-test-with-two-terminals).
+
+- [ ] Start `uv run python -m app.simulation.manual operator` in terminal B, then `uv run --env-file .env python -m app.simulation.manual customer` in terminal A. Verify both terminals join the same session.
+- [ ] Use the happy-path request from the runbook. Enter customer information in A, choose the guide by displayed number in B and inspect the complete terms before typing `approve`.
+- [ ] Verify A receives the confirmed itinerary and reservation reference. Inspect the printed trajectory for guide selection, approval, booking and final delivery in causal order.
+- [ ] In a fresh session reject a proposal in B. Check that the rejected proposal cannot create a booking and that revised terms require fresh approval.
+- [ ] Run `uv run pytest -q` to verify the two-terminal interaction and the existing automated simulation.
+
+### Task 14 — Launch both manual terminals with one cross-platform command
+
+**Files:** Create `app/simulation/launcher.py`, `app/simulation/manual_bootstrap.py`
+and `tests/test_manual_launcher.py`.
+Extend `app/simulation/manual.py`, `tests/test_manual.py` and the manual runbook.
+Implements design §14.1 without changing agent or booking behavior.
+
+- [x] Make the omitted role and explicit `launch` role start both terminals; retain `operator` and `customer` for the two-command fallback.
+- [x] Test readiness using a real operator subprocess: its ready signal must follow socket binding and must leave its single accepted connection available to the customer. Test occupied-port reporting and refusal to start the customer after a startup error or timeout.
+- [x] Test platform command selection, safe path quoting, missing Linux desktop/terminal support, scenario forwarding and operator cleanup after customer launch failure. Reproduce a detached console queued past the timeout and verify cancellation before runtime startup.
+- [x] Implement Windows native consoles, macOS Terminal and supported Linux terminals using standard-library process APIs. Forward the current interpreter, project directory, actual port and scenario. Retain output until Enter is pressed.
+- [x] Run `uv run pytest tests/test_manual.py tests/test_manual_launcher.py -q`, then `uv run pytest -q`. Verify CLI help and smoke-test both automatic windows on Windows. Record that macOS and Linux terminal dispatch is covered by command-boundary tests rather than native GUI execution on this host.
+- [x] Document the one-command launch, platform prerequisites, port/deadline options, readiness behavior and existing two-command fallback. Obtain an independent review before any commit.
+
 ## Acceptance cross-check
 
 | Acceptance criteria in design §15 | Verification |

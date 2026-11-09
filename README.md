@@ -28,7 +28,7 @@ foreach ($case in 'bad_weather','guide_unavailable','hitl_rejection','external_s
 }
 ```
 
-For real mode, start the stateless operator service in one terminal:
+For automated real-mode scenarios, start the stateless operator service in one terminal:
 
 ```powershell
 uv run python -m app.operator_demo
@@ -41,7 +41,83 @@ $env:OPERATOR_URL = 'http://127.0.0.1:8765'
 uv run python -m app.simulation --scenario happy_path --mode real
 ```
 
-Real mode uses the Open-Meteo forecast near the Covadonga Lakes, a sourced local route catalog, deterministic equipment rules, and HTTP for the three synthetic operator operations. Live requests use tomorrow's date to stay inside the forecast window. Guide scheduling and inventory are illustrative. Each HTTP reservation reference derives from the request ID. Approval and idempotency records live in the caller for the lifetime of one run.
+Real mode requests Open-Meteo near the Covadonga Lakes with explicit Celsius, millimetres and km/h units and the Europe/Madrid timezone. It imports the official route catalog into SQLite, uses deterministic equipment rules, and calls HTTP for the three synthetic operator operations. Live requests use tomorrow's date to stay inside the forecast window; actual weather can prevent a safe booking. Guide scheduling and inventory are illustrative. Each HTTP reservation reference derives from the request ID. Approval and idempotency records live in the caller for the lifetime of one run.
+
+## Official route catalog
+
+These commands work without model credentials:
+
+```sh
+uv run python -m app.route_catalog refresh
+uv run python -m app.route_catalog search
+uv run python -m app.route_catalog search --difficulty easy --max-hours 4 --max-km 10
+uv run python -m app.route_catalog search --keywords bosque lago --keyword-match any --max-hours 4
+uv run python -m app.route_catalog details PR-PNPE-2:short
+```
+
+The database defaults to `data/routes.sqlite3` and is ignored by Git. Set `ROUTE_CATALOG_DB` or pass `--database PATH` to use another location; the runner and operator demo must share that setting. The first real catalog query each Europe/Warsaw calendar day refreshes the source. `refresh` forces another attempt, including after a failed daily attempt. Concurrent processes coordinate through an expiring database lease. Failed or partial imports preserve previous valid data and report freshness explicitly; a first-run failure returns an error rather than synthetic routes.
+
+All search filters are optional. Use minimum/maximum hours, kilometres, ascent (`--min-gain-m`, `--max-gain-m`) and descent (`--min-loss-m`, `--max-loss-m`), difficulty, keywords, sort, limit and offset; see `search --help`. An empty query returns the first 20 active variants, with a maximum page size of 100. Supplied numeric filters exclude unknown measurements. Each public `route_id` identifies a variant and remains unchanged through details and demo booking; `source_route_id` identifies its parent page.
+
+Content search uses literal SQLite FTS5 terms or phrases, accent normalization and BM25 ranking, combined with parameterized numeric SQL filters through a read-only connection. Use source-language keywords (primarily Spanish); for example `cascada` requests a textual waterfall mention, without guaranteeing a match. `--prefix` enables word-prefix matching. Source excerpts explain matches, but a shared page mention does not prove the feature appears on every variant. Full details include original descriptions, cautions, content hashes and timestamps. Ambiguous measurements remain null. A future improvement is hybrid RAG for semantic and multilingual retrieval alongside these SQL filters.
+
+On November 9, 2026 the live import discovered and parsed 31 official route pages into 50 variants. Seven variant durations remained unknown. Repeating the import preserved all 31 content hashes and update timestamps. Mock mode continues to use the small authored fixtures offline. See the [catalog design](docs/route-catalog-design.md) and [implementation plan](docs/superpowers/plans/2026-11-09-route-catalog.md).
+
+## Manual test with two terminals
+
+After completing Setup, run this single command from the project root:
+
+```sh
+uv run --env-file .env python -m app.simulation.manual
+```
+
+It opens the operator and customer in separate windows, waits for the operator's listener, and confirms the customer is connected before reporting success. The windows remain open after completion until you press Enter. Start your conversation at `Customer:` in the planner window; answer manager questions in the operator window.
+
+Windows uses native consoles, macOS uses Terminal, and Linux uses an available `gnome-terminal`, `konsole`, `x-terminal-emulator` or `xterm`. Linux needs a graphical desktop. On macOS, allow Terminal automation if prompted and keep model credentials in the project `.env`, which each new Terminal window reloads through `uv`.
+
+To select another scenario or an available port, run:
+
+```sh
+uv run --env-file .env python -m app.simulation.manual --scenario hitl_rejection --port 0
+```
+
+The normal default is port `18766`; `--port 0` selects an available port automatically. Use `--startup-timeout 60` if either console needs more than the default 30 seconds to become ready. An occupied port or a startup failure stops the attempt and prints an error. On this Windows development host, native window startup is smoke-tested; macOS and Linux dispatch is verified with command-boundary tests.
+
+For the two-command fallback, open two terminals in the project root. Start the operator first. Both terminals join one trip. The customer process runs both agent graphs and owns their shared in-memory bus. The operator terminal connects the human manager to Agent B through a local loopback socket.
+
+| Terminal | Your role | Command |
+|---|---|---|
+| B — Operator | Tour manager | `uv run python -m app.simulation.manual operator` |
+| A — Planner | Customer | `uv run --env-file .env python -m app.simulation.manual customer` |
+
+1. In terminal B, wait for `Listening on 127.0.0.1:18766`. Start terminal A and press Enter at `Customer:` to request an easy hike on November 10, 2026. The mock snapshot also covers November 11.
+2. Answer the planner's questions in A. Example: “I'm a beginner with no physical limitations. I want a guided hike of up to four hours. I have boots, water and a first aid kit. I need to rent a rain jacket.” Confirm the proposed date and route if asked.
+3. In B, read the operator's question and numbered guide IDs. Enter the number beside the guide you want. At the approval prompt, inspect the route, date, guide ID and equipment quantities. Enter `approve` to authorize those terms.
+4. In A, verify the final confirmation contains the selected guide, route `PR-PNPE-2`, the date, rain jacket and a `tour-…` reference. B prints the session outcome. The path printed in A points to the JSON trajectory under `trajectories/manual/`. Its events should show Human B's answer before booking and customer delivery before completion.
+
+To test rejection, start both commands again. In B enter `reject` and give the requested change. Verify in the trajectory that the rejected terms did not create a reservation. A revised booking requires another explicit approval. To exercise the shortage fixture, append `--scenario hitl_rejection` to the customer command and request the substitute item `poncho` in B.
+
+The manual session uses GPT-6 Luna (or the configured model) with mock services and real keyboard input for both humans. Scenario evaluation still compares the outcome with the fixture's expected result. A deliberate rejection can therefore fail the baseline checks. If the port is occupied, pass the same unused `--port NUMBER` to both commands. Each operator process accepts one customer session.
+
+For manual testing against Open-Meteo and the official catalog, use the same
+single-command launcher with real mode:
+
+```sh
+uv run --env-file .env python -m app.simulation.manual --mode real
+```
+
+This opens both human consoles and starts the local HTTP operator demo
+automatically; no separate service command is required. The default operator
+URL is `http://127.0.0.1:8765`. A plain HTTP loopback `OPERATOR_URL` can select
+another local port. An existing healthy demo is reused; an unrelated occupied
+port produces a startup error. Remote or custom-path endpoints remain externally
+managed. The customer process stops the demo it started when its session ends.
+
+Weather and routes use real planning adapters. The HTTP operator remains a demo
+with synthetic guides, inventory and reservations. The two-command fallback
+accepts `--mode real` on the `customer` command and also manages the local demo.
+Both manual and automated modes save catalog refresh diagnostics and the content
+identity used by each route tool in their trajectories.
 
 ## Execution and evidence
 

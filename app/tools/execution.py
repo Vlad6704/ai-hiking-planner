@@ -1,5 +1,6 @@
 import asyncio
 import time
+import sqlite3
 from uuid import uuid4
 
 import httpx
@@ -8,7 +9,7 @@ from pydantic import TypeAdapter
 from app.models.contracts import ToolResult
 
 
-async def execute(name, arguments, call, settings, trace, actor, fallback=None):
+async def execute(name, arguments, call, settings, trace, actor, fallback=None, metadata=None):
     operation = str(uuid4())
 
     def emit(kind, **data):
@@ -26,17 +27,18 @@ async def execute(name, arguments, call, settings, trace, actor, fallback=None):
             async with asyncio.timeout(settings.tool_timeout):
                 data = await call()
             normalized = TypeAdapter(object).dump_python(data, mode="json")
+            status = "degraded" if metadata and metadata.get("catalog", {}).get("stale") else "success"
             result = ToolResult(
-                status="success", data=normalized, source=name, mode=settings.mode
+                status=status, data=normalized, source=name, mode=settings.mode, metadata=metadata
             )
             emit(
                 "tool.completed",
                 output=result.model_dump(),
-                status="success",
+                status=status,
                 duration_ms=int((time.monotonic() - start) * 1000),
             )
             return result.model_dump()
-        except (ValueError, KeyError, IndexError, TimeoutError, httpx.HTTPError) as exc:
+        except (ValueError, KeyError, IndexError, TimeoutError, httpx.HTTPError, sqlite3.Error) as exc:
             retry = isinstance(exc, (TimeoutError, httpx.TransportError)) or (
                 isinstance(exc, httpx.HTTPStatusError)
                 and exc.response.status_code in (429, 503)

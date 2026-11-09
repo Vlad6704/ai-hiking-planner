@@ -1,4 +1,5 @@
 import inspect
+import sqlite3
 from datetime import datetime
 from typing import Literal
 
@@ -76,8 +77,21 @@ def bind_tools(run, actor):
     def domain(name, description, schema, function):
         async def invoke(**kwargs):
             query = schema(**kwargs)
+            catalog_state = None
+            catalog_error = None
+            if run.settings.mode == "real" and name in ("search_hiking_routes", "get_route_details"):
+                try:
+                    catalog_state = await run.catalog.ensure_fresh()
+                except (ValueError, OSError, sqlite3.Error) as exc:
+                    catalog_error = str(exc)
+                finally:
+                    if run.catalog.last_report:
+                        run.trace.emit("catalog.refreshed", actor, run.catalog.last_report)
+                        run.catalog.last_report = None
 
             async def call():
+                if catalog_error:
+                    raise ValueError(catalog_error)
                 if run.settings.mode == "mock":
                     await run.injection.before(name)
                 value = function(query)
@@ -103,6 +117,7 @@ def bind_tools(run, actor):
                 run.trace,
                 actor,
                 fallback,
+                metadata={"catalog": catalog_state} if catalog_state else None,
             )
             if result["status"] != "error":
                 run.observed.setdefault(name, []).append(result["data"])
@@ -118,6 +133,12 @@ def bind_tools(run, actor):
         if run.case["weather_failure"]:
             raise TimeoutError()
         return select_forecast(run.forecast, query)
+
+    def routes(query):
+        return run.catalog.store.search(query) if run.settings.mode == "real" else search(query)
+
+    def route_details(query):
+        return run.catalog.store.details(query.route_id) if run.settings.mode == "real" else details(query.route_id)
 
     async def book(terms):
         for alternatives in run.case["required_rentals"]:
@@ -183,15 +204,15 @@ def bind_tools(run, actor):
             ),
             domain(
                 "search_hiking_routes",
-                "Find routes matching customer constraints.",
+                "Search route variants. All filters are optional. Keywords are literal source-language terms (primarily Spanish). A page mention does not establish a feature on every variant. Preserve the exact returned route_id.",
                 RouteQuery,
-                search,
+                routes,
             ),
             domain(
                 "get_route_details",
                 "Look up a route by exact ID.",
                 RouteLookup,
-                lambda q: details(q.route_id),
+                route_details,
             ),
             domain(
                 "get_hiking_equipment",

@@ -1,6 +1,7 @@
 import asyncio
 import os
 import time
+from datetime import datetime
 from typing import Literal
 from uuid import uuid4
 
@@ -14,8 +15,11 @@ from app.humans.approval import ApprovalRegistry
 from app.humans.simulator import HumanSimulator
 from app.messaging.bus import MessageBus
 from app.models.contracts import Contract, Forecast, TripResult
+from app.route_catalog.service import CatalogService
+from app.route_catalog.store import CatalogStore, database_path
 from app.observability.langsmith import Usage, session
 from app.observability.trace import TraceRecorder
+from app.time_context import TIMEZONE, planning_date
 from app.tools.adapters.operator_http import HttpOperatorProvider
 from app.tools.adapters.mock import FailureSchedule
 from app.tools.operator import MockOperator, OperatorTools
@@ -66,6 +70,9 @@ class SimulationRunner:
         self.settings = settings
         self.model = model
         self.rid = str(uuid4())
+        self.current_date = planning_date(
+            datetime.fromisoformat(case['clock']) if settings.mode == 'mock' else None
+        )
         self.trace = TraceRecorder(
             dict(
                 run_id=str(uuid4()),
@@ -74,6 +81,8 @@ class SimulationRunner:
                 seed=seed,
                 model=configured_model(),
                 environment_mode=settings.mode,
+                current_date=self.current_date.isoformat(),
+                timezone=TIMEZONE,
                 settings=settings.model_dump(mode="json"),
                 temperature=None if configured_model() == "openai:gpt-6-luna" else 0,
                 langsmith_trace_id=None,
@@ -89,6 +98,8 @@ class SimulationRunner:
         self.incoming = {}
         self.observed = {}
         self.active = set()
+        self.operator_idle = asyncio.Event()
+        self.operator_idle.set()
         self.result = None
         self.error = None
         self.selected = None
@@ -97,7 +108,10 @@ class SimulationRunner:
         self.final_lock = asyncio.Lock()
         self.usage = {actor: Usage() for actor in self.humans}
 
-    def human_reply(self, actor, item):
+    async def resolve_interrupt(self, actor, item):
+        return self.human_reply(actor, item)
+
+    def human_reply(self, actor, item, manual_answer=None):
         data = item.value
         recipient = actor.replace("agent", "human")
         event = self.trace.emit(
@@ -119,7 +133,7 @@ class SimulationRunner:
             }
             if not options or not set(options) <= available:
                 return {"error": "Present observed available guide IDs"}
-            answer = str(self.case["choice"])
+            answer = str(self.case["choice"]) if manual_answer is None else manual_answer
             self.selected = self.approvals.select(answer, options)
             self.approvals.records.pop(self.rid, None)
             reply.update(text=answer, guide_id=self.selected)
@@ -127,11 +141,13 @@ class SimulationRunner:
             terms = data["proposal"]
             if not terms or not self.selected or terms["guide_id"] != self.selected:
                 return {"error": "Select a guide and present exact terms first"}
-            answer = (
-                self.decisions.pop(0) if len(self.decisions) > 1 else self.decisions[0]
-            )
+            answer = manual_answer
+            if answer is None:
+                answer = self.decisions.pop(0) if len(self.decisions) > 1 else self.decisions[0]
             ref = self.approvals.record(self.rid, terms, answer)
             reply.update(text=answer, approval_ref=ref, proposal=terms)
+        elif manual_answer is not None:
+            reply.update(text=manual_answer, matched_intent=["manual"])
         else:
             reply.update(self.humans[actor].answer(data["question"]))
         self.trace.emit(
@@ -145,6 +161,10 @@ class SimulationRunner:
         return reply
 
     async def finalize(self, result, text):
+        reply = self.incoming.get('agent_a', {})
+        if ('agent_b' in self.active and not self.bus.pending and reply.get('sender') == 'agent_b'
+                and reply.get('type') in ('response', 'error', 'notification')):
+            await self.operator_idle.wait()
         async with self.final_lock:
             return await self._finalize(result, text)
 
@@ -201,6 +221,8 @@ class SimulationRunner:
                 self.incoming[actor] = envelope
                 content = envelope["content"]
             self.active.add(actor)
+            if actor == 'agent_b':
+                self.operator_idle.clear()
             try:
                 args = {
                     "messages": [("user", f"Request ID {self.rid}. {content}")],
@@ -281,10 +303,12 @@ class SimulationRunner:
                                 }
                                 continue
                         break
-                    answers = {i.id: self.human_reply(actor, i) for i in interrupts}
+                    answers = {i.id: await self.resolve_interrupt(actor, i) for i in interrupts}
                     args = Command(resume=answers)
             finally:
                 self.active.discard(actor)
+                if actor == 'agent_b':
+                    self.operator_idle.set()
 
     async def run(self):
         with session(self.trace):
@@ -303,10 +327,13 @@ class SimulationRunner:
                     else HttpOperatorProvider(os.getenv("OPERATOR_URL"), self.client)
                 )
                 self.operator = OperatorTools(self.rid, self.approvals, self.provider)
+                if self.settings.mode == "real":
+                    self.catalog = CatalogService(CatalogStore(database_path()), self.client)
                 self.model = self.model or load_model()
                 for actor in self.bus.queues:
                     graph = build_agent(
-                        actor, bind_tools(self, actor), self.model, InMemorySaver()
+                        actor, bind_tools(self, actor), self.model, InMemorySaver(),
+                        current_date=self.current_date,
                     )
                     jobs.append(asyncio.create_task(self.worker(actor, graph)))
                 try:

@@ -66,7 +66,9 @@ def evaluate(run):
             and str(result.date)
             in run.case.get("acceptable_dates", [run.case["expected_date"]])
         ),
-        route=bool(confirmed and result.route_id == "PR-PNPE-2"),
+        route=bool(confirmed and (result.route_id == "PR-PNPE-2" if run.settings.mode == "mock" else any(
+            route["route_id"] == result.route_id
+            for group in run.observed.get("search_hiking_routes", []) for route in group))),
         guide=bool(
             confirmed
             and result.guide_id == run.selected

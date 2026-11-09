@@ -46,6 +46,7 @@ class ToolResult(Contract, Generic[T]):
     source: Text
     mode: Mode
     error: ToolError | None = None
+    metadata: dict | None = None
 
     @model_validator(mode="after")
     def validate_status(self) -> Self:
@@ -120,11 +121,37 @@ class Forecast(Contract):
 
 
 class RouteQuery(Contract):
-    location: Text
-    difficulty: Text
-    max_hours: PositiveFloat
-    max_km: PositiveFloat | None = None
-    max_gain_m: int | None = None
+    location: Text | None = None
+    difficulty: Text | None = None
+    min_hours: Annotated[float, Field(ge=0, allow_inf_nan=False)] | None = None
+    max_hours: Annotated[float, Field(gt=0, allow_inf_nan=False)] | None = None
+    min_km: Annotated[float, Field(ge=0, allow_inf_nan=False)] | None = None
+    max_km: Annotated[float, Field(gt=0, allow_inf_nan=False)] | None = None
+    min_gain_m: Annotated[int, Field(ge=0)] | None = None
+    max_gain_m: Annotated[int, Field(ge=0)] | None = None
+    min_loss_m: Annotated[int, Field(ge=0)] | None = None
+    max_loss_m: Annotated[int, Field(ge=0)] | None = None
+    keywords: list[str] | None = Field(default=None, max_length=20)
+    keyword_match: Literal["all", "any"] | None = "all"
+    prefix: bool | None = False
+    sort: Literal["relevance", "name", "distance", "duration", "ascent", "descent"] | None = None
+    limit: Annotated[int, Field(ge=1, le=100)] | None = 20
+    offset: Annotated[int, Field(ge=0)] | None = 0
+
+    @model_validator(mode="after")
+    def validate_search(self):
+        for low, high in (("min_hours", "max_hours"), ("min_km", "max_km"),
+                          ("min_gain_m", "max_gain_m"), ("min_loss_m", "max_loss_m")):
+            if getattr(self, low) is not None and getattr(self, high) is not None and getattr(self, low) > getattr(self, high):
+                raise ValueError(f"{low} must not exceed {high}")
+        self.keywords = [word.strip() for word in (self.keywords or []) if word.strip()]
+        if any(len(word) > 100 for word in self.keywords) or sum(map(len, self.keywords)) > 1000:
+            raise ValueError("keyword_query_too_long")
+        self.limit = 20 if self.limit is None else self.limit
+        self.offset = 0 if self.offset is None else self.offset
+        self.keyword_match = self.keyword_match or "all"
+        self.prefix = bool(self.prefix)
+        return self
 
 
 class RouteLookup(Contract):
@@ -134,15 +161,27 @@ class RouteLookup(Contract):
 class RouteSummary(RouteLookup):
     name: Text
     difficulty: Text
-    distance_km: PositiveFloat
-    duration_hours: PositiveFloat
-    elevation_gain_m: int
+    distance_km: PositiveFloat | None = None
+    duration_hours: PositiveFloat | None = None
+    elevation_gain_m: int | None = None
 
 
 class RouteDetails(RouteSummary):
     description: Text
     constraints: list[str]
     source: Text
+    source_route_id: str | None = None
+    variant_id: str | None = None
+    elevation_loss_m: int | None = None
+    layout: str | None = None
+    source_language: str | None = None
+    content_hash: str | None = None
+    created_at: str | None = None
+    updated_at: str | None = None
+    last_checked_at: str | None = None
+    snippet: str | None = None
+    catalog_stale: bool = False
+    catalog_run_id: str | None = None
 
 
 class GearQuery(Contract):

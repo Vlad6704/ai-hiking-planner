@@ -1,4 +1,6 @@
 import json
+import math
+import re
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
@@ -23,15 +25,30 @@ def catalog(name):
 
 def search(q: RouteQuery):
     routes = [RouteDetails(**r) for r in catalog("routes")]
-    return [
-        r
-        for r in routes
-        if q.location.lower() == "picos de europa"
-        and r.difficulty == q.difficulty
-        and r.duration_hours <= q.max_hours
-        and (q.max_km is None or r.distance_km <= q.max_km)
-        and (q.max_gain_m is None or r.elevation_gain_m <= q.max_gain_m)
-    ]
+    if q.location and q.location.casefold() != "picos de europa":
+        return []
+    selected = []
+    for route in routes:
+        if q.difficulty and route.difficulty != q.difficulty.casefold():
+            continue
+        bounds = (("hours", route.duration_hours), ("km", route.distance_km),
+                  ("gain_m", route.elevation_gain_m), ("loss_m", route.elevation_loss_m))
+        if any((getattr(q, "min_" + field) is not None and (value is None or value < getattr(q, "min_" + field)))
+               or (getattr(q, "max_" + field) is not None and (value is None or value > getattr(q, "max_" + field)))
+               for field, value in bounds):
+            continue
+        text = (route.name + " " + route.description + " " + " ".join(route.constraints)).casefold()
+        matches = [bool(re.search(r"\b" + re.escape(word.casefold()) + (r"\w*\b" if q.prefix else r"\b"), text)) for word in q.keywords]
+        if matches and not (all(matches) if q.keyword_match == "all" else any(matches)):
+            continue
+        selected.append(route)
+    fields = {"name": "name", "distance": "distance_km", "duration": "duration_hours", "ascent": "elevation_gain_m", "descent": "elevation_loss_m"}
+    if q.sort in fields:
+        field = fields[q.sort]
+        selected.sort(key=lambda route: (getattr(route, field) is None, getattr(route, field), route.route_id))
+    else:
+        selected.sort(key=lambda route: route.route_id)
+    return selected[q.offset:q.offset + q.limit]
 
 
 def details(route_id):
@@ -83,6 +100,9 @@ def fallback_weather(forecast, q, now, hours):
 async def live_weather(client: httpx.AsyncClient, q: WeatherQuery):
     if q.location.lower() != "picos de europa":
         raise ValueError("invalid_location")
+    end = q.end_date or q.date
+    if end < q.date or (end - q.date).days >= 16:
+        raise ValueError("unsupported_forecast")
     fields = [
         "temperature_2m_max",
         "precipitation_probability_max",
@@ -97,26 +117,40 @@ async def live_weather(client: httpx.AsyncClient, q: WeatherQuery):
             daily=",".join(fields),
             start_date=str(q.date),
             end_date=str(q.end_date or q.date),
+            timezone="Europe/Madrid",
+            temperature_unit="celsius",
+            wind_speed_unit="kmh",
+            precipitation_unit="mm",
         ),
     )
     response.raise_for_status()
-    daily = response.json()["daily"]
-    days = [
-        ForecastDay(
-            date=date,
-            temperature_c=daily[fields[0]][i],
-            precipitation_probability=daily[fields[1]][i],
-            precipitation_mm=daily[fields[2]][i],
-            wind_kmh=daily[fields[3]][i],
+    try:
+        document = response.json()
+        daily = document["daily"]
+        units = document["daily_units"]
+        expected_units = ["°C", "%", "mm", "km/h"]
+        times = daily["time"]
+        if not isinstance(times, list) or not times or len(set(times)) != len(times):
+            raise ValueError()
+        for field, unit in zip(fields, expected_units):
+            values = daily[field]
+            if units[field] != unit or not isinstance(values, list) or len(values) != len(times):
+                raise ValueError()
+            if any(isinstance(value, bool) or value is None or not math.isfinite(float(value)) for value in values):
+                raise ValueError()
+        days = [ForecastDay(date=day, temperature_c=daily[fields[0]][i],
+                            precipitation_probability=daily[fields[1]][i],
+                            precipitation_mm=daily[fields[2]][i], wind_kmh=daily[fields[3]][i])
+                for i, day in enumerate(times)]
+        forecast = select_forecast(
+            Forecast(
+                location=q.location,
+                days=days,
+                provider="Open-Meteo",
+                issued_at=datetime.now(UTC),
+            ),
+            q,
         )
-        for i, date in enumerate(daily["time"])
-    ]
-    return select_forecast(
-        Forecast(
-            location=q.location,
-            days=days,
-            provider="Open-Meteo",
-            issued_at=datetime.now(UTC),
-        ),
-        q,
-    )
+    except (KeyError, TypeError, ValueError, IndexError, OverflowError) as exc:
+        raise ValueError("invalid_weather_response") from exc
+    return forecast

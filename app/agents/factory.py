@@ -1,8 +1,11 @@
 import os
+from datetime import date
 
 from langchain.agents import AgentState, create_agent
 from langchain.chat_models import init_chat_model
 from langchain_ollama import ChatOllama
+
+from app.time_context import TIMEZONE, planning_date
 
 
 class TripState(AgentState):
@@ -14,6 +17,10 @@ PROMPTS = {
 Guide selection and booking approval belong exclusively to B's manager. Never present guide IDs or
 ask the customer to select a guide. Once the route, date, weather and rental kit are known, contact
 B using send_to_agent and explicitly include the chosen ISO date, exact route ID and rental list.
+Search filters are optional. For content preferences form literal Spanish keywords for the primarily
+Spanish source catalog; expand alternatives as needed. Lexical search does not translate or infer
+unmentioned features. A shared route-page mention is not proof for every variant. Preserve the exact
+variant route_id from search in details, proposals and booking; never replace it with source_route_id.
 Ask the customer for missing
 experience, duration, equipment and date preferences. Use the planning tools. Avoid days with wind
 over 40 km/h or precipitation probability above 70 percent. Get customer confirmation for changes.
@@ -43,7 +50,15 @@ def load_model():
     return init_chat_model(name, temperature=0)
 
 
-def build_agent(agent_id, tools, model, checkpointer):
+def build_agent(agent_id, tools, model, checkpointer, *, current_date: date | None = None):
+    today = current_date if current_date is not None else planning_date()
+    temporal = f"""Current local date: {today.isoformat()}. Timezone: {TIMEZONE}.
+For dates without a year, use the year established in the conversation, or the current year
+for unambiguous upcoming dates. Do not ask the customer to confirm the year solely because
+it was omitted. For later day-only ranges, inherit the established month and year.
+Respect explicit years. Clarify genuinely ambiguous or contradictory dates; do not silently
+move a past date a year forward. An obvious nearby New Year transition uses the upcoming year.
+Use complete ISO dates in tool calls."""
     communication = """You run unattended inside a tool-driven service. Humans and the other agent
 cannot read your assistant text. Every question MUST be a call to ask_human. Every proposal or reply
 MUST be sent using send_to_agent. Only end with ordinary text after sending a peer message or
@@ -51,7 +66,7 @@ successfully delivering the final result. Call one tool at a time. Use exact IDs
     return create_agent(
         model,
         tools=tools,
-        system_prompt=PROMPTS[agent_id] + "\n" + communication,
+        system_prompt=PROMPTS[agent_id] + "\n" + temporal + "\n" + communication,
         state_schema=TripState,
         checkpointer=checkpointer,
         name=agent_id,

@@ -1,9 +1,10 @@
 import json
-from datetime import date, timedelta
+from datetime import timedelta
 
 import yaml
 
 from app.tools.planning import ROOT
+from app.time_context import planning_date
 
 
 def scenarios():
@@ -25,7 +26,7 @@ def load_scenario(name, mode="mock"):
     if "no_guides" in case:
         case["guides"][case["no_guides"]] = []
     if mode == "real":
-        first = date.today() + timedelta(days=1)
+        first = planning_date() + timedelta(days=1)
         case["initial"] = (
             f"Arrange an easy hike in Picos de Europa on {first}, maximum four hours."
         )
