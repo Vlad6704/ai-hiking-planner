@@ -2067,7 +2067,7 @@ start the terminals in this order from the project root.
 | B | `uv run python -m app.simulation.manual operator` | The tour manager selects a guide and decides whether to approve the terms. |
 | A | `uv run --env-file .env python -m app.simulation.manual customer` | The customer enters the initial request, answers the planner and receives the final result. |
 
-The default address is `127.0.0.1:18766`. Both commands accept `--port`. The customer command selects the initial test environment with `--scenario` (default `happy_path`) and loads the configured model. Manual runs allow 3,600 seconds overall and 900 seconds for a peer reply to accommodate typing. Each run writes `trajectories/manual/{run_id}.json`, without scenario subdirectories. It records the actual result and runtime errors without scenario evaluation. See the [manual test runbook](../README.md#manual-test-with-two-terminals) for the approval and rejection walkthrough.
+The default address is `127.0.0.1:18766`. Both commands accept `--port`. The customer command selects the initial test environment with `--scenario` (default `happy_path`) and loads the configured model. Manual runs allow 3,600 seconds overall and 900 seconds for a peer reply to accommodate typing. Each run writes `trajectories/manual/{run_id}.json`, without scenario subdirectories. It records the actual result and runtime errors without scenario evaluation. See the [manual test runbook](usage.md#manual-test-with-two-terminals) for the approval and rejection walkthrough.
 
 ---
 

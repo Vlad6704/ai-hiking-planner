@@ -214,7 +214,7 @@ Use `uv` for the lockfile and commands below. For each test cycle, write the nam
 
 ### Task 13 — Manual acceptance with two agent terminals
 
-**Files:** `app/simulation/manual.py`, `app/simulation/runner.py`, `tests/test_manual.py` and the [two-terminal runbook](../README.md#manual-test-with-two-terminals).
+**Files:** `app/simulation/manual.py`, `app/simulation/runner.py`, `tests/test_manual.py` and the [two-terminal runbook](usage.md#manual-test-with-two-terminals).
 
 - [ ] Start `uv run python -m app.simulation.manual operator` in terminal B, then `uv run --env-file .env python -m app.simulation.manual customer` in terminal A. Verify both terminals join the same session.
 - [ ] Use the happy-path request from the runbook. Enter customer information in A, choose the guide by displayed number in B and inspect the complete terms before typing `approve`.
