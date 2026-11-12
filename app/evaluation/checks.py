@@ -340,14 +340,17 @@ def evaluate(run):
     values["per_agent"] = {
         actor: dict(
             llm_call_count=u.calls,
+            token_usage_reported_calls=u.reported,
             parallel_tool_batches=u.parallel_tool_batches,
             input_tokens=u.input_tokens if u.reported else None,
             output_tokens=u.output_tokens if u.reported else None,
+            cached_input_tokens_observed=u.cached_input_tokens,
+            cache_write_tokens_observed=u.cache_write_tokens,
             **u.cache_metrics(),
         )
         for actor, u in run.usage.items()
     }
-    for key in ("llm_call_count", "input_tokens", "output_tokens"):
+    for key in ("llm_call_count", "token_usage_reported_calls", "input_tokens", "output_tokens"):
         counts = [
             entry[key]
             for entry in values["per_agent"].values()
@@ -355,6 +358,8 @@ def evaluate(run):
         ]
         values[key] = sum(counts) if counts else None
     values.update(cache_totals(values["per_agent"]))
+    for key in ("cached_input_tokens_observed", "cache_write_tokens_observed"):
+        values[key] = sum(entry[key] for entry in values["per_agent"].values())
     values.update(
         task_success_rate=int(confirmed),
         scenario_pass_rate=int(all(checks.values())),

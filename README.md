@@ -331,3 +331,22 @@ Superpowers is pinned to commit `22f0b463e7a5e579904dd6211a520321035526f7`; the 
 Upstream sources: [Superpowers](https://github.com/obra/superpowers/tree/22f0b463e7a5e579904dd6211a520321035526f7) and [LangChain Skills](https://github.com/langchain-ai/langchain-skills/tree/126c384d8552dcb476b226c244172186cc3f4328). Both bundles include their MIT notices: [Superpowers license](.agents/skills/SUPERPOWERS-LICENSE.txt) and [LangChain license](.agents/skills/LANGCHAIN-LICENSE.txt). [Codex skill discovery documentation](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills).
 
 [Technical design](docs/technical-design.md) · [Implementation plan](docs/implementation-plan.md) · [Evaluation results](docs/evaluation-summary.md) · [Top three scenarios and historical reliability](docs/evaluation-summary.md#scenario-reliability)
+
+### Automated batch summaries
+
+Every automatic CLI invocation writes `reports/automatic/<batch_number>/summary.json`
+and `summary.md`, alongside the existing per-run terminal output and trajectories.
+The console and Markdown show primary success, repeatability, latency, token,
+cache and model-call metrics first, followed by sample coverage and diagnostics.
+Summary JSON includes every planned run, its checks and a relative trajectory
+link when available. Generated reports remain ignored by Git.
+
+One invocation is one batch, with overall and per-scenario metrics. Historical
+runs are not included. Repeatability compares matching scenario/configuration
+groups only. Missing usage is unavailable, not zero; partial token subtotals and
+coverage remain visible. Cached reads/writes are already part of input tokens.
+Interrupted batches retain completed records and identify unfinished slots.
+Manual sessions remain outside automatic batch summaries.
+
+Automatic report folders use sequential numbers such as `000001`, `000002`.
+The UUID batch identifier remains inside the JSON report.

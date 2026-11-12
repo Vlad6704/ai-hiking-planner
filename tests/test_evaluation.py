@@ -194,3 +194,22 @@ def test_reapproval_after_booking_does_not_invalidate_previous_creation():
         + [approve(4), event(5, "tool.called", "b"), event(6, "tool.completed", "b")]
     )
     assert not approved_bookings(first[1:] + [approve(4)])
+
+
+def test_evaluation_exports_token_reporting_coverage():
+    import time
+    from types import SimpleNamespace
+    from app.evaluation.checks import evaluate
+    from app.observability.langsmith import Usage
+    usage = Usage()
+    usage.calls = 2
+    usage.reported = 1
+    usage.input_tokens = 100
+    usage.output_tokens = 5
+    run = SimpleNamespace(trace=SimpleNamespace(events=[],started=time.monotonic()),result=None,
+        case={'id':'happy_path','expected_date':'2026-11-10','weather_failure':False},
+        settings=SimpleNamespace(steps=100, attempts=3),usage={'agent_a':usage},error=None)
+    metrics = evaluate(run)['metrics']
+    assert metrics['token_usage_reported_calls'] == 1
+    assert metrics['llm_call_count'] == 2
+    assert metrics['per_agent']['agent_a']['input_tokens'] == 100

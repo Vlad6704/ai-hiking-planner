@@ -1398,7 +1398,15 @@ Inspect recorded events to verify:
 
 Evaluation should allow multiple valid business outcomes where the scenario permits alternatives.
 
-## 11.3 Initial Metrics
+## 11.3 Performance Metrics
+
+### 11.3.1 Per-run evaluation in the trajectory (implemented)
+
+Each automatic run stores its evaluation in the trajectory JSON under `result`:
+`checks` contains individual assertions, `passed` is the scenario verdict and
+`metrics` contains performance measurements. The CLI also prints this result.
+There is no separate per-run report file. This subsection retains the original
+metrics table; the batch-summary specification starts in Section 11.3.2.
 
 | Metric | Definition |
 |---|---|
@@ -1406,7 +1414,6 @@ Evaluation should allow multiple valid business outcomes where the scenario perm
 | Scenario pass rate | Runs satisfying all expected assertions / total runs |
 | End-to-end latency | Time from initial message to terminal result |
 | LLM token usage | Total input and output tokens |
-
 | LLM call count | Number of model invocations |
 | Tool failure rate | Failed tool attempts / total tool attempts |
 | Recovery success rate | Successfully recovered failure cases / recoverable cases |
@@ -1414,6 +1421,14 @@ Evaluation should allow multiple valid business outcomes where the scenario perm
 | Human matching failure rate | Unmatched human questions / all human questions |
 
 Metrics should be available per agent and per simulation run where applicable.
+
+The original table above describes metric concepts. In the current per-run JSON,
+`task_success_rate` is a 0/1 booking-confirmation indicator and
+`scenario_pass_rate` is a 0/1 all-checks-passed indicator. Rates over multiple
+runs belong to the batch summary. `latency_ms` measures elapsed monotonic time
+from trace initialization until evaluation. `recovery_success_rate` counts
+explicit `recovery.applied` / `recovery.started` events, not ordinary retries.
+A controlled failed trip can pass a scenario expecting refusal.
 
 Automatic evaluation reports cached input reads, cache writes when supplied by
 the provider, and cached-input share, both per agent and for the run. Use
@@ -1423,6 +1438,165 @@ A cache total or ratio is available only when all model calls in that scope
 reported that field. Include reporting coverage counts. Cached reads and writes
 are parts of input usage and must not be added to total input tokens again.
 Earlier trajectories lacking cache fields cannot establish historical cache hits.
+
+### 11.3.2 Automated batch summary
+
+**Status:** Implemented for the automatic CLI. Existing per-run evaluation and
+trajectory outputs remain available independently of this batch summary.
+
+One invocation of the automated simulation CLI defines one batch, including
+all selected scenarios and repetitions. Aggregate that invocation's results,
+not a directory scan of historical trajectories or selected successful examples.
+The same contract applies to sequential and parallel execution. Manual sessions
+remain outside this automated scenario summary.
+
+#### Batch identity and comparison context
+
+Assign a `batch_id` and record start/end timestamps, requested scenarios and
+repetitions, execution mode, sequential/parallel scheduling, effective model and
+temperature, seeds, failure-injection settings, timeouts and execution limits.
+Record scenario/snapshot fingerprints and catalog seed identity where available.
+Include the source revision and dirty-worktree flag when Git is available;
+unavailable revision metadata is null, for example in a ZIP distribution.
+Preserve a per-run entry with scenario, repetition, run/request IDs, outcome,
+checks, metrics and trajectory reference. These identifiers support diagnosis
+but are not part of the business-outcome comparison.
+
+Provide overall totals and a breakdown per scenario. Compare repeatability only
+within the same scenario, effective fixture and runtime/model configuration.
+Different seeds may be listed as an intentional experimental variable; do not
+silently describe different configurations as identical repetitions.
+
+#### Required batch metrics
+
+Each row below defines one metric. Report overall values and a breakdown per
+scenario. LLM and cache metrics also have a per-agent breakdown; tool metrics
+also have a per-tool breakdown. Counts, units and denominators must be explicit.
+
+##### Primary metrics
+
+Show this block first in both the console and Markdown batch summaries.
+
+| Metric | Definition |
+|---|---|
+| Scenario pass rate | Passed run count / planned run count; missing reports cannot pass. |
+| Successful business-result repeatability | Most frequent successful normalized result's count / planned repetitions within a comparable scenario group. |
+| Runtime error count | Runs ending with a startup or execution error, including runs that also have a trip result. |
+| Mean run latency | Sum of reported `latency_ms` / latency sample count. |
+| Median run latency | Median of reported `latency_ms`. |
+| Maximum run latency | Maximum reported `latency_ms`. |
+| Total input tokens | Sum of reported input-token counts, subject to usage completeness rules. |
+| Mean input tokens | Sum of measured per-run input-token counts / runs reporting that measurement. |
+| Total output tokens | Sum of reported output-token counts, subject to usage completeness rules. |
+| Mean output tokens | Sum of measured per-run output-token counts / runs reporting that measurement. |
+| Cached input tokens | Sum of reported cached input reads, subject to cache completeness rules. |
+| Cache-write tokens | Sum of reported cache-creation tokens, subject to cache completeness rules. |
+| Cached-input share | Summed cached input reads / summed input tokens for the same scope. |
+| Total LLM call count | Sum of model invocation counts. |
+| Mean LLM call count | Total measured model invocation count / runs reporting that measurement. |
+
+##### Sample size and coverage
+
+Display these counts alongside the primary metrics so missing runs and latency
+sample size remain visible. Apply the usage-coverage rules below to token totals
+and means.
+
+| Metric | Definition |
+|---|---|
+| Planned run count | Number of requested scenario/repetition pairs. |
+| Reported run count | Number of runs with an evaluation result. |
+| Latency sample count | Runs reporting `latency_ms`. |
+
+##### Diagnostic metrics
+
+| Metric | Definition |
+|---|---|
+| Started run count | Number of runs whose execution started. |
+| Missing report count | Planned runs without an evaluation result. |
+| Not-started run count | Planned runs whose execution never started. |
+| Passed run count | Runs for which all expected scenario checks pass. |
+| Confirmed execution count | Runs with a confirmed trip result and no runtime error. |
+| Controlled failed-trip count | Runs with a failed trip result and no runtime error. |
+| Incomplete run count | Runs without a terminal result or a recorded runtime error, including not-started runs. |
+| Confirmed-booking count | Runs with a confirmed booking receipt, including those with a subsequent runtime error. |
+| Booking confirmation rate | Confirmed-booking count / planned run count; missing evidence cannot count as confirmation. |
+| Check failure count | Number of false results for each named check; include the count of runs reporting that check as its denominator. |
+| Error-code count | Number of runs reporting each runtime error code. |
+| Business-result frequency | Count of each normalized business result within a comparable scenario group. |
+| Agent-message count | Number of `agent.message_sent` events. |
+| Measured-run count | Number of runs reporting a given measurement; report separately for each applicable metric. |
+| Token-usage reporting call count | Model calls reporting input/output token usage. |
+| Cache-read reporting call count | Model calls reporting cached input reads. |
+| Cache-write reporting call count | Model calls reporting cache-creation tokens. |
+| Tool-attempt count | Number of `tool.called` events. |
+| Failed tool-attempt count | Number of `tool.failed` events. |
+| Tool failure rate | Failed tool-attempt count / tool-attempt count. |
+| Tool retry count | Number of `tool.retry` events. |
+| Explicit fallback-attempt count | Number of `recovery.started` events. |
+| Successful fallback count | Number of `recovery.applied` events. |
+| Explicit fallback success rate | Successful fallback count / explicit fallback-attempt count. |
+| Batch wall time | Elapsed monotonic time for the complete invocation, not the sum of individual run latencies. |
+
+The four execution counts (confirmed, controlled failed, runtime error and
+incomplete) are mutually exclusive and cover all planned runs. Runtime errors
+take precedence. Preserve the separate business status when a receipt exists:
+an execution failure does not prove that no reservation exists.
+
+Report latency sample count, mean, median and maximum for all measured runs and
+separately for passed and non-passed runs. Use the implemented `latency_ms`
+interval described in Section 11.3.1. Empty groups produce null statistics.
+
+Normalize a business result using status, route ID, date, guide ID and sorted
+equipment items. Exclude request IDs, reservation IDs, timestamps, wording and
+tool ordering. Report its fields rather than only an opaque hash. Show the
+repeatability distribution alongside scenario pass rate: repeated failed trips
+must not be presented as reliable successful bookings. This measurement compares
+the existing final-result fields; it does not establish identical model behavior
+or identical rental quantities absent from that result schema.
+
+#### Aggregation rules and incomplete data
+
+- Calculate tool failure rate from summed failed attempts / summed attempts,
+  not the mean of per-run rates. Calculate cached-input share from summed cache
+  reads / summed input tokens, not the mean of per-run cache shares.
+- Preserve missing measurements as null, never zero. Include measured-run and
+  model-call coverage where relevant, using the usage callback's reported-call
+  counts. Distinguish a complete total from a known subtotal. A total or ratio
+  needing unavailable usage is null; a labeled observed subtotal may still be
+  shown. Means over measured runs must state that denominator.
+- Count `tool.retry` as retries. Explicit fallback accounting uses
+  `recovery.started` and `recovery.applied`; do not imply that the existing
+  fallback success ratio measures every operation recovered by retry.
+- A per-run exception must be recorded without discarding completed sibling
+  results or silently cancelling the remaining selected cases. On batch
+  interruption, retain available results, identify incomplete/not-started runs
+  and mark the summary incomplete. Do not manufacture missing trajectories.
+- Scenario pass rate is separate from confirmed-booking rate. A deliberate
+  outage may safely end in refusal and still fail a scenario expecting booking.
+- Default summary metrics do not include estimated monetary cost, subjective
+  answer quality or production drift scores. Do not use p95 as the headline
+  latency statistic for a five-run sample.
+
+#### Output artifacts
+
+- Each batch produces console output and `summary.json` / `summary.md` in
+  `reports/automatic/<batch_number>/`.
+- Allocate sequential, zero-padded directory numbers atomically. Keep the UUID
+  `batch_id` in JSON.
+- Include all planned runs and relative links to available trajectories,
+  including failed runs. Preserve existing per-run CLI output.
+- JSON retains full-precision metrics and reporting coverage.
+- Markdown and console use readable labels, formatted numbers, percentages and
+  seconds. Show missing data as `Unavailable`; explain partial coverage.
+- Present primary metrics first. Group diagnostics by topic, agent and tool.
+- Scenario checks show `Check | Passed | Failed`; exclude missing or inapplicable
+  results from both counts.
+- Console diagnostics show failed checks and errors, followed by artifact locations.
+
+Use portable relative artifact references and apply the existing redaction rules.
+Generated reports stay ignored by Git unless explicitly selected for publication.
+Failed mandatory checks, missing runs or execution errors retain a nonzero CLI
+exit status; writing a summary does not turn a failed batch into a success.
 
 ## 11.4 Future Evaluation Strategy
 
