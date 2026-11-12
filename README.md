@@ -2,7 +2,7 @@
 
 Two agents arrange a guided hike. The planner talks to the customer and checks routes and weather. The operator checks guide and equipment availability and asks a manager to approve the booking.
 
-In the published `happy_path` batch, all five consecutive runs passed the scenario checks and confirmed the same route, date, guide and equipment. Read the [batch report](reports/automatic/000001/summary.md) or follow the messages, tool calls and approval in [one successful trajectory](trajectories/automatic/happy_path/8a630de1-8972-4b01-8e22-60a90475c02e.json).
+In the published `happy_path` batch, all five consecutive runs passed the scenario checks and confirmed the same route, date, guide and equipment. Follow the messages, tool calls and approval in [one successful trajectory](trajectories/automatic/happy_path/8a630de1-8972-4b01-8e22-60a90475c02e.json).
 
 ## Quick start
 
@@ -14,7 +14,11 @@ In the published `happy_path` batch, all five consecutive runs passed the scenar
 uv run --env-file .env python -m app.simulation --scenario happy_path --mode mock --timeout 300 --peer-timeout 90
 ```
 
-The CLI prints the scenario verdict and artifact paths. Open `summary.md` under `reports/automatic/<batch_number>/` for the checks and links to each run's JSON trajectory.
+## Where to find reports
+
+- **Published five-run result:** open [reports/automatic/000001/summary.md](reports/automatic/000001/summary.md).
+- **Your new runs:** open `reports/automatic/`, choose the highest numbered folder (such as `000002`), then open `summary.md`. The CLI prints the exact path after the batch.
+- Each report shows passed/failed checks, token usage, timings and links to individual trajectories. The same folder contains `summary.json` for machine-readable results.
 
 ## Repeat the evaluation
 
