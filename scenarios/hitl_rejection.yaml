@@ -1,12 +1,32 @@
 {
   "id": "hitl_rejection",
   "initial": "Please arrange an easy hike on November 10, 2026, in Picos de Europa. I need rental rain protection.",
-  "stock": {"rain jacket": 0, "poncho": 3},
+  "stock": {
+    "rain jacket": 3,
+    "poncho": 3
+  },
   "snapshot": "baseline.json",
   "expected_date": "2026-11-10",
-  "acceptable_dates": ["2026-11-10", "2026-11-11"],
+  "acceptable_dates": [
+    "2026-11-10",
+    "2026-11-11"
+  ],
   "decisions": [
-    "Rejected. Standard rain jackets are unavailable. Check the substitute rental item ID 'poncho' for this date and submit the revised arrangement for approval.",
+    "Rejected. Please offer the customer a poncho instead of the rain jacket and obtain their agreement before submitting revised terms for approval.",
     "Approved"
-  ]
+  ],
+  "rules": {
+    "substitution": [
+      [
+        "poncho",
+        "substitution",
+        "substitute"
+      ],
+      "Yes, I accept the poncho substitution."
+    ]
+  },
+  "substitution_accepted": true,
+  "substitution_equipment": {
+    "poncho": 1
+  }
 }

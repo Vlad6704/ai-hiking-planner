@@ -18,14 +18,14 @@ from test_manual_services import available_url
 from test_runtime_logging import records, runtime
 
 
-def test_runner_records_log_path_and_resets_correlation(runtime, tmp_path):
+def test_runner_omits_log_path_and_resets_correlation(runtime, tmp_path):
     path = runtime.configure_logging('customer', tmp_path)
     ids = []
     for _ in range(2):
         run = SimulationRunner(load_scenario('happy_path'), Settings(), 42, DateContextModel(finish=True))
         ids.append(run.trace.metadata['run_id'])
         asyncio.run(run.run())
-        assert run.trace.metadata['runtime_log_path'] == str(path)
+        assert 'runtime_log_path' not in run.trace.metadata
     logging.getLogger('app.test').info('outside')
     rows = records(path)
     assert [row['run_id'] for row in rows if row['event'] == 'simulation.started'] == ids

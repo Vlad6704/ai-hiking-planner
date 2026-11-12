@@ -3,5 +3,20 @@
   "initial": "I would like an easy hike in Picos de Europa on November 10, 2026, up to four hours.",
   "snapshot": "baseline.json",
   "expected_date": "2026-11-11",
-  "no_guides": "2026-11-10"
+  "no_guides": "2026-11-10",
+  "rules": {
+    "substitution": [
+      [
+        "accept",
+        "alternative",
+        "substitute",
+        "replacement",
+        "November 11"
+      ],
+      "Yes, I accept the alternative guided hike on November 11 with the proposed guide and rental rain jacket."
+    ]
+  },
+  "substitution_equipment": {
+    "rain jacket": 1
+  }
 }

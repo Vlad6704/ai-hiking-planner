@@ -75,7 +75,7 @@ Communication restrictions:
 
 **Customer ↔ Agent A ↔ Message Bus ↔ Agent B ↔ Tour manager**
 
-In automated runs, scenario fixtures supply both humans' answers. In a manual test, each human has a separate terminal. The customer process hosts both agent graphs, their private checkpoint threads, the in-memory message bus and the booking state. The manager process listens on loopback for one customer process and exchanges manager prompts and answers as newline-delimited JSON. Peer messages between the agents stay on the in-memory bus.
+In automated runs, scenario fixtures supply both humans' answers. In a manual test, each human has a separate terminal. The customer process hosts both agent graphs, their separate checkpointed business states and the in-memory message bus. The manager process listens on loopback for one customer process and exchanges manager prompts and answers as newline-delimited JSON. All communication between the agents uses the message bus.
 
 Supporting components:
 
@@ -106,6 +106,11 @@ Supporting components:
 | HTTP integrations | httpx |
 | Observability | LangSmith |
 | Testing | pytest |
+
+For `openai:gpt-6-sol`, omit the unsupported temperature parameter and record
+the unspecified temperature as null in trajectory metadata.
+For the Luna comparison, configure `openai:gpt-6-luna` with explicit
+`temperature=1` and record that value in trajectory metadata.
 | Configuration | YAML, environment variables |
 | Scenario fixtures | YAML / JSON |
 | Trajectory export | JSON |
@@ -138,6 +143,27 @@ The LLM independently determines which available tool to invoke and when.
 No fixed sequence of domain tool calls is imposed in V1.
 
 ## 3.2 Agent A — Travel Planning Assistant
+
+Informational requests, such as listing routes, do not require trip dates,
+gear or a booking proposal. Use `send_to_customer` to present an informational
+answer and suspend for the customer's next message, without producing a
+terminal TripResult or contacting Agent B. The browser and console reuse their
+human-input mechanism for the next message. Record `human.information` when
+the answer is presented; correlate the later human response to that event.
+
+`acknowledge_message` ends a turn locally without queueing a message.
+Its tool description and agent instructions explicitly say OTHER AGENT rather
+than relying on the term "peer": use it only after a message from the other
+agent requiring no further action. Never use it for customer or manager
+messages, greetings, questions or answers. After a human answer, agents resume
+the active task. A peer request
+requires an actionable response, including when a proposal cannot proceed.
+Peer replies/notifications do not require acknowledgements. `send_to_agent`
+defaults to a notification; operational requests must explicitly use request.
+Responses/errors without an outstanding correlated request return an error
+rather than silently becoming a new request. Runtime reminders must accept a
+local acknowledgement as a completed turn. Booking approval/final delivery
+requirements remain unchanged.
 
 ### Responsibilities
 
@@ -194,6 +220,7 @@ transition uses the upcoming year. Send complete ISO dates to tools.
 | `search_hiking_routes` | Find routes matching constraints |
 | `get_route_details` | Retrieve detailed route information |
 | `get_hiking_equipment` | Retrieve equipment recommendations |
+| `reply_with_customer_decision` | Record the customer's decision on a revised offer and return it to Agent B |
 
 Shared infrastructure tools:
 
@@ -232,7 +259,8 @@ Shared infrastructure tools:
 
 ## 3.4 Agent State
 
-V1 uses a minimal state architecture.
+Each agent has typed, serializable business state alongside its conversation
+history. The two checkpointed states are fully separate.
 
 The base agent state extends LangGraph `MessagesState` with:
 
@@ -240,6 +268,8 @@ The base agent state extends LangGraph `MessagesState` with:
 |---|---|---|
 | `messages` | Message collection | Agent-specific conversation history and tool interactions |
 | `request_id` | UUID string | Identifier for the trip-planning request |
+| `inbox`, `outbox` | Structured messages | Received facts, processed IDs and outgoing dispatch records |
+| `trip_status`, `pending_interaction` | Structured records | Agent task phase and resumable human question |
 
 Each agent has an independent LangGraph thread.
 
@@ -248,33 +278,56 @@ Thread identifiers:
 - `{request_id}:agent_a`
 - `{request_id}:agent_b`
 
-An agent cannot access the other agent's private conversation history.
+Neither an agent nor its tools can access the other agent's history or state,
+including through runner fields, shared business objects or closures.
 
 ### State ownership
 
-Business information initially remains in the message history.
+Agent A owns customer requirements, its route/weather/equipment results,
+requested terms, offers received from B, actual customer replies and decisions,
+and reservation outcomes received from B.
 
-V1 will not maintain a separate continuously synchronized business state containing route proposals, weather results, guide availability and equipment information.
+Agent B owns requests received from A, its guide/inventory results, manager
+interactions and guide selection, exact approvals/rejections, customer decisions
+received from A, booking attempt status, idempotency records and provider receipts.
 
-However, critical operational facts must be stored by the appropriate infrastructure component:
+These facts are explicit serializable fields in their owner's agent state.
+Tools read local state and return checkpointed updates, using mechanisms such
+as `ToolRuntime.state` and `Command(update=...)`. State fields need not all be
+included in every model prompt. No essential business fact may exist only in
+a runner attribute, closure or process-local approval/provider registry.
 
-- Processed idempotency keys
-- Reservation records
-- HITL approval records
-- Outstanding agent-to-agent requests
-- Simulation lifecycle status
+Both agents continue to use the same LangChain `create_agent` architecture.
+This ownership model does not require a parent graph with shared agent state.
+Parallel tool updates must merge without losing completed sibling results.
+Interrupt resume must retain facts already checkpointed by the owning agent.
 
-These records are not part of the LLM's conversational memory.
+A peer-owned fact becomes available only after a structured message is received
+and its payload recorded in the recipient's own state, with source message
+identity and exact proposal references. Each agent validates its local facts
+and received evidence. A common request ID does not grant peer-state access.
+
+The runner and bus own transport scheduling, queues, deadlines and execution
+limits. Live clients, locks and tasks remain runtime resources; their resumable
+business meaning belongs in agent state. Traces and evaluation can observe
+execution but cannot supply business facts back to agents or become another
+communication channel.
 
 ### Checkpointing
 
-A LangGraph checkpointer maintains conversation state across invocations and human interruptions.
+A LangGraph checkpointer maintains each agent's complete serializable business
+and conversation state across invocations and human interruptions, including
+pending interaction identity, exact terms, completed facts and operation status.
 
 V1 may use an in-memory checkpointer for the test runtime.
 
 Persistence across process restarts is not guaranteed in this configuration.
 
-A persistent checkpointer is a possible future improvement.
+The schemas and tools must permit replacing the in-memory checkpointer with a
+database-backed one without moving business facts. End-to-end durable recovery
+also requires restoring transport from checkpointed inbox/outbox records and
+recreating runtime resources. A checkpointer swap alone does not persist queues.
+Stable message IDs and idempotency keys prevent duplicate effects on replay.
 
 ---
 
@@ -283,6 +336,10 @@ A persistent checkpointer is a possible future improvement.
 ## 4.1 Communication Pattern
 
 Communication uses an **asynchronous Request-Reply pattern over an in-memory Message Bus**.
+
+Messages are the only communication channel between agents, including their
+tools. Shared runner fields, business registries, traces and direct reads of
+peer checkpoints must not communicate business facts.
 
 The Message Bus maintains separate queues:
 
@@ -305,16 +362,56 @@ The transport layer attaches the following metadata:
 | `recipient` | Agent ID | Receiving agent |
 | `correlation_id` | UUID / null | Links responses to requests |
 | `type` | Enum | `request`, `response`, `notification` or `error` |
-| `content` | String / structured payload | Message content |
+| `content` | String | Human-readable explanation accompanying the typed payload |
 | `timestamp` | ISO 8601 | Creation timestamp |
+| `payload` | Typed payload / null | Validated business facts and exact proposal references |
 
-The Message Bus is responsible for metadata and routing.
+The Message Bus is responsible for metadata and routing. Natural-language
+content explains a message; typed payloads carry operational facts. Receiving
+a message updates only the recipient's state. Message IDs support deduplication.
+
+The business exchange is:
+
+1. A sends structured requirements, requested route/date/rentals and relevant
+   route, weather and equipment facts obtained by A's tools.
+2. B returns a structured complete proposal after resource checks and manager
+   guide selection, or a structured availability/failure result.
+3. A returns the customer decision for that exact offer, linked to B's offer
+   message ID and A's originating customer interaction.
+4. B returns a structured booking outcome with exact terms, approval/decision
+   references and the provider-issued short reservation ID when confirmed.
+5. Each recipient checkpoints the received facts in its own state.
+
+### Compact planning evidence
+
+A sends only evidence for the selected route and date: route identity,
+difficulty, distance, duration, elevation and operational constraints; the
+selected day's forecast with location, provider and issue time; and required,
+recommended and missing equipment. Rental quantities remain in the exact terms.
+Search result lists, other routes/dates, descriptions, navigation instructions,
+points of interest, raw text, catalog metadata and equipment explanation text
+must not be copied into peer messages. Original tool observations remain in A's
+private checkpoint and the audit trajectory.
+
+Evidence is projected by trusted code, not rewritten by the model. Each compact
+fact retains a stable source observation reference scoped to route/date. Only
+new or changed evidence is sent; customer decisions reference the exact offer
+and actual reply without resending previous evidence. A changed date or route
+includes the corresponding new evidence. B retains previously received facts
+in its private state for validation. Its model sees compact operational data,
+not raw evidence wrappers, query arguments or audit metadata. Transport retries
+retain the already checkpointed message rather than rebuilding its evidence.
+
+Booking progress and uncertainty are also communicated through structured
+messages when needed. Missing outcome information never proves that no booking
+exists. A cannot discover a booking by reading B's provider object.
 
 Agents should not be required to generate message IDs or manage transport-level correlation manually.
 
 ## 4.3 Sending Messages
 
-Agents communicate through the shared `send_to_agent` tool.
+Agents communicate through the shared message bus using `send_to_agent` or A's
+dedicated `reply_with_customer_decision` tool for returning a customer's decision.
 
 For example, Agent A may request:
 
@@ -329,6 +426,45 @@ Agent B receives the message and starts or continues its ReAct execution using i
 Agent B sends the result through the same communication mechanism.
 
 The runtime uses the correlation identifier to associate the response with the original request.
+
+Agent A's first operational message uses `send_to_agent(kind="request",
+proposal=...)` with exact `route_id`, ISO `date` and equipment quantities.
+Prose in `content` supplements these structured fields. A omits `guide_id`
+until the manager chooses it.
+
+Agent B reports an availability problem in a structured availability/failure
+payload with `kind="response"`, omitting a complete offer. A missing-guide report
+asks A to coordinate a feasible date. For a complete alternative offered for
+customer consent, B includes `proposal` only after verifying availability and
+obtaining the manager's guide selection, so the exact terms include `guide_id`.
+
+#### Customer decision on a revised offer
+
+When the route, date or rental equipment changes, B sends A the complete,
+verified alternative as a structured offer. If B supplies only a description,
+A requests the missing proposal. A presents the customer-facing terms and
+passes the exact offer to `ask_human`. Runtime links the customer's verbatim
+reply to that question and offer and resumes A with the reply. The simulator
+supplies the customer's words in automated runs. In both manual and automated
+runs, A interprets what the customer meant.
+
+For clear acceptance or refusal, A calls
+`reply_with_customer_decision(decision: Literal["accepted", "declined"])`.
+A's tool binds the decision to the current offer and actual reply in A's state.
+It checkpoints the decision and outgoing message intent, then dispatches that
+structured message. B records the received decision in its own state. Dispatch
+retries use the same message ID and cannot duplicate the business decision.
+The trajectory links the recorded decision to the original reply, offer and
+outgoing message. A retry must not deliver a second decision. Only acceptance
+returned to B for the current exact terms permits B to seek manager approval.
+A refusal closes that proposal without booking.
+
+If the reply is ambiguous, A clarifies with the customer about the same offer.
+If the customer requests different terms, A asks B to verify those terms and
+return a new offer. Neither case grants approval for the old offer. Each agent's
+tools validate identity, received evidence and order using only local state.
+They do not classify
+customer text with keywords or regular expressions.
 
 Agent A is then resumed through a new input in its existing thread.
 
@@ -390,7 +526,7 @@ The interaction uses LangGraph:
 5. The runner obtains a response from the assigned human's simulator or terminal.
 6. Runner resumes the graph using `Command(resume=answer)`.
 
-In manual mode the planner asks questions in the customer terminal. The operator displays questions, numbered guide IDs and proposed booking terms in the manager terminal. The manager chooses a displayed number, then types `approve` or `reject` when asked about the specific proposal. A rejection can include a requested change. Both interaction modes use the same selection validation and approval registry.
+In manual mode the planner asks questions in the customer terminal. The operator displays questions, numbered guide IDs and proposed booking terms in the manager terminal. The manager chooses a displayed number, then types `approve` or `reject` when asked about the specific proposal. A rejection can include a requested change. Both interaction modes use the same validation and B's checkpointed approval records.
 
 ## 5.2 Human Simulator
 
@@ -418,8 +554,28 @@ Proposed matching algorithm:
 4. Tokenize and remove common stop words.
 5. Compare against configured keyword groups.
 6. Calculate match scores.
-7. Select the highest-scoring supported intent.
-8. Return its configured response.
+7. Retain supported intents above threshold. Within each clause, combine
+   close-scoring intents only when each has distinct matched token evidence.
+   Prefer a more specific match over a candidate using only the same evidence.
+   Identical evidence for competing intents remains ambiguous.
+8. Combine the configured answers in stable fixture order, once per intent.
+
+General questions do not select the structured substitution-consent rule.
+Scenario rule overrides merge with the base snapshot rules. The six current
+cases include a definite preference for the Covadonga long loop, one adult,
+and an acceptable next-day alternative. Specific alternative-date patterns
+answer with that alternative instead of repeatedly restating the preferred date.
+Real-mode date answers use the same dynamically selected forecast-window dates.
+Authored substitution decisions are constrained to the fixture's preferred
+route when that preference has been communicated, allowed dates and
+substitution equipment. Before a route preference has been communicated,
+use the route from A's original operational proposal for equipment-only
+substitutions. A fixture's unspoken route preference must not reject a
+replacement item for the already selected route. An offer outside those
+constraints receives a refusal. Real-mode guide-shortage preset dates move
+with the requested date as well.
+The simulator receives both the question and exact structured proposal for a
+substitution interrupt. Its decision is based on those combined inputs.
 
 Suggested initial scoring:
 
@@ -453,6 +609,12 @@ If no acceptable match is found:
 
 Default: two clarification attempts.
 
+For a structured substitution interrupt, restrict fixture matching to the
+substitution intent. A clarification with no matched intent does not constitute
+a customer refusal and must not create a consent decision. Sol CLI validation
+may use the existing configurable 90-second peer and 300-second overall limits
+to accommodate slower model responses.
+
 ### Future Alternative
 
 If keyword matching proves unreliable, an LLM-based matching component may replace the matcher.
@@ -485,7 +647,10 @@ The system must validate the selected guide against actual available-guide recor
 
 The booking adapter must reject unauthorized booking requests even if the LLM attempts the call.
 
-Approval decisions are stored in a runtime approval registry indexed by `request_id`, with the relevant proposal parameters.
+Approval decisions are checkpointed in B's state with request ID, exact terms,
+manager interaction and approval reference. B validates its own approval and
+resource records together with customer consent received from A. B cannot read
+A's consent records; A receives approval evidence in B's outcome message.
 
 ---
 
@@ -569,6 +734,9 @@ is maintained in [Persistent Route Catalog and Content Search](route-catalog-des
 - Trip duration
 - Optional equipment already owned
 
+Planner instructions require copying the verified forecast day for the selected
+date into the equipment query, including all four numeric weather values.
+
 **Output:**
 - Required equipment
 - Recommended equipment
@@ -631,11 +799,23 @@ No available guides is a valid business result, not a technical exception.
 - Service unavailable
 - Timeout / uncertain outcome
 
+Rental items are the missing equipment agreed for the actual customer request.
+An empty rental set is valid when the customer owns the required equipment.
+Scenario fixture expectations such as `required_rentals` must not impose
+requirements inside the booking tool in either environment mode. Keep weather,
+route, resource availability, exact approval and idempotency checks in place.
+
 ## 6.5 Real and Mock Integration Strategy
 
 Mock adapters must reproduce the real adapter's normalized schemas and error semantics as closely as possible.
 
 Preferred mock data source: **recorded response snapshots**, stored as fixtures.
+
+Route retrieval uses the same SQLite store, SQL/FTS search, variant identities
+and validated response models in both modes. Mock runs initialize an isolated
+temporary database from the versioned normalized route seed, use the scenario
+clock for freshness, and disable source refresh. They do not read or modify the
+live catalog database. See the route feature design for seed details.
 
 Mock mode must support:
 
@@ -649,17 +829,26 @@ Mock mode must support:
 Real mode must use configured external endpoints where available.
 
 The guide scheduling, inventory and booking APIs are imaginary business integrations.
-Keep their tools and HTTP adapters simple: provide a small local test service
+Keep the operator integration simple: provide a small local test service
 with three business endpoints for guide availability, equipment inventory and reservation
 creation. Availability endpoints return fixed scenario responses; the reservation
-endpoint returns a synthetic confirmation with an ID derived from the request ID.
+endpoint returns a synthetic confirmation with a short code assigned to the request ID.
 The service does not persist bookings, update stock or maintain reservation stores.
-Use the same validated contracts as the mock adapters.
-The HTTP adapters only send requests, enforce timeouts and normalize responses;
-shared wrappers handle bounded retries. Approval validation remains in the
-trusted tool layer before reservation creation. Only minimal per-run approval
-and idempotency bookkeeping is retained by the runtime for validation and
-duplicate-call protection; it is discarded after the run.
+All reservation providers, including mock, the bundled HTTP demo and external
+operator services, use the same short `reservation_id` format:
+`TR-XXXXXXXX`, with eight characters from `ABCDEFGHJKLMNPQRSTUVWXYZ23456789`.
+The operator service issues the identifier, handles collisions and returns the
+same identifier for a repeated idempotent request. The external service is
+expected to satisfy this contract. The application uses that single identifier
+throughout tool results, final results, customer messages and trajectories.
+The in-process `MockOperator` and the single HTTP operator adapter
+`HttpOperatorProvider` expose the same validated contracts for all three
+operations. If an external provider uses a different identifier format,
+its operator adapter must support the system's short-ID contract.
+Shared wrappers handle bounded retries. Approval validation remains in the
+trusted tool layer before reservation creation. Approval, booking attempt status,
+receipts and idempotency bookkeeping are checkpointed in B's state. The runner
+does not maintain a second authoritative business registry.
 
 The local service is a demonstration backend, not a live tour operator integration.
 No database, booking files, authentication system or separate deployment infrastructure is
@@ -668,6 +857,29 @@ scenario against it. Mock mode continues to run directly in process without
 starting an HTTP server, while both modes use real LLM inference.
 
 A missing real endpoint must produce an explicit configuration error rather than silently returning mock data.
+
+### Manual environment presets
+
+The browser offers three presets before starting a trip: Normal conditions
+(default), No rain jackets, and No guides on a date. For the third preset the
+tester selects the affected date. Apply the selected operator conditions only
+to that session, using the same inventory and guide data for the in-process
+operator and the bundled HTTP demo. Live weather and route retrieval still use
+the configured providers. A separately configured external operator controls
+its own availability. Show which conditions apply before the session starts.
+The manager can reject any feasible proposal during a manual conversation.
+
+Style the native preset select and affected-date input consistently with the
+browser UI: inherited font, white background, rounded corners, a minimum
+44-pixel height and a visible green keyboard-focus ring. Give the select a
+green chevron and enough width for its longest option. Keep native keyboard
+interaction and clear disabled states; allow the controls to wrap on mobile.
+
+Browser and console manual sessions do not run the scenario evaluator. Their
+selected scenario supplies the initial test environment, not an expected outcome
+for the conversation. Preserve runtime approval, weather, availability, route,
+idempotency and terminal-delivery validation. Human reviewers judge whether the
+conversation and selected trip meet the customer's preferences.
 
 ---
 
@@ -783,6 +995,14 @@ Handling:
 2. Apply fallback if safe and valid.
 3. Otherwise terminate with an explicit failure.
 
+An exhausted retry result explicitly indicates that automatic attempts are
+exhausted. Agents must stop reissuing the failed service operation in this
+session. B returns an operational failure to A; A submits a failed trip result.
+A must not acknowledge an actionable failure and leave the session unfinished.
+Technical reasons are retained in logs and trajectories. Customer-facing failed
+trip messages use the generic text "We couldn't complete your request. Please
+try again later." The detailed failure reason is not copied into customer text.
+
 Possible read-only fallback: a previously recorded snapshot, provided it meets the validity requirements for the operation.
 
 Safety-critical decisions must not treat stale weather or unavailable booking confirmation as verified current information.
@@ -806,6 +1026,26 @@ Or:
 - Expected result: controlled failure
 
 A seeded random generator may be used to simulate probabilistic failures while preserving reproducibility.
+
+CLI and browser manual sessions expose an optional mock-only timeout override
+for one domain tool. The CLI accepts `--failure-tool <tool-name>` and
+`--timeout-probability <0..1>`, used together, with the existing `--seed`.
+The browser presents a Failure injection tool selector, timeout percentage
+(0..100) and seed (default 42). Controls are locked for the current session.
+Real mode rejects supplied injection settings and hides these controls.
+
+Each provider attempt independently samples the configured timeout probability
+using the run's seeded generator. Retries remain bounded by existing policy.
+The override replaces the selected tool's fixture failure rule. Selecting
+weather also overrides the legacy always-failing weather flag. Other tool
+rules and scenario fallback availability retain their configured values.
+Without an override, the scenario uses its authored failure settings.
+Store effective failure rules and the seed in trajectory metadata. Each
+concurrent run owns its random generator and failure counters. A fixed seed
+repeats the random sequence, while model decisions and tool order may vary.
+Automatic scenario checks retain their authored expectations, so deliberately
+preventing completion can produce a failed scenario evaluation with a safe
+controlled failure. Manual sessions report their actual outcome.
 
 ---
 
@@ -839,6 +1079,12 @@ The Runner:
 
 Each scenario run must start with isolated agent threads, queues, mock-service state and idempotency records.
 
+The simulation CLI accepts `--parallel` with either `--all` or `--scenario`.
+It schedules all selected runs, including `--runs` repetitions, concurrently
+with `asyncio.gather` in one Python process. Each run writes its own trajectory
+and prints its report when it completes. The exit code is nonzero if any run
+fails. Without `--parallel`, runs execute sequentially.
+
 ## 9.3 Execution Model
 
 The runtime uses asynchronous Python tasks.
@@ -865,7 +1111,9 @@ Asynchronous ordering may differ between runs; evaluation will focus on causal c
 
 A scenario ends when one of the following occurs:
 
-- Agent A submits a valid terminal `TripResult` and its final message is delivered to Human A.
+- Agent A submits valid business fields through `TripSubmission`; A's tool binds
+  identifiers from its own state and B's received outcome, validates the resulting
+  `TripResult` and delivers its final message to Human A.
 - A non-recoverable failure is reported.
 - Global timeout is reached.
 - Maximum number of execution steps is exceeded.
@@ -883,13 +1131,22 @@ These values are provisional and should be tuned during testing.
 
 ## 9.6 Finalization Contract
 
-Agent A is responsible for producing the final structured trip result.
+Agent A submits the final structured business fields through `TripSubmission`.
 
-V1 should expose an explicit completion mechanism, such as a `submit_trip_result` tool accepting the `TripResult` schema and a final human-facing message from Agent A.
+`submit_trip_result` accepts `TripSubmission`. A's tool binds the request ID
+from A's state and the reservation ID from B's structured outcome already
+received and checkpointed by A. It validates submitted terms against that
+message and builds `TripResult`, then renders the canonical final text.
+It cannot read B's receipt, provider wrapper, approval registry or checkpoint.
+Approval and availability enforcement occurs at B's booking boundary using
+B's own facts and the planning/consent evidence received from A.
 
 This prevents an intermediate conversational response from being misinterpreted as a completed task.
 
-Before accepting completion, runtime validation checks that no mandatory pending operation or unresolved approval remains.
+Before accepting completion, A checks its local pending requests and received
+outcome. B's outcome must establish that its operational work is resolved.
+Transport lifecycle checks can establish message delivery, but cannot replace
+an outcome payload with knowledge obtained by inspecting B's business state.
 
 After validating the result, the completion mechanism must deliver the final
 message to Human A through the human communication adapter. In automated runs,
@@ -897,13 +1154,32 @@ the customer simulator accepts the message. In manual runs, the customer adapter
 prints and flushes the final text in the planner terminal and records delivery.
 The manager terminal receives the session outcome. The message must agree with the
 validated result and summarize the confirmed trip and reservation reference,
-or explain the failure when Agent A submits a failed result.
+or show the generic failure message when Agent A submits a failed result.
 
 Only after delivery succeeds may the runtime record `human.message_delivered`
 and then `simulation.completed`. A delivery failure must not be reported as
-successful simulation completion. Infrastructure-level failures, such as a
-global timeout, may terminate with `simulation.failed` without a final message;
-the trajectory must record that delivery did not occur and why.
+successful simulation completion. After a runtime stop such as deadlock, step
+limit or timeout, cancel active agent tasks and attempt one bounded final
+customer delivery. Preserve the runtime error and record `simulation.failed`
+with the actual delivery status. Cleanup and terminal delivery have a small
+reserved event allowance beyond the normal work-step limit, so exhausting the
+work budget cannot prevent the final notification.
+
+Terminal customer delivery, including runtime safety notification, uses only
+A's checkpointed state. B sends booking progress before invoking a reservation
+side effect and sends the outcome afterwards. A checkpoints these messages.
+The bus can drain already queued outcome messages into A's inbox during cleanup;
+the runtime must never read B's state to complete A's knowledge.
+
+If A's received facts establish that no reservation was attempted, construct
+a failed result and deliver the generic message above. If A has received a
+verified confirmation, render its canonical message. If a reservation attempt has an
+uncertain outcome, deliver "We couldn't confirm your booking status. Please
+contact the operator before trying again." Preserve the uncertain status rather
+than asserting that no booking exists. A missing terminal response to pending
+booking work is treated as unconfirmed. Neither path resumes booking work.
+An unsuccessful notification is recorded as a delivery failure without a
+successful completion event. Already delivered final messages are not repeated.
 
 The completion interface is a domain-level capability, not a simulator-specific addition to ordinary human-facing messages.
 
@@ -925,9 +1201,9 @@ Every scenario contains:
 
 Agents must not receive the scenario ID, expected result, or hidden fixtures as part of their instructions.
 
-## 10.2 Five Baseline Scenarios
+## 10.2 Automated Scenarios
 
-The initial dataset contains five manually authored scenarios defined below.
+The original five baseline cases and the additional equipment shortage case are defined below.
 Each uses a short initial request, only the human response fixtures needed for
 that case, fixed mock-service data and explicit expected-result assertions.
 The fixtures are synthetic and informed by the assignment's hiking-trip example.
@@ -962,13 +1238,13 @@ The no-fallback variant of External Service Failure is an optional extension.
 
 ### Scenario 4 — HITL Rejection
 
-**Input:** Proposed trip initially lacks required available equipment.
-
-**Human B:** Rejects the first proposal.
-
-**Environment:** An alternative equipment arrangement exists.
-
-**Expected:** Agents adapt the proposal, obtain a new valid approval and finalize the booking.
+Both rain jackets and ponchos are in stock. Agent B verifies that the proposed
+jacket is available and submits the feasible jacket proposal. The manager
+rejects it and asks B to offer a poncho. B verifies availability and asks A
+to obtain the tourist's explicit agreement. Only after agreement may B seek
+fresh approval of the revised exact terms and book them. A rejection creates
+no reservation. A tourist declining the substitution ends this proposal
+without booking.
 
 ### Scenario 5 — External Service Failure
 
@@ -981,6 +1257,21 @@ The no-fallback variant of External Service Failure is an optional extension.
 **Expected:** Controlled fallback is recorded, the agent uses valid fallback data and completes the scenario if all safety requirements remain satisfied.
 
 A variant without a valid fallback must terminate with a defined failure status rather than inventing weather information.
+
+### Additional scenario — Equipment Shortage
+
+B obtains the manager's guide selection before sending the complete substitute
+proposal to A. This selection precedes customer consent; approval of the revised
+booking follows consent. A requests a complete structured offer if B only
+describes a substitute in prose. A uses the substitution question flow to obtain
+the customer decision and then returns that decision to B.
+
+The requested rain jacket is unavailable and a poncho is available. B checks
+the requested inventory, then checks the substitute and asks A to present it
+to the tourist. A returns the tourist's decision to B. B may submit the
+substitute to the manager only after the tourist accepts it. If declined,
+finish without a reservation. Record the checks, customer decision, manager
+approval and booking in causal order. Exercise both customer choices in tests.
 
 ## 10.3 Repeated Execution Test
 
@@ -1004,7 +1295,8 @@ The system does not require identical wording, tool-call order or generated reas
 
 ## 11.1 Final Result Schema
 
-Agent A returns a Pydantic-compatible `TripResult`.
+Runtime produces the persisted Pydantic-compatible `TripResult` from Agent A's
+business submission and trusted identifiers.
 
 Required fields:
 
@@ -1072,6 +1364,7 @@ Evaluation should allow multiple valid business outcomes where the scenario perm
 | Scenario pass rate | Runs satisfying all expected assertions / total runs |
 | End-to-end latency | Time from initial message to terminal result |
 | LLM token usage | Total input and output tokens |
+
 | LLM call count | Number of model invocations |
 | Tool failure rate | Failed tool attempts / total tool attempts |
 | Recovery success rate | Successfully recovered failure cases / recoverable cases |
@@ -1080,9 +1373,18 @@ Evaluation should allow multiple valid business outcomes where the scenario perm
 
 Metrics should be available per agent and per simulation run where applicable.
 
+Automatic evaluation reports cached input reads, cache writes when supplied by
+the provider, and cached-input share, both per agent and for the run. Use
+LangChain usage metadata's cache_read/cache_creation values, including
+priority/flex variants. Zero is a reported zero; missing usage remains null.
+A cache total or ratio is available only when all model calls in that scope
+reported that field. Include reporting coverage counts. Cached reads and writes
+are parts of input usage and must not be added to total input tokens again.
+Earlier trajectories lacking cache fields cannot establish historical cache hits.
+
 ## 11.4 Future Evaluation Strategy
 
-Start with the five scenarios defined in Section 10.2. Run four scenarios once
+For the original acceptance batch, use the five baseline scenarios in Section 10.2. Run four scenarios once
 each and one selected scenario five consecutive times for the assignment's
 repeatability demonstration: nine runs in total, not twenty-five. The five runs
 of the selected scenario also count toward scenario coverage. Repeated runs do not increase the
@@ -1161,8 +1463,9 @@ a later run. Restore scoped loop handlers after use.
 Configure process logging for the manual launcher/consoles (including the
 lightweight bootstrap), automated simulation CLI, catalog CLI and standalone
 operator demo. The background demo uses the customer process's log with its
-own component identity. Include the runtime-log path in trajectory metadata
-and document how to locate console/runtime diagnostics in README.
+own component identity. Do not include runtime-log paths in trajectory metadata.
+Correlate logs and trajectories by run/request IDs; document log location through
+LOG_DIR and README rather than exporting local filesystem paths.
 
 Tests must verify valid JSON, rotation, redaction, idempotent initialization,
 context isolation, actual asyncio callback failures with transport addresses,
@@ -1200,9 +1503,15 @@ Every simulation produces one human-readable JSON trajectory file.
 
 The trajectory is intended **only for analysis**, not execution replay.
 
-Suggested path:
+Automated simulation path (a CLI `--output` value can replace the root):
 
-`trajectories/{scenario_id}/{run_id}.json`
+`trajectories/automatic/{scenario_id}/{run_id}.json`
+
+Both browser and console manual sessions write directly to
+`trajectories/manual/{run_id}.json`, without scenario subdirectories. Keep the
+scenario identifier in metadata. The default trajectory root has only `manual/`
+and `automatic/` directories. Consolidate older batches into this layout while
+preserving run IDs and JSON contents, and update evaluation report links.
 
 The document uses three top-level sections:
 
@@ -1323,7 +1632,18 @@ For concurrent operations, event order alone must not be used to infer dependenc
 
 ### Result Section
 
-The final section contains:
+The model-facing `submit_trip_result` accepts business fields through a
+`TripSubmission` (status, route, date, guide, equipment, failure reason).
+A's tool binds request_id and reservation_id from A's checkpointed state.
+The reservation ID must come from B's structured confirmation received through
+the bus. Final validation uses that received evidence and A's local facts.
+The canonical text is rendered from the validated result; the model does not
+copy technical IDs into the submission. No direct access to B's receipt is used.
+Persisted `TripResult` retains the active request ID and the operator-issued
+short reservation ID. The same short-ID contract applies to external receipts.
+A's tool uses the received verified short ID directly, without generating an alias.
+
+For automated scenarios, the final section contains:
 
 - Structured `TripResult`
 - Execution outcome
@@ -1331,6 +1651,18 @@ The final section contains:
 - Individual validation checks
 - Aggregated execution metrics
 - Optional error summary
+
+For browser and console manual sessions, the result section contains only:
+
+- `status`: actual session status (`confirmed`, `failed`, `cancelled`, `error`
+  or `incomplete`), without an overall evaluation verdict.
+- `trip_result`: the structured `TripResult`, or null if none was produced.
+- `error`: runtime error summary, or null.
+
+Do not include `passed`, scenario checks or scenario evaluation metrics in
+manual exports. A controlled refusal to book is a business result (`failed`),
+not a scenario-test verdict. Cancellation retains its actual session status.
+Automated evaluation is independent of the selected real/mock environment.
 
 ### Data Protection
 
@@ -1399,6 +1731,71 @@ The README must explain dependency installation, environment configuration, LLM 
 
 ## 14.1 Manual test entrypoint
 
+### Browser interface
+
+`uv run --env-file .env python -m app.simulation.web --mode real` starts a
+loopback-only FastAPI server and opens the browser after binding its port.
+The page presents customer/planner and manager/operator chats side by side.
+Both agents remain in one server process and communicate through the existing
+queues. Browser polling and structured replies replace terminal human input;
+all selection, approval and booking checks remain in the existing runner.
+
+Before creating a browser session, a Simulation / Real data selector chooses
+the data mode for that session without restarting the server. The CLI `--mode`
+sets the initial selection. Session creation accepts the selected mode and
+returns it in snapshots; refreshing reconnects using the session's actual mode.
+The selector is locked until the user starts a new trip, and the API rejects
+another session while one is active. Mode-specific configuration controls mock
+dates, failure injection and availability presets; mock-only settings must not
+carry over into real sessions. The local HTTP operator demo is initialized on
+demand when real mode is selected and released at server shutdown. Simulation
+continues to use its in-process operator even after the demo was initialized.
+Clearly show that real mode uses live weather and the maintained route catalog,
+while guides, inventory and reservations remain demonstrative unless an external
+operator is configured. Errors initializing real mode are shown without silently
+falling back to simulation.
+
+Support one active trip per server. In mock mode, show the scenario's simulated current date and the dates
+covered by its weather fixtures before and during a trip. Place the notice in
+the Session conditions area and keep that area visible while scrolling. Read these dates from
+scenario data. Hide this notice in real mode.
+
+The customer starts a trip with an initial
+request; each pending question has an ID, and replies must match its actor
+and ID. Show numbered guide choices and exact proposal terms with Approve /
+Reject controls and a rejection reason. Display errors, terminal outcome,
+final customer message and a downloadable trajectory. Render all messages
+as text, not HTML. Refreshing the page reconnects to the current trip.
+New trip clears the previous session's displayed error and returns to the
+initial request form. Late polling responses or errors for the previous session
+must not restore its content or overwrite a new session.
+Enter sends the initial request or a chat answer; Shift+Enter inserts a new
+line. Ignore composition/repeated key events and prevent duplicate sends
+while a request is in flight. Approval/rejection still requires its explicit
+button and is never triggered by Enter in the rejection-reason field.
+Show a third, right-hand live trajectory panel, updated by the same polling
+as the chats. Display ordered events with sequence, time, actor and type;
+expand an event to inspect its redacted JSON, including tool activity and
+inter-agent messages. Apply the trajectory export's redaction before sending
+events to the browser. Preserve expanded events and chat drafts across polls.
+The panel is available during execution and retained after completion; on
+narrow screens it moves below the chats. It shows recorded events, not private
+model reasoning or system log records.
+Record the human interrupt when the question is presented, before waiting
+for input. The live trajectory must show it while the human is still thinking;
+record the response only after submission and emit no duplicate interrupt.
+
+The browser can cancel a trip; server shutdown cancels active work and saves
+its trajectory. Every terminal run saves `trajectories/manual/{run_id}.json`,
+with runtime logging unchanged. The real-mode demo backend is managed for
+the server lifetime using the existing ownership checks. Mock mode stays
+offline apart from model inference. Bind only to 127.0.0.1, reject unexpected
+Host/Origin values and do not enable cross-origin access. This is a personal
+local test UI, not a multi-user deployment. Existing console commands remain
+available.
+
+### Console interface
+
 From the project root, `uv run --env-file .env python -m app.simulation.manual`
 opens both human terminals automatically. The optional `launch` role is an
 explicit alias. The launcher uses the current Python environment, starts the
@@ -1410,8 +1807,11 @@ selected scenario. The customer acknowledges a connected, ready-for-input
 console through its own temporary status file before the launcher reports
 success. `--port 0` requests an available port; `--startup-timeout` controls
 each console's readiness deadline. An occupied port, startup error or timeout
-must prevent customer launch and produce an actionable error. If customer
-launch fails, stop the processes started for that attempt. A lightweight
+must prevent customer launch and produce an actionable error.
+Status files are published atomically. A short bounded retry tolerates transient
+file-access contention, including a Windows reader briefly blocking replacement;
+persistent publication errors still fail startup.
+If customer launch fails, stop the processes started for that attempt. A lightweight
 console bootstrap publishes its PID before importing the agent runtime.
 Cancellation marks the attempt before cleanup; queued consoles check the
 marker and attempt-directory lifetime before startup and after runtime
@@ -1451,7 +1851,7 @@ start the terminals in this order from the project root.
 | B | `uv run python -m app.simulation.manual operator` | The tour manager selects a guide and decides whether to approve the terms. |
 | A | `uv run --env-file .env python -m app.simulation.manual customer` | The customer enters the initial request, answers the planner and receives the final result. |
 
-The default address is `127.0.0.1:18766`. Both commands accept `--port`. The customer command selects the scenario with `--scenario` (default `happy_path`) and loads the configured model. Manual runs allow 3,600 seconds overall and 900 seconds for a peer reply to accommodate typing. Each run writes `trajectories/manual/{scenario_id}/{run_id}.json`. Its evaluator compares the observed result with the fixture expectations, so a deliberate rejection can produce a failed scenario check. See the [manual test runbook](../README.md#manual-test-with-two-terminals) for the approval and rejection walkthrough.
+The default address is `127.0.0.1:18766`. Both commands accept `--port`. The customer command selects the initial test environment with `--scenario` (default `happy_path`) and loads the configured model. Manual runs allow 3,600 seconds overall and 900 seconds for a peer reply to accommodate typing. Each run writes `trajectories/manual/{run_id}.json`, without scenario subdirectories. It records the actual result and runtime errors without scenario evaluation. See the [manual test runbook](../README.md#manual-test-with-two-terminals) for the approval and rejection walkthrough.
 
 ---
 
@@ -1461,6 +1861,9 @@ V1 is considered complete when:
 
 - [ ] Exactly two operational AI agents are implemented using the same generic architecture.
 - [ ] Both agents maintain independent conversation states.
+- [ ] Each agent's complete business state is serializable and checkpointed independently; no business facts depend on runner attributes or peer-state access.
+- [ ] Structured messages are the only exchange of business facts between agents and their tools. A fact absent from the received payload cannot be obtained from a shared registry.
+- [ ] Checkpoint/resume preserves pending human interactions, decisions and completed tool facts. Duplicate message dispatch/reception does not repeat business effects.
 - [ ] Agent A communicates only with Human A and Agent B.
 - [ ] Agent B communicates only with Human B and Agent A.
 - [ ] Both agents can autonomously invoke their tools.
@@ -1498,7 +1901,9 @@ Potential improvements:
 
 ### 16.1 Structured Business State
 
-Introduce typed state for trip requirements, proposals, resource availability, approvals and reservations.
+Typed, isolated agent business state is required in V1 by Section 3.4. This
+section no longer defers it to V2. Future improvements may optimize the size
+and projections of each agent's state while preserving message-only exchange.
 
 **Potential benefit:** fewer repeated LLM interpretations and more deterministic routing.
 
@@ -1510,7 +1915,25 @@ Move predictable operations into explicit LangGraph nodes while retaining LLM re
 
 ### 16.3 Parallel Tool Execution
 
-Execute independent data retrieval operations concurrently.
+Implemented in V1 after measuring sequential model-call overhead. The agent
+may request several independent read-only tools in one model response. The
+existing LangGraph tool node executes them concurrently. Allowed retrieval
+tools are weather, route search, route details, equipment advice, guide
+availability and inventory. Every call must already have its required inputs.
+For example, weather and route search can share a batch; guide availability
+and inventory can share a batch for a known route/date.
+
+Agent instructions require human questions, customer messages, peer messages,
+acknowledgements, reservation creation and final result delivery to each run
+alone. A dependent lookup waits for its prerequisites. Approval and booking
+retain their existing runtime validations.
+
+Verify concurrency with deterministic graph tests and barrier synchronization.
+Verify checkpoint/interrupt resume preserves completed sibling reads. Record
+`parallel_tool_batches` per agent in evaluation metrics as the count of model
+responses requesting more than one tool. Compare measured model calls and
+elapsed time with the preceding sequential runs; a single run is not a
+repeatability guarantee.
 
 **Potential benefit:** reduced end-to-end latency.
 
@@ -1528,7 +1951,9 @@ Restrict available tools according to the current workflow phase.
 
 ### 16.6 Persistent Execution
 
-Introduce persistent checkpointing and durable communication for recovery after process restarts.
+Replace the V1 in-memory checkpointer with a persistent implementation and
+restore message dispatch from the isolated checkpointed inbox/outbox records.
+Recreate transport and client resources to recover after process restarts.
 
 **Potential benefit:** stronger operational reliability.
 

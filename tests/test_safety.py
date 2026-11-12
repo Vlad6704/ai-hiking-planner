@@ -7,8 +7,7 @@ import pytest
 from app.models.contracts import Forecast, WeatherQuery, BookingRequest
 from app.simulation.scenario import load_scenario
 from app.tools.planning import fallback_weather
-from app.tools.operator import MockOperator, OperatorTools
-from app.humans.approval import ApprovalRegistry
+from app.tools.operator import MockOperator
 from app.observability.trace import TraceRecorder
 
 
@@ -45,20 +44,11 @@ def test_uncertain_outcome():
     async def run():
         rid = str(uuid4())
         provider = LostResponse({"2026-11-10": ["luis"]}, {}, ["trail"])
-        approvals = ApprovalRegistry()
-        terms = dict(route_id="trail", guide_id="luis", date="2026-11-10", equipment={})
-        req = BookingRequest(
-            **terms,
-            request_id=rid,
-            idempotency_key=f"booking:{rid}",
-            approval_ref=approvals.record(rid, terms, "Approved"),
-        )
-        ops = OperatorTools(rid, approvals, provider)
+        req = BookingRequest(route_id='trail', guide_id='luis', date='2026-11-10', equipment={},
+            request_id=rid, idempotency_key=f'booking:{rid}', approval_ref='approved')
         with pytest.raises(TimeoutError):
-            await ops.reserve(req)
-        with pytest.raises(ValueError, match="idempotency_conflict"):
-            await ops.reserve(req.model_copy(update={"guide_id": "other"}))
-        assert (await ops.reserve(req)).reservation_id == f"tour-{rid}"
+            await provider.reserve(req)
+        assert (await provider.reserve(req)).reservation_id == next(iter(provider.created.values())).reservation_id
         assert len(provider.created) == 1
 
     asyncio.run(run())

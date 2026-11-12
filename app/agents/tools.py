@@ -14,17 +14,17 @@ from app.models.contracts import (
     Proposal,
     RouteLookup,
     RouteQuery,
-    TripResult,
+    TripSubmission,
+    TripProposal,
     WeatherQuery,
 )
 from app.tools.execution import execute
+from app.tools.route_results import route_model_result
 from app.tools.planning import (
-    details,
     fallback_weather,
     gear,
     live_weather,
-    search,
-    select_forecast,
+    mock_forecast,
 )
 
 
@@ -32,7 +32,7 @@ class ApprovedTerms(Proposal):
     """Booking terms already presented to the manager."""
 
 
-def bind_tools(run, actor):
+def bind_tools(actor, context):
     @tool
     def ask_human(
         question: str,
@@ -42,85 +42,107 @@ def bind_tools(run, actor):
     ):
         """Ask your assigned human. For selection supply available guide IDs in displayed order.
         For approval supply exact route_id, date, guide_id, equipment quantities."""
-        return interrupt(
-            dict(
-                question=question,
-                kind=kind,
-                options=options or [],
-                proposal=proposal.model_dump(mode="json") if proposal else None,
-            )
-        )
+        if kind == "approval":
+            if proposal is None:
+                return {"error": "Present exact terms first"}
+            try:
+                context.validate_manager_proposal(proposal.model_dump(mode="json"))
+            except ValueError as exc:
+                return {"error": str(exc)}
+        data = dict(question=question, kind=kind, options=options or [],
+                    proposal=proposal.model_dump(mode='json') if proposal else None)
+        data['_source_message_id'] = (context.incoming or {}).get('message_id')
+        return context.process_human_reply(data, interrupt(data))
 
     @tool(return_direct=True)
     async def send_to_agent(
         content: str,
-        kind: Literal["request", "response", "notification", "error"] = "request",
+        kind: Literal["request", "response", "notification", "error"] = "notification",
+        proposal: Proposal | TripProposal | None = None,
     ):
-        """Queue a message to the other agent. End this turn after sending."""
-        parent = run.incoming.get(actor)
-        if parent and parent["message_id"] in run.bus.pending:
-            kind = "error" if kind == "error" else "response"
-        elif actor == "agent_b" and run.operator.result:
-            # A completed operator sends the reservation for delivery. The
-            # customer-facing agent owes no further peer reply for this notice.
-            kind = "notification"
-        elif kind != "notification":
-            # Replies always close the request that woke this agent. The next
-            # exchange can then carry a revised proposal as a fresh request.
-            if parent and parent["type"] == "request" and kind in ("response", "error"):
-                return {"error": "This request is already closed."}
-            else:
-                kind = "request"
-        receipt = run.bus.send(actor, content, kind, parent)
-        return {"queued": receipt["message_id"]}
+        """Queue a peer message, then end this turn. A's first operational request requires proposal with
+        exact route_id, date and equipment quantities; omit guide_id until the manager selects it.
+        Include the full proposal for exact revised offers. A returns customer decisions with reply_with_customer_decision.
+        B must verify substitute inventory before offering it. A must obtain explicit customer consent then return the decision."""
+        try:
+            return context.stage_message(content, kind, proposal)
+        except ValueError as exc:
+            return {'error': str(exc)}
+
+    @tool(return_direct=True)
+    def reply_with_customer_decision(decision: Literal["accepted", "declined"]):
+        """Interpret the customer's reply to the current exact offer and return their decision to B.
+        Use only for clear acceptance or refusal. Clarify ambiguity or request changed terms first."""
+        try:
+            return context.reply_with_customer_decision(decision)
+        except ValueError as exc:
+            return {"error": str(exc)}
+
+    @tool(return_direct=True)
+    def acknowledge_message():
+        """End your turn after a message from the OTHER AGENT that requires no further action.
+        Sends nothing. NEVER use for customer or manager messages, greetings, questions, or answers."""
+        context.trace.emit('agent.acknowledged', actor, {})
+        return {'acknowledged': True}
+
+    @tool
+    def send_to_customer(content: str):
+        """Show an informational answer to the customer and wait for their next message. Does not book or finish the trip. Use for route listings and other informational replies."""
+        if (context.state.get('received_outcome') or {}).get('status') == 'confirmed':
+            return {'error': 'A reservation exists; deliver its validated final result using submit_trip_result.'}
+        if context.has_pending_request:
+            return {'error': 'Resolve the outstanding operator request before waiting for another customer message.'}
+        data = dict(question=content, kind='information', options=[], proposal=None)
+        return context.process_human_reply(data, interrupt(data))
 
     def domain(name, description, schema, function):
         async def invoke(**kwargs):
             query = schema(**kwargs)
             catalog_state = None
             catalog_error = None
-            if run.settings.mode == "real" and name in ("search_hiking_routes", "get_route_details"):
+            if name in ("search_hiking_routes", "get_route_details"):
                 try:
-                    catalog_state = await run.catalog.ensure_fresh()
+                    catalog_state = await context.catalog.ensure_fresh()
                 except (ValueError, OSError, sqlite3.Error) as exc:
                     catalog_error = str(exc)
                 finally:
-                    if run.catalog.last_report:
-                        run.trace.emit("catalog.refreshed", actor, run.catalog.last_report)
-                        run.catalog.last_report = None
+                    if context.catalog.last_report:
+                        context.trace.emit("catalog.refreshed", actor, context.catalog.last_report)
+                        context.catalog.last_report = None
 
             async def call():
                 if catalog_error:
                     raise ValueError(catalog_error)
-                if run.settings.mode == "mock":
-                    await run.injection.before(name)
+                if context.settings.mode == "mock":
+                    await context.injection.before(name)
                 value = function(query)
                 return await value if inspect.isawaitable(value) else value
 
             fallback = None
             if (
                 name == "get_weather_forecast"
-                and run.settings.mode == "mock"
-                and run.case["fallback"]
+                and context.settings.mode == "mock"
+                and context.case["fallback"]
             ):
                 fallback = lambda: fallback_weather(
-                    run.forecast,
+                    context.forecast,
                     query,
-                    datetime.fromisoformat(run.case["clock"]),
-                    run.settings.max_weather_age_hours,
+                    datetime.fromisoformat(context.case["clock"]),
+                    context.settings.max_weather_age_hours,
                 )
             result = await execute(
                 name,
                 query.model_dump(mode="json"),
                 call,
-                run.settings,
-                run.trace,
+                context.settings,
+                context.trace,
                 actor,
                 fallback,
                 metadata={"catalog": catalog_state} if catalog_state else None,
             )
-            if result["status"] != "error":
-                run.observed.setdefault(name, []).append(result["data"])
+            context.record_observation(name, query.model_dump(mode='json'), result)
+            if name in ("search_hiking_routes", "get_route_details"):
+                return route_model_result(result, details=name == "get_route_details")
             return result
 
         return StructuredTool.from_function(
@@ -128,74 +150,50 @@ def bind_tools(run, actor):
         )
 
     async def weather(query):
-        if run.settings.mode == "real":
-            return await live_weather(run.client, query)
-        if run.case["weather_failure"]:
+        if context.settings.mode == "real":
+            return await live_weather(context.client, query)
+        if context.case["weather_failure"]:
             raise TimeoutError()
-        return select_forecast(run.forecast, query)
+        return mock_forecast(context.forecast, query)
 
     def routes(query):
-        return run.catalog.store.search(query) if run.settings.mode == "real" else search(query)
+        return context.catalog.store.search(query)
 
     def route_details(query):
-        return run.catalog.store.details(query.route_id) if run.settings.mode == "real" else details(query.route_id)
+        return context.catalog.store.details(query.route_id)
 
     async def book(terms):
-        for alternatives in run.case["required_rentals"]:
-            if not any(terms.equipment.get(item, 0) >= 1 for item in alternatives):
-                raise ValueError(
-                    "Missing required rental: " + " or ".join(alternatives)
-                )
-        days = [
-            day
-            for report in run.observed.get("get_weather_forecast", [])
-            for day in report["days"]
-            if day["date"] == str(terms.date)
-        ]
-        if (
-            not days
-            or days[-1]["wind_kmh"] > 40
-            or days[-1]["precipitation_probability"] > 70
-        ):
-            raise ValueError("A verified safe forecast is required for this date")
-        if not any(
-            route["route_id"] == terms.route_id
-            for routes in run.observed.get("search_hiking_routes", [])
-            for route in routes
-        ):
-            raise ValueError("A verified route is required")
-        active = run.approvals.records.get(run.rid)
-        if active is None:
-            raise ValueError("missing_approval")
-        request = BookingRequest(
-            **terms.model_dump(),
-            request_id=run.rid,
-            idempotency_key=f"booking:{run.rid}",
-            approval_ref=active[0],
-        )
-        return await run.operator.reserve(request)
+        return await context.reserve(terms)
 
     @tool
-    async def submit_trip_result(result: TripResult, final_message: str):
-        """Deliver the terminal result. For failure send the exact reason. For confirmation use exactly:
-        Confirmed {route_id} on {date} with {guide_id}. Reservation {reservation_id}. Equipment: {items}.
-        Join sorted equipment with comma-space or use none."""
+    async def submit_trip_result(result: TripSubmission):
+        """Deliver status and exact business terms, or the failure reason.
+        Runtime binds request and reservation IDs from trusted state and renders the final message."""
         try:
-            await run.finalize(result, final_message)
+            terminal = context.make_result(result)
+            await context.deliver_final(terminal)
+            context.state['result'] = terminal.model_dump(mode='json')
         except ValueError as exc:
             return {"error": str(exc)}
         return "Delivered"
 
     @tool("ask_human")
-    def ask_customer(question: str):
-        """Ask the hiker a question about dates, experience, route preferences or owned gear."""
-        return interrupt(
-            dict(question=question, kind="question", options=[], proposal=None)
-        )
+    def ask_customer(question: str, proposal: Proposal | None = None):
+        """Ask the hiker a question. For revised terms include the exact operator-offered proposal.
+        Interpret their reply and use reply_with_customer_decision for clear acceptance or refusal."""
+        terms = proposal.model_dump(mode="json") if proposal else None
+        if terms is not None and (not context.state.get('offer') or context.state['offer']["proposal"] != terms):
+            return {"error": "Present the exact operator-offered substitution"}
+        data = dict(question=question, kind='substitution' if proposal else 'question', options=[], proposal=terms)
+        data['_source_message_id'] = (context.incoming or {}).get('message_id')
+        data['_original_proposal'] = context.state.get('original_proposal')
+        return context.process_human_reply(data, interrupt(data))
 
-    shared = [ask_customer if actor == "agent_a" else ask_human, send_to_agent]
+    shared = [ask_customer if actor == "agent_a" else ask_human, send_to_agent, acknowledge_message]
     if actor == "agent_a":
         return shared + [
+            reply_with_customer_decision,
+            send_to_customer,
             domain(
                 "get_weather_forecast",
                 "Forecast for Picos de Europa and an ISO date or range.",
@@ -227,13 +225,13 @@ def bind_tools(run, actor):
             "check_guide_availability",
             "List qualified available guides.",
             GuideQuery,
-            run.provider.guides,
+            context.provider.guides,
         ),
         domain(
             "check_equipment_inventory",
             "Check quantities of rental items.",
             InventoryQuery,
-            run.provider.inventory,
+            context.provider.inventory,
         ),
         domain(
             "create_tour_reservation",

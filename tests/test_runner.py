@@ -15,7 +15,7 @@ def test_customer_receives_final_result():
     )
     trace = TraceRecorder({})
     human = HumanSimulator({})
-    asyncio.run(deliver_final(result, "Weather unavailable", human, trace))
+    asyncio.run(deliver_final(result, "We couldn't complete your request. Please try again later.", human, trace))
     delivery, completed = trace.events[-2:]
     assert completed["caused_by"] == delivery["event_id"]
     assert delivery["data"]["message_id"] in human.messages

@@ -9,7 +9,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from app.models.contracts import RouteQuery
+from app.models.contracts import RouteDetails, RouteQuery
 from app.route_catalog.models import CatalogRoute, CatalogVariant, content_hash
 
 
@@ -27,8 +27,9 @@ def local_day(instant):
 
 
 class CatalogStore:
-    def __init__(self, path: Path):
+    def __init__(self, path: Path, *, clock=None):
         self.path = Path(path).resolve()
+        self.clock = clock or utcnow
         self.path.parent.mkdir(parents=True, exist_ok=True)
         with closing(sqlite3.connect(self.path, timeout=10)) as connection:
             version = connection.execute("PRAGMA user_version").fetchone()[0]
@@ -61,7 +62,7 @@ class CatalogStore:
         with closing(self.connect_readonly()) as connection:
             state = dict(connection.execute("SELECT * FROM catalog_state WHERE id=1").fetchone())
         state["stale"] = (state["last_outcome"] != "complete" or not state["last_success_at"]
-                          or local_day(state["last_success_at"]) != local_day(utcnow()))
+                          or local_day(state["last_success_at"]) != local_day(self.clock()))
         return state
 
     def records(self):
@@ -179,7 +180,7 @@ class CatalogStore:
 
     def _result(self, row, state, full=False):
         data = json.loads(row["payload"])
-        return dict(route_id=row["variant_id"], source_route_id=row["route_id"], variant_id=row["variant_id"],
+        return RouteDetails(route_id=row["variant_id"], source_route_id=row["route_id"], variant_id=row["variant_id"],
                     name=data["name"] + " — " + row["name"], difficulty=row["difficulty"],
                     distance_km=row["distance_m"] / 1000 if row["distance_m"] is not None else None,
                     duration_hours=row["duration_minutes"] / 60 if row["duration_minutes"] is not None else None,
@@ -192,7 +193,7 @@ class CatalogStore:
                     source_language=data["source_language"], content_hash=row["content_hash"],
                     created_at=row["created_at"], updated_at=row["updated_at"], last_checked_at=row["last_checked_at"],
                     snippet=row["excerpt"], catalog_stale=state["stale"] or row["parse_status"] == "stale",
-                    catalog_run_id=state["run_id"], parse_warnings=data["warnings"])
+                    catalog_run_id=state["run_id"], parse_warnings=data["warnings"]).model_dump(mode='json')
 
     def search(self, query: RouteQuery) -> list[dict]:
         terms, arguments = ["r.active=1", "v.active=1"], []

@@ -1,0 +1,31 @@
+{
+  "id": "equipment_shortage",
+  "initial": "Please arrange an easy hike on November 10, 2026, in Picos de Europa. I need a rental rain jacket.",
+  "stock": {
+    "rain jacket": 0,
+    "poncho": 3
+  },
+  "snapshot": "baseline.json",
+  "expected_date": "2026-11-10",
+  "acceptable_dates": [
+    "2026-11-10",
+    "2026-11-11"
+  ],
+  "decisions": [
+    "Approved"
+  ],
+  "rules": {
+    "substitution": [
+      [
+        "poncho",
+        "substitution",
+        "substitute"
+      ],
+      "Yes, I accept the poncho substitution."
+    ]
+  },
+  "substitution_accepted": true,
+  "substitution_equipment": {
+    "poncho": 1
+  }
+}

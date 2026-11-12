@@ -1,7 +1,20 @@
 {
   "clock": "2026-11-08T12:00:00+00:00",
   "rules": {
-    "guided": [["guide","guided","solo","proceed","book"],"Yes, please arrange a guided hike with rental rain protection. The manager may select the guide."],
+    "substitution": [
+      ["accept", "agree", "confirm", "proposed", "offer"],
+      "Yes, I accept the proposed guided hike and rental equipment."
+    ],
+    "guided": [
+      [
+        "guide",
+        "guided",
+        "solo",
+        "proceed",
+        "book"
+      ],
+      "Yes, please arrange a guided hike with rental rain protection. The manager may select the guide."
+    ],
     "experience": [
       [
         "experience",
@@ -23,16 +36,19 @@
         "equipment",
         "gear",
         "own",
-        "bring"
+        "bring",
+        "rain jacket",
+        "boots",
+        "rent"
       ],
       "I have boots, water and a first aid kit. Please rent a rain jacket."
     ],
     "date": [
       [
         "date",
-        "alternative",
-        "confirm",
-        "dates"
+        "dates",
+        "when",
+        "november"
       ],
       "November 10 is preferred. November 11 is acceptable if needed."
     ],
@@ -40,12 +56,41 @@
       [
         "group",
         "people",
-        "party"
+        "party",
+        "how many",
+        "one hiker",
+        "one rain jacket",
+        "for one"
       ],
       "One adult."
+    ],
+    "route": [
+      [
+        "route",
+        "loop",
+        "lakes",
+        "covadonga"
+      ],
+      "I prefer the Lagos de Covadonga long loop (PR-PNPE-2:long), about 2.5 hours."
+    ],
+    "alternative_date": [
+      [
+        "alternative date",
+        "alternative calendar date",
+        "another date",
+        "different date",
+        "different day",
+        "november 11"
+      ],
+      "Yes, November 11 works for the alternative hike."
     ]
   },
-  "required_rentals": [["rain jacket","poncho"]],
+  "required_rentals": [
+    [
+      "rain jacket",
+      "poncho"
+    ]
+  ],
   "stock": {
     "rain jacket": 3
   },
@@ -85,5 +130,6 @@
     ]
   },
   "fallback": false,
-  "weather_failure": false
+  "weather_failure": false,
+  "preferred_route_id": "PR-PNPE-2:long"
 }

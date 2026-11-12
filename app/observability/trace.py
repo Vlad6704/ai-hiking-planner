@@ -38,12 +38,21 @@ class TraceRecorder:
         self.metadata = dict(schema_version="1", started_at=now(), **metadata)
         self.started = time.monotonic()
         self.events = []
+        self.terminal_allowance = 0
+
+    def reserve_terminal_events(self):
+        self.terminal_allowance = 3
 
     def emit(
         self, kind, actor, data, *, recipient=None, caused_by=None, operation_id=None
     ):
         terminal = kind in ("simulation.completed", "simulation.failed")
-        if self.max_steps is not None and len(self.events) >= self.max_steps - int(
+        reserved = self.terminal_allowance > 0 and kind in (
+            'runtime.notification_started', 'human.message_delivered', 'simulation.failed'
+        )
+        if reserved:
+            self.terminal_allowance -= 1
+        if not reserved and self.max_steps is not None and len(self.events) >= self.max_steps - int(
             not terminal
         ):
             raise RuntimeError("step_limit")
@@ -61,16 +70,14 @@ class TraceRecorder:
         self.events.append(event)
         return event
 
-    def write(self, directory: Path, result):
+    def write(self, directory: Path, result, *, group_by_scenario=True):
         self.metadata.update(
             finished_at=now(),
             duration_ms=round((time.monotonic() - self.started) * 1000),
         )
-        path = (
-            directory
-            / self.metadata["scenario_id"]
-            / (self.metadata["run_id"] + ".json")
-        )
+        if group_by_scenario:
+            directory = directory / self.metadata["scenario_id"]
+        path = directory / (self.metadata["run_id"] + ".json")
         path.parent.mkdir(parents=True, exist_ok=True)
         temp = path.with_suffix(".tmp")
         document = redact(

@@ -1,14 +1,12 @@
 .venv/
 __pycache__/
 .pytest_cache/
+.pytest-ui-select-check/
 .superpowers/
 .env
 logs/
 data/*.sqlite3
 data/*.sqlite3-*
 
-# Keep the published evaluation batches. Other local runs can be regenerated.
-trajectories/*
-!trajectories/acceptance/
-!trajectories/luna-release/
-!trajectories/luna-final-real/
+# Generated trajectories stay local; explicitly publish selected examples with git add -f.
+trajectories/

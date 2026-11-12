@@ -35,10 +35,15 @@ def test_two_consoles_complete_one_booking(monkeypatch, tmp_path, capsys):
         output = operator.communicate(timeout=10)[0]
         assert "2. luis" in output and "Session ended: confirmed" in output
         assert "Enter approve or reject." in output
-        assert "Reservation tour-" in capsys.readouterr().out
-        path, = (tmp_path/"trajectories/manual/happy_path").glob("*.json")
+        assert "Reservation TR-" in capsys.readouterr().out
+        directory = tmp_path / "trajectories/manual"
+        path, = directory.glob("*.json")
+        assert list(directory.iterdir()) == [path]
         doc = json.loads(path.read_text(encoding="utf-8"))
-        assert doc["result"]["passed"]
+        assert doc["result"]["status"] == "confirmed"
+        assert doc["result"]["trip_result"]["status"] == "confirmed"
+        assert doc["result"]["error"] is None
+        assert not {"passed", "checks", "metrics"} & doc["result"].keys()
         assert doc["events"][-1]["type"] == "simulation.completed"
     finally:
         if operator.poll() is None:

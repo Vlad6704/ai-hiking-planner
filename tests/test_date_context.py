@@ -1,5 +1,4 @@
 import asyncio
-import re
 from datetime import UTC, date, datetime
 
 import pytest
@@ -30,10 +29,8 @@ class DateContextModel(BaseChatModel):
         self.seen.append(messages[0].content)
         message = AIMessage(content='Date context received.')
         if self.finish:
-            rid = re.search(r'Request ID ([\w-]+)', messages[1].content).group(1)
             message = AIMessage(content='', tool_calls=[dict(name='submit_trip_result', id='finish', args=dict(
-                result=dict(request_id=rid, status='failed', failure_reason='Test completed'),
-                final_message='Test completed'))])
+                result=dict(status='failed', failure_reason='Test completed')))])
         return ChatResult(generations=[ChatGeneration(message=message)])
 
 

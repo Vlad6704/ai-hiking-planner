@@ -67,18 +67,18 @@ def start_demo(url, port):
 @contextmanager
 def operator_backend(mode):
     if mode != 'real':
-        yield
+        yield False
         return
     url = os.environ.setdefault('OPERATOR_URL', DEFAULT_OPERATOR_URL)
     parsed = urlsplit(url)
     if (parsed.scheme != 'http' or parsed.hostname not in ('127.0.0.1', 'localhost')
             or parsed.path not in ('', '/') or parsed.query or parsed.fragment
             or parsed.username or parsed.password):
-        yield
+        yield False
         return
     if is_demo(url):
         print(f'Using existing HTTP operator demo at {url}.', flush=True)
-        yield
+        yield True
         return
     with start_demo(url, parsed.port or 80):
-        yield
+        yield True

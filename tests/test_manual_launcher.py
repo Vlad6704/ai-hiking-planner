@@ -11,6 +11,43 @@ import pytest
 from app.simulation import manual
 
 
+def test_status_publication_retries_temporary_permission_error(monkeypatch, tmp_path):
+    from pathlib import Path
+    from app.simulation import launcher
+    status = tmp_path / 'ready.json'
+    launcher.write_status(status, 'starting')
+    replace = Path.replace
+    attempts, sleeps = [], []
+
+    def temporarily_locked(source, target):
+        attempts.append(1)
+        if len(attempts) == 1:
+            raise PermissionError('Destination is open in the readiness reader')
+        return replace(source, target)
+
+    monkeypatch.setattr(Path, 'replace', temporarily_locked)
+    monkeypatch.setattr(launcher.time, 'sleep', sleeps.append)
+    launcher.write_status(status, 'ready', port=1234)
+    assert json.loads(status.read_text())['state'] == 'ready'
+    assert len(attempts) == 2 and len(sleeps) == 1
+
+
+def test_status_publication_does_not_hide_persistent_permission_errors(monkeypatch, tmp_path):
+    from pathlib import Path
+    from app.simulation import launcher
+    attempts = []
+
+    def locked(source, target):
+        attempts.append(1)
+        raise PermissionError('Persistent denial')
+
+    monkeypatch.setattr(Path, 'replace', locked)
+    monkeypatch.setattr(launcher.time, 'sleep', lambda _: None)
+    with pytest.raises(PermissionError, match='Persistent denial'):
+        launcher.write_status(tmp_path / 'ready.json', 'ready')
+    assert len(attempts) == 6
+
+
 @pytest.mark.parametrize("role", [[], ["launch"]])
 def test_one_command_launches_selected_session(monkeypatch, role):
     launched = []

@@ -16,12 +16,13 @@ from app.observability.http_logging import attach_http_logging
 
 
 class CatalogService:
-    def __init__(self, store: CatalogStore, client: httpx.AsyncClient, *, clock=None, index_url=INDEX_URL):
+    def __init__(self, store: CatalogStore, client: httpx.AsyncClient, *, clock=None, index_url=INDEX_URL, refresh_enabled=True):
         self.store, self.client = store, client
         attach_http_logging(client)
         self.clock = clock or (lambda: datetime.now(UTC))
         self.index_url = index_url
         self.last_report = None
+        self.refresh_enabled = refresh_enabled
 
     async def fetch(self, url, headers=None):
         if not allowed_url(url, self.index_url):
@@ -49,6 +50,8 @@ class CatalogService:
                 await asyncio.sleep(0.2 * 2 ** attempt)
 
     async def refresh(self, force=False):
+        if not self.refresh_enabled:
+            raise ValueError('catalog_refresh_disabled')
         start = self.clock()
         owner = str(uuid4())
         acquired = self.store.claim_refresh(local_day(start.isoformat()), owner,
@@ -117,7 +120,8 @@ class CatalogService:
             return self.last_report
 
     async def ensure_fresh(self):
-        await self.refresh()
+        if self.refresh_enabled:
+            await self.refresh()
         if not self.store.has_usable():
             raise ValueError("catalog_unavailable: run the route catalog refresh command and inspect its errors")
         state = self.store.state()

@@ -15,6 +15,7 @@ from pydantic import (
 )
 
 Text = Annotated[str, Field(min_length=1)]
+ReservationId = Annotated[str, Field(pattern=r"^TR-[A-HJ-NP-Z2-9]{8}$")]
 Mode = Literal["mock", "real"]
 
 
@@ -38,6 +39,7 @@ class ToolError(Contract):
     code: Text
     message: Text
     retryable: bool = False
+    attempts_exhausted: bool = False
 
 
 class ToolResult(Contract, Generic[T]):
@@ -57,32 +59,47 @@ class ToolResult(Contract, Generic[T]):
         return self
 
 
-class TripResult(Contract):
-    request_id: UUID
+class TripSubmission(Contract):
     status: Literal["confirmed", "failed"]
     route_id: Text | None = None
     date: Date | None = None
     guide_id: Text | None = None
-    reservation_id: Text | None = None
     equipment_items: list[ItemName] = Field(default_factory=list)
     failure_reason: Text | None = None
 
     @model_validator(mode="after")
     def check_terminal(self) -> Self:
         if self.status == "confirmed" and not all(
-            (self.route_id, self.date, self.guide_id, self.reservation_id)
+            (self.route_id, self.date, self.guide_id)
         ):
             raise ValueError(
-                "Confirmed trips require route, date, guide and reservation"
+                "Confirmed submissions require route, date and guide"
             )
         if self.status == "failed" and not self.failure_reason:
             raise ValueError("Failed trips require a reason")
         return self
 
 
-class Proposal(Contract):
+class TripResult(TripSubmission):
+    request_id: UUID
+    reservation_id: ReservationId | None = None
+
+    @model_validator(mode="after")
+    def check_reservation(self) -> Self:
+        if self.status == "confirmed" and not self.reservation_id:
+            raise ValueError("Confirmed trips require a reservation")
+        return self
+
+
+class TripProposal(Contract):
+    """Customer's requested terms before the manager selects a guide."""
+
     route_id: Text
     date: Date
+    equipment: dict[ItemName, PositiveInt]
+
+
+class Proposal(TripProposal):
     guide_id: Text
     equipment: dict[ItemName, PositiveInt] = Field(default_factory=dict)
 
@@ -94,7 +111,7 @@ class BookingRequest(Proposal):
 
 
 class Reservation(Proposal):
-    reservation_id: Text
+    reservation_id: ReservationId
     status: Literal["confirmed"]
     created_at: datetime
 
@@ -170,6 +187,10 @@ class RouteDetails(RouteSummary):
     description: Text
     constraints: list[str]
     source: Text
+    instructions: str | None = None
+    points_of_interest: str | None = None
+    full_text: str | None = None
+    parse_warnings: list[str] = Field(default_factory=list)
     source_route_id: str | None = None
     variant_id: str | None = None
     elevation_loss_m: int | None = None

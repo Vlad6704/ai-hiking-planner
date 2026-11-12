@@ -59,7 +59,14 @@ def write_status(path: Path | None, state: str, **details) -> None:
     if path is not None:
         temporary = path.with_suffix(".tmp")
         temporary.write_text(json.dumps({"state": state, "pid": os.getpid(), **details}), encoding="utf-8")
-        temporary.replace(path)
+        for attempt in range(6):
+            try:
+                temporary.replace(path)
+                return
+            except PermissionError:
+                if attempt == 5:
+                    raise
+                time.sleep(0.02)
 
 
 def wait_for_console(path: Path, process: subprocess.Popen, timeout: float, role: str) -> dict:

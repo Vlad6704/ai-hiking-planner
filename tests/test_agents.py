@@ -19,5 +19,6 @@ def test_default_luna_and_ollama_selection(monkeypatch):
     assert configured_model() == "openai:gpt-6-luna"
     luna = load_model()
     assert luna.model_name == "gpt-6-luna" and luna.reasoning_effort == "none"
+    assert luna.temperature == 1
     monkeypatch.setenv("HIKING_MODEL", "ollama:gemma4:26b")
     assert load_model().model == "gemma4:26b"

@@ -81,5 +81,6 @@ async def execute(name, arguments, call, settings, trace, actor, fallback=None, 
                 status="error",
                 mode=settings.mode,
                 source=name,
-                error=dict(code=code, message=code, retryable=retry),
+                error=dict(code=code, message=code, retryable=retry,
+                           attempts_exhausted=retry and attempt == settings.attempts),
             ).model_dump()

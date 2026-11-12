@@ -4,16 +4,22 @@ from app.models.contracts import Guide, Inventory, Reservation
 
 
 class HttpOperatorProvider:
-    def __init__(self, base_url, client):
+    def __init__(self, base_url, client, preset=None):
         if not base_url:
             raise ValueError("Set OPERATOR_URL for real mode")
         self.url = base_url.rstrip("/")
         self.client = client
+        self.preset = preset
         self.idempotent_reservations = False
 
     async def post(self, path, query, schema):
+        headers = {}
+        if self.preset is not None:
+            headers['X-Manual-Preset'] = self.preset.name
+            if self.preset.date:
+                headers['X-Manual-Preset-Date'] = self.preset.date.isoformat()
         response = await self.client.post(
-            self.url + path, json=query.model_dump(mode="json")
+            self.url + path, json=query.model_dump(mode="json"), headers=headers
         )
         response.raise_for_status()
         if path == "/guides":

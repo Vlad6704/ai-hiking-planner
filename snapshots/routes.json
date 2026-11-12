@@ -1,0 +1,1375 @@
+{
+  "schema_version": 1,
+  "seed_id": "official-catalog-2026-11-09",
+  "routes": [
+    {
+      "route_id": "GR-PNPE-201",
+      "name": "SENDA DEL ARCEDIANO",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/senda-arcediano.html",
+      "category": "GR",
+      "description": "La Senda del Arcediano llegó a ser una de las vías de comunicación más importantes entre el oriente asturiano y la Meseta. En el siglo X se la conocía como Vía Saliámica, nombre relacionado con su más que probable origen romano. Su actual nombre data del siglo XVIII, cuando D. Pedro Díaz de Oseja, Arcediano de Villaviciosa y natural de Sajambre reserva en su testamento partidas destinadas a la reparación y mantenimiento de la ruta. El camino discurre desde el puerto del Pontón hasta las inmediaciones de Cangas de Onís, cruzando a su paso los bosques sajambriegos y las majadas del concejo de Amieva. A lo largo del recorrido se pueden disfrutar algunos de los más sorprendentes paisajes de los Picos de Europa. Espesos bosques de hayas y robles, extensas praderías y acogedores pueblos contrastan con las cumbres próximas del Macizo Occidental de los Picos de Europa. A lo largo de la ruta el senderista descubrirá lugares de incomparable belleza, como la pradería y robledales de Verrunde, la Pica Ten, Los Collaos, el collado de Beza, las majadas de Saugu y Toneyo, y pueblos como Oseja, Soto y Amieva.",
+      "instructions": "La Senda del Arcediano discurre entre el puerto del Pontón y las inmediaciones de Tornín, cerca de Cangas de Onís, aunque la ruta señalizada en el interior del Parque Nacional corresponde al tramo entre Pontón y el collado de Angón, cerca de Amieva. Este trayecto es quizás excesivamente largo para hacerlo en una sola etapa, por lo que se sugiere dividir el trayecto en dos. Una primera, más corta y cómoda, entre el puerto del Pontón y Soto de Sajambre, y una segunda entre Soto y Amieva. Se puede añadir una tercera etapa, entre Amieva y Cangas de Onís, que se encuentra también señalizada fuera del Parque Nacional.",
+      "points_of_interest": "Los bosques en cualquier época del año, especialmente en otoño / El trazado de la calzada y las técnicas contractivas en muchos tramos / La arquitectura popular de pueblos como Oseja, Soto y Amieva / El paisaje desde cualquier punto elevado de la senda / Los sonidos y signos de existencia de una fauna que, aunque es abundante, resulta difícil de ver.",
+      "cautions": "Preste especial atención a la señalización de marcas de pintura / La nieve puede impedir el tránsito, especialmente en la zona alta. / Con niebla abstenerse de hacer la ruta. / Lleve provisión de agua para el recorrido. / Lleve siempre botas de montaña.",
+      "full_text": "Longitud (Length): 11 Km. (Pontón - Soto de Sajambre) / 27,5 Km. (Pontón - Amieva) Desnivel (Difference in altitude): Tramo Pontón - Soto de Sajambre: 211 m. de subida acumulada + 575 m. de bajada. / Ruta completa: 776 m. de subida acumulada + 1.470 m. de bajada Duración (Duration, in hours): 3 h. 55 min. (Pontón - Soto de Sajambre) / 9 h. 10 min. (ruta completa, desde puerto del Pontón hasta Amieva) Dificultad (Difficulty): Media. Recorrido muy largo para hacerlo en una sola jornada. Se recomienda hacer la ruta en dos etapas Pontón - Soto y Soto - Amieva Descripción (Description): La Senda del Arcediano llegó a ser una de las vías de comunicación más importantes entre el oriente asturiano y la Meseta. En el siglo X se la conocía como Vía Saliámica, nombre relacionado con su más que probable origen romano. Su actual nombre data del siglo XVIII, cuando D. Pedro Díaz de Oseja, Arcediano de Villaviciosa y natural de Sajambre reserva en su testamento partidas destinadas a la reparación y mantenimiento de la ruta. El camino discurre desde el puerto del Pontón hasta las inmediaciones de Cangas de Onís, cruzando a su paso los bosques sajambriegos y las majadas del concejo de Amieva. A lo largo del recorrido se pueden disfrutar algunos de los más sorprendentes paisajes de los Picos de Europa. Espesos bosques de hayas y robles, extensas praderías y acogedores pueblos contrastan con las cumbres próximas del Macizo Occidental de los Picos de Europa. A lo largo de la ruta el senderista descubrirá lugares de incomparable belleza, como la pradería y robledales de Verrunde, la Pica Ten, Los Collaos, el collado de Beza, las majadas de Saugu y Toneyo, y pueblos como Oseja, Soto y Amieva. Cómo hacer la ruta (How to make the trail): La Senda del Arcediano discurre entre el puerto del Pontón y las inmediaciones de Tornín, cerca de Cangas de Onís, aunque la ruta señalizada en el interior del Parque Nacional corresponde al tramo entre Pontón y el collado de Angón, cerca de Amieva. Este trayecto es quizás excesivamente largo para hacerlo en una sola etapa, por lo que se sugiere dividir el trayecto en dos. Una primera, más corta y cómoda, entre el puerto del Pontón y Soto de Sajambre, y una segunda entre Soto y Amieva. Se puede añadir una tercera etapa, entre Amieva y Cangas de Onís, que se encuentra también señalizada fuera del Parque Nacional. Preste atención a (Interesting places): Los bosques en cualquier época del año, especialmente en otoño / El trazado de la calzada y las técnicas contractivas en muchos tramos / La arquitectura popular de pueblos como Oseja, Soto y Amieva / El paisaje desde cualquier punto elevado de la senda / Los sonidos y signos de existencia de una fauna que, aunque es abundante, resulta difícil de ver. Precauciones: Preste especial atención a la señalización de marcas de pintura / La nieve puede impedir el tránsito, especialmente en la zona alta. / Con niebla abstenerse de hacer la ruta. / Lleve provisión de agua para el recorrido. / Lleve siempre botas de montaña. Caution notes: Pay special attention to the paint marks / Snow can block the passage, especially in high zones / With fog don't start walking / You must carry water / Always wear mountain shoes. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_gr_201_tcm30-70978.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_gr_201_tcm30-70979.pdf",
+      "raw_metrics": {
+        "length": "11 Km. (Pontón - Soto de Sajambre) / 27,5 Km. (Pontón - Amieva)",
+        "duration": "3 h. 55 min. (Pontón - Soto de Sajambre) / 9 h. 10 min. (ruta completa, desde puerto del Pontón hasta Amieva)",
+        "elevation": "Tramo Pontón - Soto de Sajambre: 211 m. de subida acumulada + 575 m. de bajada. / Ruta completa: 776 m. de subida acumulada + 1.470 m. de bajada",
+        "difficulty": "Media. Recorrido muy largo para hacerlo en una sola jornada. Se recomienda hacer la ruta en dos etapas Pontón - Soto y Soto - Amieva"
+      },
+      "variants": [
+        {
+          "variant_id": "GR-PNPE-201:ponton-soto-de-sajambre",
+          "key": "ponton-soto-de-sajambre",
+          "name": "(Pontón - Soto de Sajambre)",
+          "distance_m": 11000,
+          "duration_minutes": 235,
+          "ascent_m": 211,
+          "descent_m": 575,
+          "difficulty": "moderate",
+          "layout": "unknown"
+        },
+        {
+          "variant_id": "GR-PNPE-201:ponton-amieva",
+          "key": "ponton-amieva",
+          "name": "(Pontón - Amieva)",
+          "distance_m": 27500,
+          "duration_minutes": 550,
+          "ascent_m": null,
+          "descent_m": null,
+          "difficulty": "moderate",
+          "layout": "unknown"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "GR-PNPE-202",
+      "name": "RUTA DE LA RECONQUISTA",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-reconquista.html",
+      "category": "GR",
+      "description": "En el año 718 se libra en Covadonga la batalla que daría inició a la Reconquista de la Península tras la invasión musulmana. Un puñado de rebeldes cántabros y astures venció a un ejército numeroso de invasores, que al verse acorralados huyeron atravesando los Picos de Europa, para acabar sepultados en Cosgaya por un deslizamiento de tierras. La ruta de la Reconquista recupera parte del trayecto que siguieron los musulmanes en su huída. Se trata sin duda del recorrido señalizado más completo y ambicioso de los Picos de Europa, ya que permite atravesarlos en su totalidad de NO a SE, pasando por praderías, bosques, elevados puertos y profundos cañones, que sintetizan la esencia montañera de este Parque Nacional.",
+      "instructions": "Por tratarse de una ruta lineal, es necesario hacerla planificando el modo de regreso. Por otro lado, es obligado dividir la ruta al menos en tres etapas (Covadonga - Poncebos, Poncebos - Sotres y Sotres - Cosgaya), que se pueden hacer de forma independiente, y en uno u otro sentido. Etapa Poncebos - Covadonga: Es la más larga de las tres y la más dura, debido al elevado desnivel, que supera los 1.300 m. en ascenso y otros tantos en descenso. Se requiere una buena preparación para hacer este tramo de casi 11 h de duración, y contar además con buena meteorología y luz solar suficiente. No hay refugios de montaña a lo largo del recorrido, por lo que hay que planificar muy bien la ruta y los tiempos para completar el trayecto con luz de día. Etapa Poncebos - Sotres: Es la más corta y accesible. Tiene además el aliciente de pasar por la población de Bulnes tras remontar la Canal del Texu, y acceder a las praderías de Pandébano. Sotres es buen lugar para descansar y planificar la tercera etapa de la ruta entre esta población asturiana y la cántabra de Cosgaya.",
+      "points_of_interest": "En la etapa entre Poncebos y Covadonga: El tramo de ruta del Cares desde Culiembro hasta Poncebos / Las vistas desde Ostón / Las cabañas de los pastores a lo largo de todo el recorrido / La Vega de Comeya / Covadonga y su entorno. En la etapa entre Poncebos y Sotres: La Canal del Texu / El entorno de Bulnes / Las vistas del Naranjo de Bulnes en la subida a Pandébano / Las majadas e invernales en el tramo final hasta Sotres.",
+      "cautions": "Preste especial atención a la señalización de marcas de pintura / Recorrido muy largo. Calcule las fuerzas para el recorrido completo / La nieve puede impedir el tránsito, especialmente en la zona alta. / Con niebla abstenerse de hacer la ruta. / Lleve provisión de agua para el recorrido. / Lleve siempre botas de montaña.",
+      "full_text": "Longitud (Length): Ruta completa, Covadonga - Cosgaya: 58,6 Km. / Etapa Poncebos - Covadonga: 26,6 Km. / Etapa Poncebos Sotres: 9,4 Km. / Etapa Poncebos - Cosgaya: 35,9 Km. Desniveles acumulados (Difference in altitude): Ruta completa, Covadonga - Cosgaya: 2.873 m. de subida + 2.403 m. de bajada. / Etapa Poncebos - Covadonga: 1.387 m. de subida + 1.337 m. de bajada. / Etapa Poncebos - Sotres. 1.018 m. de subida + 318 m. de bajada / Etapa Poncebos - Cosgaya: 1.536 m. de subida + 1.016 m. de bajada Duración (Duration, in hours): Ruta completa, Covadonga - Cosgaya: 20 h. 35 min. / Etapa Covadonga - Poncebos: 10 h. 45 min. / Etapa Poncebos - Sotres: 3 h. / Etapa Poncebos - Cosgaya: 9 h. 40 min. Dificultad (Difficulty): Alta. Ruta muy larga, que requiere ser realizada al menos en tres etapas. Desnivel muy elevado Descripción (Description): En el año 718 se libra en Covadonga la batalla que daría inició a la Reconquista de la Península tras la invasión musulmana. Un puñado de rebeldes cántabros y astures venció a un ejército numeroso de invasores, que al verse acorralados huyeron atravesando los Picos de Europa, para acabar sepultados en Cosgaya por un deslizamiento de tierras. La ruta de la Reconquista recupera parte del trayecto que siguieron los musulmanes en su huída. Se trata sin duda del recorrido señalizado más completo y ambicioso de los Picos de Europa, ya que permite atravesarlos en su totalidad de NO a SE, pasando por praderías, bosques, elevados puertos y profundos cañones, que sintetizan la esencia montañera de este Parque Nacional. Cómo hacer la ruta (How to make the trail): Por tratarse de una ruta lineal, es necesario hacerla planificando el modo de regreso. Por otro lado, es obligado dividir la ruta al menos en tres etapas (Covadonga - Poncebos, Poncebos - Sotres y Sotres - Cosgaya), que se pueden hacer de forma independiente, y en uno u otro sentido. Etapa Poncebos - Covadonga: Es la más larga de las tres y la más dura, debido al elevado desnivel, que supera los 1.300 m. en ascenso y otros tantos en descenso. Se requiere una buena preparación para hacer este tramo de casi 11 h de duración, y contar además con buena meteorología y luz solar suficiente. No hay refugios de montaña a lo largo del recorrido, por lo que hay que planificar muy bien la ruta y los tiempos para completar el trayecto con luz de día. Etapa Poncebos - Sotres: Es la más corta y accesible. Tiene además el aliciente de pasar por la población de Bulnes tras remontar la Canal del Texu, y acceder a las praderías de Pandébano. Sotres es buen lugar para descansar y planificar la tercera etapa de la ruta entre esta población asturiana y la cántabra de Cosgaya. Preste atención a (Interesting places): En la etapa entre Poncebos y Covadonga: El tramo de ruta del Cares desde Culiembro hasta Poncebos / Las vistas desde Ostón / Las cabañas de los pastores a lo largo de todo el recorrido / La Vega de Comeya / Covadonga y su entorno. En la etapa entre Poncebos y Sotres: La Canal del Texu / El entorno de Bulnes / Las vistas del Naranjo de Bulnes en la subida a Pandébano / Las majadas e invernales en el tramo final hasta Sotres. Precauciones: Preste especial atención a la señalización de marcas de pintura / Recorrido muy largo. Calcule las fuerzas para el recorrido completo / La nieve puede impedir el tránsito, especialmente en la zona alta. / Con niebla abstenerse de hacer la ruta. / Lleve provisión de agua para el recorrido. / Lleve siempre botas de montaña. Caution notes: Pay special attention to the paint marks / Very long trail for round-trip./ Good programming and good physical conditions are needed for the entire circuit / Snow can block the passage, especially in high zones / With fog don't start walking / You must carry water / Always wear mountain shoes. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_gr_202_tcm30-70982.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_gr_202_tcm30-70330.pdf",
+      "raw_metrics": {
+        "length": "Ruta completa, Covadonga - Cosgaya: 58,6 Km. / Etapa Poncebos - Covadonga: 26,6 Km. / Etapa Poncebos Sotres: 9,4 Km. / Etapa Poncebos - Cosgaya: 35,9 Km.",
+        "duration": "Ruta completa, Covadonga - Cosgaya: 20 h. 35 min. / Etapa Covadonga - Poncebos: 10 h. 45 min. / Etapa Poncebos - Sotres: 3 h. / Etapa Poncebos - Cosgaya: 9 h. 40 min.",
+        "elevation": "Ruta completa, Covadonga - Cosgaya: 2.873 m. de subida + 2.403 m. de bajada. / Etapa Poncebos - Covadonga: 1.387 m. de subida + 1.337 m. de bajada. / Etapa Poncebos - Sotres. 1.018 m. de subida + 318 m. de bajada / Etapa Poncebos - Cosgaya: 1.536 m. de subida + 1.016 m. de bajada",
+        "difficulty": "Alta. Ruta muy larga, que requiere ser realizada al menos en tres etapas. Desnivel muy elevado"
+      },
+      "variants": [
+        {
+          "variant_id": "GR-PNPE-202:full",
+          "key": "full",
+          "name": "Ruta completa, Covadonga - Cosgaya:",
+          "distance_m": 58600,
+          "duration_minutes": 1235,
+          "ascent_m": 2873,
+          "descent_m": 2403,
+          "difficulty": "hard",
+          "layout": "unknown"
+        },
+        {
+          "variant_id": "GR-PNPE-202:etapa-poncebos-covadonga",
+          "key": "etapa-poncebos-covadonga",
+          "name": "Etapa Poncebos - Covadonga:",
+          "distance_m": 26600,
+          "duration_minutes": null,
+          "ascent_m": 1387,
+          "descent_m": 1337,
+          "difficulty": "hard",
+          "layout": "unknown"
+        },
+        {
+          "variant_id": "GR-PNPE-202:etapa-poncebos-sotres",
+          "key": "etapa-poncebos-sotres",
+          "name": "Etapa Poncebos Sotres:",
+          "distance_m": 9400,
+          "duration_minutes": 180,
+          "ascent_m": 1018,
+          "descent_m": 318,
+          "difficulty": "hard",
+          "layout": "unknown"
+        },
+        {
+          "variant_id": "GR-PNPE-202:etapa-poncebos-cosgaya",
+          "key": "etapa-poncebos-cosgaya",
+          "name": "Etapa Poncebos - Cosgaya:",
+          "distance_m": 35900,
+          "duration_minutes": 580,
+          "ascent_m": 1536,
+          "descent_m": 1016,
+          "difficulty": "hard",
+          "layout": "unknown"
+        }
+      ],
+      "warnings": [
+        "Duration is ambiguous or missing for etapa-poncebos-covadonga"
+      ],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-1",
+      "name": "RUTA DE FRASSINELLI",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-frassinelli.html",
+      "category": "PR",
+      "description": "El nombre de esta ruta se debe a Roberto Frassinelli, ciudadano alemán que vivió en la población de Corao a mediados del siglo XIX, y gran amante de la naturaleza, que frecuentaba este camino para acceder a la alta montaña del Macizo Occidental. El recorrido señalizado corresponde al tramo inferior de la ruta que frecuentaba Frassinelli, comprendido entre Corao y los Lagos de Covadonga. Esta ruta coincide también con una de las vías de acceso del ganado desde el valle del Güeña hasta los pastizales de Comeya y el entorno de los Lagos.",
+      "instructions": "Se puede hacer el trayecto en sentido ascendente (desde Corao hasta Buferrera) o descendente (sentido inverso); en cualquiera de los dos casos hay que tener en cuenta el viaje de regreso. Aconsejamos recurrir a un transporte público para subir hasta los Lagos, para desde allí hacer la ruta en cómodo descenso.",
+      "points_of_interest": "El Poljé de Comeya / Los restos de instalaciones mineras / Majadas e invernales a lo largo de todo el recorrido / La iglesia de Abamia.",
+      "cautions": "El tramo de carretera en la cuesta de Huesera / Atención a la niebla en algunas épocas del año.",
+      "full_text": "Longitud (Length): 15,1 Km. (solo ida); 30,2 Km. (ida y vuelta) Desnivel (Difference in altitude): 971 m. (en ascenso o descenso, según el sentido del recorrido) Duración (Duration, in hours): 3 h. 45 min. ascenso + 3 h. 15 min. descenso. (7 h. recorrido completo). Dificultad (Difficulty): Baja (solo ida). Media (ida y vuelta) Descripción (Description): El nombre de esta ruta se debe a Roberto Frassinelli, ciudadano alemán que vivió en la población de Corao a mediados del siglo XIX, y gran amante de la naturaleza, que frecuentaba este camino para acceder a la alta montaña del Macizo Occidental. El recorrido señalizado corresponde al tramo inferior de la ruta que frecuentaba Frassinelli, comprendido entre Corao y los Lagos de Covadonga. Esta ruta coincide también con una de las vías de acceso del ganado desde el valle del Güeña hasta los pastizales de Comeya y el entorno de los Lagos. Cómo hacer la ruta (How to make the trail): Se puede hacer el trayecto en sentido ascendente (desde Corao hasta Buferrera) o descendente (sentido inverso); en cualquiera de los dos casos hay que tener en cuenta el viaje de regreso. Aconsejamos recurrir a un transporte público para subir hasta los Lagos, para desde allí hacer la ruta en cómodo descenso. Preste atención a (Interesting places): El Poljé de Comeya / Los restos de instalaciones mineras / Majadas e invernales a lo largo de todo el recorrido / La iglesia de Abamia. Precauciones: El tramo de carretera en la cuesta de Huesera / Atención a la niebla en algunas épocas del año. Caution notes: Beware of road in \"Huesera\" area / Beware of fog ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_01_tcm30-70902.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_01_tcm30-70903.pdf",
+      "raw_metrics": {
+        "length": "15,1 Km. (solo ida); 30,2 Km. (ida y vuelta)",
+        "duration": "3 h. 45 min. ascenso + 3 h. 15 min. descenso. (7 h. recorrido completo).",
+        "elevation": "971 m. (en ascenso o descenso, según el sentido del recorrido)",
+        "difficulty": "Baja (solo ida). Media (ida y vuelta)"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-1:outbound",
+          "key": "outbound",
+          "name": "(solo ida)",
+          "distance_m": 15100,
+          "duration_minutes": null,
+          "ascent_m": null,
+          "descent_m": null,
+          "difficulty": "easy",
+          "layout": "unknown"
+        },
+        {
+          "variant_id": "PR-PNPE-1:return",
+          "key": "return",
+          "name": "(ida y vuelta)",
+          "distance_m": 30200,
+          "duration_minutes": 420,
+          "ascent_m": 971,
+          "descent_m": 971,
+          "difficulty": "moderate",
+          "layout": "out_and_back"
+        }
+      ],
+      "warnings": [
+        "Duration is ambiguous or missing for outbound"
+      ],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-10",
+      "name": "PUEBLOS DE SAJAMBRE",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-pueblos-sajambre.html",
+      "category": "PR",
+      "description": "Los habitantes del valle de Sajambre son unos de los que mejor han sabido conjugar la armonía entre las actividades tradicionales y el respeto por el entorno, gracias a un sabio uso de sus recursos. A través de esta ruta descubriremos la arquitectura de la piedra y la madera, disfrutando en el trayecto de prados, bosques y pastos que albergan gran variedad de especies de flora y fauna. El recorrido se inicia en la parte alta de Oseja, en la ermita de San Roque, siguiendo en dirección a Soto por la Senda del Arcediano. Desde Soto se baja hasta los pueblos de Ribota de Arriba y Ribota de Abajo, desde donde parte un sendero junto al río Sella. Finalmente una subida nos lleva de regreso a Oseja.",
+      "instructions": "Este recorrido es circular, lo que permite iniciarlo y finalizarlo en cualquier punto, haciéndolo a su vez en uno u otro sentido. Se recomienda partir de Oseja en dirección a Soto, visitar este precioso pueblo sajambriego y bajar luego por la carretera hasta el mirador de Vista Alegre, donde un sendero conduce hasta Ribota. Ya en el barrio más bajo de Ribota se remonta el río Sella hasta alcanzar el camino que conduce en suave ascenso hasta Oseja. Todo ello en 3 h. 30 min.",
+      "points_of_interest": "La arquitectura tradicional en cada pueblo / Iglesias y lavaderos en Oseja y Ribota / Las escuelas de Soto de Sajambre / El río Sella en Ribota de Abajo.",
+      "cautions": "Tenga cuidado con tráfico en el tramo de carretera entre Soto y el mirador de Vistalegre.",
+      "full_text": "Longitud (Length): 10,2 Km. (recorrido circular) Desnivel (Difference in altitude): 405 m., tanto de subida como de bajada Duración (Duration, in hours): 3 h 30 min. Dificultad (Difficulty): Baja Descripción (Description): Los habitantes del valle de Sajambre son unos de los que mejor han sabido conjugar la armonía entre las actividades tradicionales y el respeto por el entorno, gracias a un sabio uso de sus recursos. A través de esta ruta descubriremos la arquitectura de la piedra y la madera, disfrutando en el trayecto de prados, bosques y pastos que albergan gran variedad de especies de flora y fauna. El recorrido se inicia en la parte alta de Oseja, en la ermita de San Roque, siguiendo en dirección a Soto por la Senda del Arcediano. Desde Soto se baja hasta los pueblos de Ribota de Arriba y Ribota de Abajo, desde donde parte un sendero junto al río Sella. Finalmente una subida nos lleva de regreso a Oseja. Cómo hacer la ruta (How to make the trail): Este recorrido es circular, lo que permite iniciarlo y finalizarlo en cualquier punto, haciéndolo a su vez en uno u otro sentido. Se recomienda partir de Oseja en dirección a Soto, visitar este precioso pueblo sajambriego y bajar luego por la carretera hasta el mirador de Vista Alegre, donde un sendero conduce hasta Ribota. Ya en el barrio más bajo de Ribota se remonta el río Sella hasta alcanzar el camino que conduce en suave ascenso hasta Oseja. Todo ello en 3 h. 30 min. Preste atención a (Interesting places): La arquitectura tradicional en cada pueblo / Iglesias y lavaderos en Oseja y Ribota / Las escuelas de Soto de Sajambre / El río Sella en Ribota de Abajo. Precauciones: Tenga cuidado con tráfico en el tramo de carretera entre Soto y el mirador de Vistalegre. Caution notes: Be careful with the traffic on the road between Soto and Vistalegre viewpoint ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_10_tcm30-70869.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_10_tcm30-69765.pdf",
+      "raw_metrics": {
+        "length": "10,2 Km. (recorrido circular)",
+        "duration": "3 h 30 min.",
+        "elevation": "405 m., tanto de subida como de bajada",
+        "difficulty": "Baja"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-10:circuit",
+          "key": "circuit",
+          "name": "(recorrido circular)",
+          "distance_m": 10200,
+          "duration_minutes": 210,
+          "ascent_m": 405,
+          "descent_m": 405,
+          "difficulty": "easy",
+          "layout": "circular"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-11",
+      "name": "PANDERRUEDAS-POSADA DE VALDEÓN",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-panderruedas-posada-valdeon.html",
+      "category": "PR",
+      "description": "El valle de Valdeón es uno de los mejor conservados del Parque Nacional, en especial los bosques de hayas de su vertiente meridional, situados en la cara norte de la Cordillera Cantábrica. La ruta por el hayedo es un agradable recorrido en el que se percibe lo umbrío y húmedo de este tipo de bosques. Se cruzan numerosos ríos y arroyos, entre ellos el Cares en su tramo alto, cuando todavía es un arroyo. Siendo observadores, durante el recorrido podremos ver otras especies de árboles que se entremezclan discretamente con las hayas, huellas de la presencia de zorros, corzos, ciervos, jabalís y otros mamíferos que habitan en estos bosques así como numerosas aves forestales.",
+      "instructions": "La vista de los Picos de Europa y el valle de Valdeón desde el puerto de Panderruedas / Las distintas formas y colores del Hayedo en cada época del año, especialmente en otoño / Los sonidos del bosque y de sus aves forestales / Huellas y signos que desvelan la presencia de una variada fauna.",
+      "points_of_interest": "Este recorrido es lineal, por lo que se puede hacer de bajada o de subida. En cualquier caso habrá que tener en cuenta la forma de regresar a por el vehículo. En Valdeón hay servicio de taxis que permite volver a Panderruedas.",
+      "cautions": "Planificar bien el regreso al punto de estacionamiento de su vehículo ya que se trata de un recorrido lineal. Nunca abandone el camino; siga la señalización. Tenga en cuenta que este camino discurre por una zona de uso restringido, por lo que no está permitido abandonar la pista para adentrarse en el hayedo.",
+      "full_text": "Longitud (Length): 13,5 Km. (recorrido lineal) Desnivel (Difference in altitude): 511 m. de descenso Duración (Duration, in hours): 4 h. Dificultad (Difficulty): Baja Descripción (Description): El valle de Valdeón es uno de los mejor conservados del Parque Nacional, en especial los bosques de hayas de su vertiente meridional, situados en la cara norte de la Cordillera Cantábrica. La ruta por el hayedo es un agradable recorrido en el que se percibe lo umbrío y húmedo de este tipo de bosques. Se cruzan numerosos ríos y arroyos, entre ellos el Cares en su tramo alto, cuando todavía es un arroyo. Siendo observadores, durante el recorrido podremos ver otras especies de árboles que se entremezclan discretamente con las hayas, huellas de la presencia de zorros, corzos, ciervos, jabalís y otros mamíferos que habitan en estos bosques así como numerosas aves forestales. Cómo hacer la ruta (How to make the trail): La vista de los Picos de Europa y el valle de Valdeón desde el puerto de Panderruedas / Las distintas formas y colores del Hayedo en cada época del año, especialmente en otoño / Los sonidos del bosque y de sus aves forestales / Huellas y signos que desvelan la presencia de una variada fauna. Preste atención a (Interesting places): Este recorrido es lineal, por lo que se puede hacer de bajada o de subida. En cualquier caso habrá que tener en cuenta la forma de regresar a por el vehículo. En Valdeón hay servicio de taxis que permite volver a Panderruedas. Precauciones: Planificar bien el regreso al punto de estacionamiento de su vehículo ya que se trata de un recorrido lineal. Nunca abandone el camino; siga la señalización. Tenga en cuenta que este camino discurre por una zona de uso restringido, por lo que no está permitido abandonar la pista para adentrarse en el hayedo. Caution notes: This is one-way tour; please remember you have to come back to the car park. Never leave the trail, follow the marks. Please note that this trail crosses a restricted area; the entrance in the beech forest is forbidden. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_11_tcm30-70928.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_11_tcm30-70929.pdf",
+      "raw_metrics": {
+        "length": "13,5 Km. (recorrido lineal)",
+        "duration": "4 h.",
+        "elevation": "511 m. de descenso",
+        "difficulty": "Baja"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-11:main",
+          "key": "main",
+          "name": "(recorrido lineal)",
+          "distance_m": 13500,
+          "duration_minutes": 240,
+          "ascent_m": null,
+          "descent_m": 511,
+          "difficulty": "easy",
+          "layout": "unknown"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-12",
+      "name": "VEGA DE LLOS",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-vega-llos.html",
+      "category": "PR",
+      "description": "El valle de Valdeón es uno de los mejor conservados del Parque Nacional, en especial los bosques de hayas de su vertiente meridional. Esta ruta parte desde Posada y atraviesa algunos de los pueblos próximos para aproximarse a las cumbres de la vertiente meridional del Macizo Occidental de los Picos de Europa. El destino final en la Vega de Llos es uno de los lugares más bellos de los Picos de Europa. Al pie de las cumbres calizas es fácil observar a los rebecos pastando plácidamente.",
+      "instructions": "Este recorrido es circular, lo que permite iniciarlo y finalizarlo en cualquier punto, haciéndolo a su vez en uno u otro sentido. Se recomienda partir de Posada de Valdeón en dirección a Soto y Caldevilla, para desde allí subir por el valle de Argolla hasta el collado de Bustiello, desde donde la pista continúa hacia la Vega de Llos. El regreso hasta Bustiello es por el mismo sitio, para desde allí bajar directamente a Soto de Sajambre. Todo el recorrido (sin contar paradas) se hace cómodamente en menos de 4 h.",
+      "points_of_interest": "La vista de los bosques que cubren la vertiente sur del valle de Valdeón, desde la Vega de Llos/ Los rebaños de rebecos en Llos, al pie de las cumbres del Macizo Occidental / Los sonidos del bosque y de sus aves forestales.",
+      "cautions": "Siga la señalización y no abandone los caminos. / Lleve siempre botas de montaña.",
+      "full_text": "Longitud (Length): 13,5 Km. (circuito completo) Desnivel (Difference in altitude): 511 m. de descenso Duración (Duration, in hours): 4 h. Dificultad (Difficulty): Baja Descripción (Description): El valle de Valdeón es uno de los mejor conservados del Parque Nacional, en especial los bosques de hayas de su vertiente meridional. Esta ruta parte desde Posada y atraviesa algunos de los pueblos próximos para aproximarse a las cumbres de la vertiente meridional del Macizo Occidental de los Picos de Europa. El destino final en la Vega de Llos es uno de los lugares más bellos de los Picos de Europa. Al pie de las cumbres calizas es fácil observar a los rebecos pastando plácidamente. Cómo hacer la ruta (How to make the trail): Este recorrido es circular, lo que permite iniciarlo y finalizarlo en cualquier punto, haciéndolo a su vez en uno u otro sentido. Se recomienda partir de Posada de Valdeón en dirección a Soto y Caldevilla, para desde allí subir por el valle de Argolla hasta el collado de Bustiello, desde donde la pista continúa hacia la Vega de Llos. El regreso hasta Bustiello es por el mismo sitio, para desde allí bajar directamente a Soto de Sajambre. Todo el recorrido (sin contar paradas) se hace cómodamente en menos de 4 h. Preste atención a: La vista de los bosques que cubren la vertiente sur del valle de Valdeón, desde la Vega de Llos/ Los rebaños de rebecos en Llos, al pie de las cumbres del Macizo Occidental / Los sonidos del bosque y de sus aves forestales. Precauciones: Siga la señalización y no abandone los caminos. / Lleve siempre botas de montaña. Caution notes: Follow the marks and don't leave the trail / Always wear mountain shoes. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_12_tcm30-70932.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_12_tcm30-70933.pdf",
+      "raw_metrics": {
+        "length": "13,5 Km. (circuito completo)",
+        "duration": "4 h.",
+        "elevation": "511 m. de descenso",
+        "difficulty": "Baja"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-12:circuit",
+          "key": "circuit",
+          "name": "(circuito completo)",
+          "distance_m": 13500,
+          "duration_minutes": 240,
+          "ascent_m": null,
+          "descent_m": 511,
+          "difficulty": "easy",
+          "layout": "circular"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-14",
+      "name": "MONTÓ (VALLE DE PRADA)",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-monto.html",
+      "category": "PR",
+      "description": "Esta ruta es la única que se adentra en la zona de montaña situada al sur del valle de Valdeón, remontando el valle de Prada hasta la majada de Montó. El camino comienza en la localidad de Prada, cruzando el río Arenal, y va ganando altura entre prados de siega bordeados de árboles y arbustos que cobijan una gran variedad de especies animales. El bosque de rebollos y hayas completa el mosaico de paisajes. La ocupación humana y los usos tradicionales se reflejan en invernales y majadas que dan cuenta de la trashumancia ganadera impuesta por las estaciones. En Montó se adivinan los pequeños chozos y corrales, vestigio de la ocupación en el pasado de la majada desde primavera hasta principios del otoño. El recorrido se hace en todo momento siguiendo la pista forestal que accede a la majada, y el camino de regreso es obligadamente por la misma ruta.",
+      "instructions": "Este recorrido es lineal y sin posibilidad de enlace con otros caminos, por lo que es obligado hacer la bajada por la misma pista de subida. Existe la posibilidad de iniciar el recorrido en Santa Marina de Valdeón hasta mitad de la subida, enlazando con la pista en la Loma del Jito. También se puede subir por un camino y bajar por el otro, volviendo al punto de partida por la carretera que une Prada y Santa Marina.",
+      "points_of_interest": "Los hórreos de Prada / El ímpetu del río Arenal en primavera / El entorno de la majada de Montó / El paisaje del valle de Valdeón en el camino de bajada.",
+      "cautions": "Se debe llevar agua para el recorrido ante la falta de fuentes. / Lleve siempre botas de montaña. Tenga en cuenta que la mitad superior de este camino discurre por zona de uso restringido , por lo que no está permitido abandonar la pista .",
+      "full_text": "Longitud (Length): 11,6 Km. (ida y vuelta) Desnivel (Difference in altitude): 610 m. Duración (Duration, in hours): 4 h. 45 min. (ida y vuelta) Dificultad (Difficulty): Media Descripción (Description): Esta ruta es la única que se adentra en la zona de montaña situada al sur del valle de Valdeón, remontando el valle de Prada hasta la majada de Montó. El camino comienza en la localidad de Prada, cruzando el río Arenal, y va ganando altura entre prados de siega bordeados de árboles y arbustos que cobijan una gran variedad de especies animales. El bosque de rebollos y hayas completa el mosaico de paisajes. La ocupación humana y los usos tradicionales se reflejan en invernales y majadas que dan cuenta de la trashumancia ganadera impuesta por las estaciones. En Montó se adivinan los pequeños chozos y corrales, vestigio de la ocupación en el pasado de la majada desde primavera hasta principios del otoño. El recorrido se hace en todo momento siguiendo la pista forestal que accede a la majada, y el camino de regreso es obligadamente por la misma ruta. Cómo hacer la ruta (How to make the trail): Este recorrido es lineal y sin posibilidad de enlace con otros caminos, por lo que es obligado hacer la bajada por la misma pista de subida. Existe la posibilidad de iniciar el recorrido en Santa Marina de Valdeón hasta mitad de la subida, enlazando con la pista en la Loma del Jito. También se puede subir por un camino y bajar por el otro, volviendo al punto de partida por la carretera que une Prada y Santa Marina. Preste atención a (Interesting places): Los hórreos de Prada / El ímpetu del río Arenal en primavera / El entorno de la majada de Montó / El paisaje del valle de Valdeón en el camino de bajada. Precauciones: Se debe llevar agua para el recorrido ante la falta de fuentes. / Lleve siempre botas de montaña. Tenga en cuenta que la mitad superior de este camino discurre por zona de uso restringido , por lo que no está permitido abandonar la pista . Caution notes: Please carry water / Always wear mountain shoes Please note that the second half of this track is a restricted area, don't leave the track. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_14_tcm30-70936.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_14_tcm30-70937.pdf",
+      "raw_metrics": {
+        "length": "11,6 Km. (ida y vuelta)",
+        "duration": "4 h. 45 min. (ida y vuelta)",
+        "elevation": "610 m.",
+        "difficulty": "Media"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-14:return",
+          "key": "return",
+          "name": "(ida y vuelta)",
+          "distance_m": 11600,
+          "duration_minutes": 285,
+          "ascent_m": null,
+          "descent_m": null,
+          "difficulty": "moderate",
+          "layout": "out_and_back"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-15",
+      "name": "SENDA DEL MERCADILLO",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/senda-mercadillo.html",
+      "category": "PR",
+      "description": "Esta ruta discurre por lo que se conocía como las sendas del mercadillo, caminos utilizados por los vecinos de Valdeón para acudir a las ferias y mercados de ganado en la vecina comarca de Liébana. El recorrido tiene un enorme valor paisajístico, ya que va ganando altura poco a poco hasta alcanzar inmejorables vistas de los valles de Valdeón y Camaleño. Supone a su vez una aproximación a las zonas donde habitan algunas de las especies más representativas del Parque Nacional (oso, lobo, rebeco).",
+      "instructions": "El recorrido completo es una travesía, y por tanto se puede hacer en uno u otro sentido, lo que implica tener en cuenta el regreso al punto de partida si es necesario recoger el vehículo. Si se opta por ir y volver por el mismo camino hay que considerar que son 9 h. de trayecto. Este recorrido permite también aproximarse al collado de Remoña, desde donde se enlaza con la senda que sube hasta la Vega de Liordes. Esta ruta requiere buena preparación física, ya que es larga y de gran desnivel (8 h. ida y vuelta). Existe una variante señalizada de esta ruta, iniciando el recorrido en Santa Marina de Valdeón. En este caso el recorrido completo hasta Fuente De se puede hacer en 3 h. y 45 min. (7 h. 30 min. ida y vuelta). También se reduce así la opción de ir y volver a Liordes (6 h. 30 min.). Por último se puede subir al collado de Remoña desde el sendero que sale de Prada y bajar por Santa Marina por la variante, para desde ahí, por carretera, regresar a Prada, cerrando así un circuito completo por el valle del río Arenal (unas 5 h. el recorrido completo).",
+      "points_of_interest": "Las magníficas vistas desde cualquier punto de la ruta / El contraste de las formaciones calizas de los Picos de Europa con la roca silícea de la Cordillera Cantábrica.",
+      "cautions": "Con nieve o niebla abstenerse de hacer la ruta / Llevar provisión de agua suficiente / Atención a las marcas de pintura de la ruta y la señalización en general. / Lleve siempre botas de montaña. / Tenga en cuenta siempre el regreso al punto de partida.",
+      "full_text": "Longitud (Length): 13,2 Km. (recorrido de ida) / 26,4 Km. (ida y vuelta) Desnivel (Difference in altitude): 831 m. de ascenso y 692 m. de descenso Duración (Duration, in hours): 4 h. 30 min. (solo ida) / 9 h. ida y vuelta Dificultad (Difficulty): Media, ruta larga y con fuerte desnivel Descripción (Description): Esta ruta discurre por lo que se conocía como las sendas del mercadillo, caminos utilizados por los vecinos de Valdeón para acudir a las ferias y mercados de ganado en la vecina comarca de Liébana. El recorrido tiene un enorme valor paisajístico, ya que va ganando altura poco a poco hasta alcanzar inmejorables vistas de los valles de Valdeón y Camaleño. Supone a su vez una aproximación a las zonas donde habitan algunas de las especies más representativas del Parque Nacional (oso, lobo, rebeco). Cómo hacer la ruta (How to make the trail): El recorrido completo es una travesía, y por tanto se puede hacer en uno u otro sentido, lo que implica tener en cuenta el regreso al punto de partida si es necesario recoger el vehículo. Si se opta por ir y volver por el mismo camino hay que considerar que son 9 h. de trayecto. Este recorrido permite también aproximarse al collado de Remoña, desde donde se enlaza con la senda que sube hasta la Vega de Liordes. Esta ruta requiere buena preparación física, ya que es larga y de gran desnivel (8 h. ida y vuelta). Existe una variante señalizada de esta ruta, iniciando el recorrido en Santa Marina de Valdeón. En este caso el recorrido completo hasta Fuente De se puede hacer en 3 h. y 45 min. (7 h. 30 min. ida y vuelta). También se reduce así la opción de ir y volver a Liordes (6 h. 30 min.). Por último se puede subir al collado de Remoña desde el sendero que sale de Prada y bajar por Santa Marina por la variante, para desde ahí, por carretera, regresar a Prada, cerrando así un circuito completo por el valle del río Arenal (unas 5 h. el recorrido completo). Preste atención a (Interesting places): Las magníficas vistas desde cualquier punto de la ruta / El contraste de las formaciones calizas de los Picos de Europa con la roca silícea de la Cordillera Cantábrica. Precauciones: Con nieve o niebla abstenerse de hacer la ruta / Llevar provisión de agua suficiente / Atención a las marcas de pintura de la ruta y la señalización en general. / Lleve siempre botas de montaña. / Tenga en cuenta siempre el regreso al punto de partida. Caution notes: With fog, snow or snowing don't start walking / You must carry water / Attention to the paint marks and other signs / Always wear mountain shoes / Please note that you have to come back to the starting point. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_15_tcm30-70940.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_15_tcm30-70941.pdf",
+      "raw_metrics": {
+        "length": "13,2 Km. (recorrido de ida) / 26,4 Km. (ida y vuelta)",
+        "duration": "4 h. 30 min. (solo ida) / 9 h. ida y vuelta",
+        "elevation": "831 m. de ascenso y 692 m. de descenso",
+        "difficulty": "Media, ruta larga y con fuerte desnivel"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-15:outbound",
+          "key": "outbound",
+          "name": "(recorrido de ida)",
+          "distance_m": 13200,
+          "duration_minutes": 270,
+          "ascent_m": 831,
+          "descent_m": 692,
+          "difficulty": "moderate",
+          "layout": "unknown"
+        },
+        {
+          "variant_id": "PR-PNPE-15:return",
+          "key": "return",
+          "name": "(ida y vuelta)",
+          "distance_m": 26400,
+          "duration_minutes": 540,
+          "ascent_m": null,
+          "descent_m": null,
+          "difficulty": "moderate",
+          "layout": "out_and_back"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-16",
+      "name": "COLLADO JERMOSO",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-collado-jermoso.html",
+      "category": "PR",
+      "description": "El refugio de Collado Jermoso se encuentra emplazado sobre una terraza natural en el borde occidental del Macizo Central, en uno de los lugares más impresionantes de los Picos de Europa, desde donde se aprecian inmejorables vistas del valle de Valdeón y de las cumbres del Macizo del Cornión. El acceso desde la localidad de Cordiñanes es quizás el de mayor dureza, debido al enorme desnivel que hay que salvar. A través del hayedo y la canal de Asotín se accede a la zona de media montaña, para superar después los pedreros del Argayo Congosto que nos llevarán hasta las inmediaciones del refugio. Desde allí se pueden panificar algunas rutas de acceso al interior del Macizo Central, reservadas únicamente para los más preparados montañeros.",
+      "instructions": "Debido a la dureza del recorrido de subida, si se plantea hacer la ida y la vuelta por el mismo camino hay que tener en cuenta que son casi 8 h. de camino. Existe otra opción para acceder al refugio de Jermoso, la que partiendo del puerto de Pandetrave se dirige al collado Remoña y de ahí asciende por la canal de Pedabejo hasta la vega de Liordes. A partir de Liordes la ruta no está señalizada como PR, aunque el camino es claro si la meteorología es buena y si se cuenta con buena cartografía. En este caso se puede regresar por el PR señalizado para bajar hasta Cordiñanes.",
+      "points_of_interest": "Las impresionantes vistas desde el refugio / La ascensión por la canal de Asotín por encima del monte de Corona.",
+      "cautions": "¡ATENCIÓN! Ruta de alta montaña de extrema dureza. Absténgase de hacer el recorrido si no cuenta con la suficiente preparación física y el equipo adecuado. Precaución especial con nieve o niebla.",
+      "full_text": "Longitud (Length): 4,1 Km. (solo ida) Desnivel (Difference in altitude): 1.214 m. de subida Duración (Duration, in hours): 4 h. (solo ida) Dificultad (Difficulty): ¡ATENCIÓN! DIFICULTAD ALTA . Ruta de alta montaña con gran desnivel. Recorrido de extrema dureza. Descripción (Description): El refugio de Collado Jermoso se encuentra emplazado sobre una terraza natural en el borde occidental del Macizo Central, en uno de los lugares más impresionantes de los Picos de Europa, desde donde se aprecian inmejorables vistas del valle de Valdeón y de las cumbres del Macizo del Cornión. El acceso desde la localidad de Cordiñanes es quizás el de mayor dureza, debido al enorme desnivel que hay que salvar. A través del hayedo y la canal de Asotín se accede a la zona de media montaña, para superar después los pedreros del Argayo Congosto que nos llevarán hasta las inmediaciones del refugio. Desde allí se pueden panificar algunas rutas de acceso al interior del Macizo Central, reservadas únicamente para los más preparados montañeros. Cómo hacer la ruta (How to make the trail): Debido a la dureza del recorrido de subida, si se plantea hacer la ida y la vuelta por el mismo camino hay que tener en cuenta que son casi 8 h. de camino. Existe otra opción para acceder al refugio de Jermoso, la que partiendo del puerto de Pandetrave se dirige al collado Remoña y de ahí asciende por la canal de Pedabejo hasta la vega de Liordes. A partir de Liordes la ruta no está señalizada como PR, aunque el camino es claro si la meteorología es buena y si se cuenta con buena cartografía. En este caso se puede regresar por el PR señalizado para bajar hasta Cordiñanes. Preste atención a (Interesting places): Las impresionantes vistas desde el refugio / La ascensión por la canal de Asotín por encima del monte de Corona. Precauciones: ¡ATENCIÓN! Ruta de alta montaña de extrema dureza. Absténgase de hacer el recorrido si no cuenta con la suficiente preparación física y el equipo adecuado. Precaución especial con nieve o niebla. Caution notes: WARNING! High mountain trail extremely hard. Start walking only in case you carry appropriate equipment and you have good physical condition. Special precautions in case of snow or fog. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_16_tcm30-70985.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_16_tcm30-70986.pdf",
+      "raw_metrics": {
+        "length": "4,1 Km. (solo ida)",
+        "duration": "4 h. (solo ida)",
+        "elevation": "1.214 m. de subida",
+        "difficulty": "¡ATENCIÓN! DIFICULTAD ALTA . Ruta de alta montaña con gran desnivel. Recorrido de extrema dureza."
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-16:outbound",
+          "key": "outbound",
+          "name": "(solo ida)",
+          "distance_m": 4100,
+          "duration_minutes": 240,
+          "ascent_m": 1214,
+          "descent_m": null,
+          "difficulty": "hard",
+          "layout": "unknown"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-17",
+      "name": "ENTORNO DE TRESVISO",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-entorno-tresviso.html",
+      "category": "PR",
+      "description": "El pueblo de Tresviso se asienta en una ladera de exposición sur situada por encima del desfiladero de Urdón, en un emplazamiento en el que cada rincón del terreno ha sido aprovechado para los distintos usos y necesidades de la población. Este camino discurre por prados de siega y bosquetes de robles que se asoman al precipicio del desfiladero, con punto de inicio y final en el pueblo de Tresviso.",
+      "instructions": "Este recorrido es circular, lo que permite iniciarlo y finalizarlo en cualquier punto, haciéndolo a su vez en uno u otro sentido. Se recomienda partir de Tresviso en dirección SO y hacer el recorrido en el sentido de las agujas del reloj. Todo ello en 1 h. 30 min.",
+      "points_of_interest": "Las increíbles vistas hacia el desfiladero del Urdón / El magnífico robledal que se da sombra a casi todo el recorrido.",
+      "cautions": "Atención a la señalización de marcas de pintura.",
+      "full_text": "Longitud (Length): 3 Km. (circular) Desnivel (Difference in altitude): 160 m (bajada y subida) Duración (Duration, in hours): 1 h. 30 min. Dificultad (Difficulty): Baja Descripción (Description): El pueblo de Tresviso se asienta en una ladera de exposición sur situada por encima del desfiladero de Urdón, en un emplazamiento en el que cada rincón del terreno ha sido aprovechado para los distintos usos y necesidades de la población. Este camino discurre por prados de siega y bosquetes de robles que se asoman al precipicio del desfiladero, con punto de inicio y final en el pueblo de Tresviso. Cómo hacer la ruta (How to make the trail): Este recorrido es circular, lo que permite iniciarlo y finalizarlo en cualquier punto, haciéndolo a su vez en uno u otro sentido. Se recomienda partir de Tresviso en dirección SO y hacer el recorrido en el sentido de las agujas del reloj. Todo ello en 1 h. 30 min. Preste atención a (Interesting places): Las increíbles vistas hacia el desfiladero del Urdón / El magnífico robledal que se da sombra a casi todo el recorrido. Precauciones: Atención a la señalización de marcas de pintura. Caution notes: Attention to the paint marks. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_17_tcm30-70943.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_17_tcm30-70944.pdf",
+      "raw_metrics": {
+        "length": "3 Km. (circular)",
+        "duration": "1 h. 30 min.",
+        "elevation": "160 m (bajada y subida)",
+        "difficulty": "Baja"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-17:circuit",
+          "key": "circuit",
+          "name": "(circular)",
+          "distance_m": 3000,
+          "duration_minutes": 90,
+          "ascent_m": 160,
+          "descent_m": 160,
+          "difficulty": "easy",
+          "layout": "circular"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-18",
+      "name": "JOU DE LOS CABRONES",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-jou-cabrones.html",
+      "category": "PR",
+      "description": "El Jou de los Cabrones se encuentra en pleno corazón del Macizo Central de los Picos de Europa, rodeado de las cumbres más altas de la Cordillera Cantábrica. El pequeño refugio José Ramón Lueje ocupa un emplazamiento privilegiado, donde solo el viento rompe el silencio de la montaña. El recorrido de acceso es una de las rutas más duras de los Picos de Europa, debido sobre todo al enorme desnivel que hay que salvar. En el tramo bajo se pasa por las inmediaciones del pueblo de Bulnes, y se sigue el trayecto de acceso por la canal de Amuesa hasta la majada del mismo nombre, lugar de pastoreo en los meses de verano. La mitad superior de la ruta se adentra en la alta montaña de los Picos de Europa a través de un duro y empinado sendero.",
+      "instructions": "Debido a la dureza del recorrido de subida, y teniendo en cuenta que hay que hacer la ida y la vuelta por el mismo camino, (más de 11 h. en total), se propone hacer la ruta en dos jornadas, una de ida, pernoctando en el refugio, y al día siguiente la vuelta. Existe también la posibilidad de ir desde el Jou de los Cabrones a la Vega de Urriellu, tomando como puntos de referencia los dos refugios, donde se puede pernoctar. Hay que tener en cuenta que este trayecto no está señalizado. Por último se puede considerar la opción de utilizar el funicular para ahorrarse la primera hora de subida entre Poncebos y Bulnes (430 m. de desnivel).",
+      "points_of_interest": "El emplazamiento del pueblo de Bulnes / La progresión hacia la alta montaña / Las formaciones kársticas al pie de los Cuetos del Trave / El paisaje de las cumbres del Macizo Central.",
+      "cautions": "¡ATENCIÓN! RUTA DE MONTAÑA DE ALTA DIFICULTAD / Gran desnivel / Este recorrido ha sido descatalogado como ruta de pequeño recorrido por su extrema dureza y elevado desnivel / Absténgase de hacer la ruta si no se cuenta con suficiente preparación física y equipo adecuado / Precaución especial con nieve o niebla.",
+      "full_text": "Longitud (Length): 8,5 Km. (solo ida) / 17 Km. (ida y vuelta) Desnivel (Difference in altitude): 1.780 m. subida (solo ida) + 1.780 m. bajada (ida y vuelta) Duración (Duration, in hours): 5 h. 45 min. (tramo Poncebos - Jou de los Cabrones) Dificultad (Difficulty): Muy Alta. Gran desnivel, recorrido de enorme dureza con tránsito por zonas de alta montaña de cierta dificultad. Descripción (Description): El Jou de los Cabrones se encuentra en pleno corazón del Macizo Central de los Picos de Europa, rodeado de las cumbres más altas de la Cordillera Cantábrica. El pequeño refugio José Ramón Lueje ocupa un emplazamiento privilegiado, donde solo el viento rompe el silencio de la montaña. El recorrido de acceso es una de las rutas más duras de los Picos de Europa, debido sobre todo al enorme desnivel que hay que salvar. En el tramo bajo se pasa por las inmediaciones del pueblo de Bulnes, y se sigue el trayecto de acceso por la canal de Amuesa hasta la majada del mismo nombre, lugar de pastoreo en los meses de verano. La mitad superior de la ruta se adentra en la alta montaña de los Picos de Europa a través de un duro y empinado sendero. Cómo hacer la ruta (How to make the trail): Debido a la dureza del recorrido de subida, y teniendo en cuenta que hay que hacer la ida y la vuelta por el mismo camino, (más de 11 h. en total), se propone hacer la ruta en dos jornadas, una de ida, pernoctando en el refugio, y al día siguiente la vuelta. Existe también la posibilidad de ir desde el Jou de los Cabrones a la Vega de Urriellu, tomando como puntos de referencia los dos refugios, donde se puede pernoctar. Hay que tener en cuenta que este trayecto no está señalizado. Por último se puede considerar la opción de utilizar el funicular para ahorrarse la primera hora de subida entre Poncebos y Bulnes (430 m. de desnivel). Preste atención a (Interesting places): El emplazamiento del pueblo de Bulnes / La progresión hacia la alta montaña / Las formaciones kársticas al pie de los Cuetos del Trave / El paisaje de las cumbres del Macizo Central. Precauciones: ¡ATENCIÓN! RUTA DE MONTAÑA DE ALTA DIFICULTAD / Gran desnivel / Este recorrido ha sido descatalogado como ruta de pequeño recorrido por su extrema dureza y elevado desnivel / Absténgase de hacer la ruta si no se cuenta con suficiente preparación física y equipo adecuado / Precaución especial con nieve o niebla. Caution notes: WARNING! MOUNTAIN TRAIL OF HIGH DIFFICULTY / Very big difference of altitude / This route is out of the list of the short tour trail because is extremely hard / Start walking only in case you carry appropriate equipment and you have good physical condition / Special precautions in case of snow or fog. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_18_tcm30-70763.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/Perfil-PR-18_tcm30-70988.pdf",
+      "raw_metrics": {
+        "length": "8,5 Km. (solo ida) / 17 Km. (ida y vuelta)",
+        "duration": "5 h. 45 min. (tramo Poncebos - Jou de los Cabrones)",
+        "elevation": "1.780 m. subida (solo ida) + 1.780 m. bajada (ida y vuelta)",
+        "difficulty": "Muy Alta. Gran desnivel, recorrido de enorme dureza con tránsito por zonas de alta montaña de cierta dificultad."
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-18:outbound",
+          "key": "outbound",
+          "name": "(solo ida)",
+          "distance_m": 8500,
+          "duration_minutes": null,
+          "ascent_m": 1780,
+          "descent_m": null,
+          "difficulty": "hard",
+          "layout": "unknown"
+        },
+        {
+          "variant_id": "PR-PNPE-18:return",
+          "key": "return",
+          "name": "(ida y vuelta)",
+          "distance_m": 17000,
+          "duration_minutes": null,
+          "ascent_m": 1780,
+          "descent_m": 1780,
+          "difficulty": "hard",
+          "layout": "out_and_back"
+        }
+      ],
+      "warnings": [
+        "Duration is ambiguous or missing for outbound",
+        "Duration is ambiguous or missing for return"
+      ],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-19",
+      "name": "CANAL DE CAMBURERO",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-canal-camburero.html",
+      "category": "PR",
+      "description": "Antes de que se abriera el camino de acceso a la Vega de Urriello desde Pandébano, esta era la vía natural de aproximación al Naranjo de Bulnes por el Norte. Se trata de un recorrido de extrema dureza, debido sobre todo al elevado desnivel que hay que salvar, y también al terreno por el que discurre en su tramo superior, sobre senderos apenas marcados sobre canchales y pedreros. Es a la vez un recorrido de gran belleza, que aproxima al montañero al corazón calizo de los Picos de Europa, remontando las profundas gargantas de la canal del Texu, Balcosín y Camburero.",
+      "instructions": "El recorrido completo es el que discurre entre Poncebos y Urriellu, aunque se puede tomar el funicular hasta Bulnes, ahorrando así 430 m. de desnivel, lo que supone una hora menos de recorrido. Se puede pernoctar en el refugio tras la subida, para desde allí hacer alguna otra ruta por la alta montaña, así como hacer el camino de regreso por Pandébano hasta Sotres.",
+      "points_of_interest": "La ubicación de Bulnes entre elevadas montañas rocosas. / La progresión desde la baja hasta la alta montaña de los Picos de Europa. / La colosal presencia del Naranjo de Bulnes, y de su pared NO, con casi 600 m. de desplome vertical.",
+      "cautions": "¡ATENCIÓN! RUTA DE MONTAÑA DE ALTA DIFICULTAD / Gran desnivel / Este recorrido ha sido descatalogado como ruta de pequeño recorrido por su extrema dureza y elevado desnivel / Absténgase de hacer la ruta si no se cuenta con suficiente preparación física y equipo adecuado / Precaución especial con nieve o niebla.",
+      "full_text": "Longitud (Length): 8,3 Km. (Poncebos - Vega Urriellu) / 16,6 Km. (ida y vuelta) Desnivel (Difference in altitude): 1.700 m. ascenso Poncebos - Camburero / 1.700 m. descenso en sentido inverso Duración (Duration, in hours): 5 h. 30 min. (Poncebos - Camburero) / 10 h. 30 min. (ida y vuelta) Dificultad (Difficulty): Muy Alta. Gran desnivel, recorrido de enorme dureza con tránsito por zonas de alta montaña de cierta dificultad Descripción (Description): Antes de que se abriera el camino de acceso a la Vega de Urriello desde Pandébano, esta era la vía natural de aproximación al Naranjo de Bulnes por el Norte. Se trata de un recorrido de extrema dureza, debido sobre todo al elevado desnivel que hay que salvar, y también al terreno por el que discurre en su tramo superior, sobre senderos apenas marcados sobre canchales y pedreros. Es a la vez un recorrido de gran belleza, que aproxima al montañero al corazón calizo de los Picos de Europa, remontando las profundas gargantas de la canal del Texu, Balcosín y Camburero. Cómo hacer la ruta (How to make the trail): El recorrido completo es el que discurre entre Poncebos y Urriellu, aunque se puede tomar el funicular hasta Bulnes, ahorrando así 430 m. de desnivel, lo que supone una hora menos de recorrido. Se puede pernoctar en el refugio tras la subida, para desde allí hacer alguna otra ruta por la alta montaña, así como hacer el camino de regreso por Pandébano hasta Sotres. Preste atención a (Interesting places): La ubicación de Bulnes entre elevadas montañas rocosas. / La progresión desde la baja hasta la alta montaña de los Picos de Europa. / La colosal presencia del Naranjo de Bulnes, y de su pared NO, con casi 600 m. de desplome vertical. Precauciones: ¡ATENCIÓN! RUTA DE MONTAÑA DE ALTA DIFICULTAD / Gran desnivel / Este recorrido ha sido descatalogado como ruta de pequeño recorrido por su extrema dureza y elevado desnivel / Absténgase de hacer la ruta si no se cuenta con suficiente preparación física y equipo adecuado / Precaución especial con nieve o niebla. Caution notes: WARNING! MOUNTAIN TRAIL OF HIGH DIFFICULTY / Very big difference of altitude / This route is out of the list of the short tour trail because is extremely hard / Start walking only in case you carry appropriate equipment and you have good physical condition / Special precautions in case of snow or fog. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_19_tcm30-70823.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_19_tcm30-70341.pdf",
+      "raw_metrics": {
+        "length": "8,3 Km. (Poncebos - Vega Urriellu) / 16,6 Km. (ida y vuelta)",
+        "duration": "5 h. 30 min. (Poncebos - Camburero) / 10 h. 30 min. (ida y vuelta)",
+        "elevation": "1.700 m. ascenso Poncebos - Camburero / 1.700 m. descenso en sentido inverso",
+        "difficulty": "Muy Alta. Gran desnivel, recorrido de enorme dureza con tránsito por zonas de alta montaña de cierta dificultad"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-19:main",
+          "key": "main",
+          "name": "(Poncebos - Vega Urriellu)",
+          "distance_m": 8300,
+          "duration_minutes": null,
+          "ascent_m": null,
+          "descent_m": null,
+          "difficulty": "hard",
+          "layout": "unknown"
+        },
+        {
+          "variant_id": "PR-PNPE-19:return",
+          "key": "return",
+          "name": "(ida y vuelta)",
+          "distance_m": 16600,
+          "duration_minutes": 630,
+          "ascent_m": null,
+          "descent_m": null,
+          "difficulty": "hard",
+          "layout": "out_and_back"
+        }
+      ],
+      "warnings": [
+        "Duration is ambiguous or missing for main"
+      ],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-2",
+      "name": "LAGOS DE COVADONGA",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-lagos-covadonga.html",
+      "category": "PR",
+      "description": "Este recorrido circular en torno a los Lagos de Covadonga es uno de los más completos y visitados del Parque Nacional de los Picos de Europa. Al interés geológico de los propios lagos se le unen los valores paisajísticos que se disfrutan en toda la ruta, especialmente desde los miradores del Príncipe y Entrelagos. El recorrido largo discurre por el misterioso hayedo de Palomberu y las praderías abiertas de la Vega de Enol.",
+      "instructions": "Partiendo del aparcamiento de Buferrera, se accede primero el Centro de Visitantes Pedro Pidal, que se recomienda visitar. Posteriormente, tras acercarse hasta el mirador del Príncipe, se regresa para adentrarse en las minas de Buferrera en dirección al lago Ercina. El recorrido se completa dando un rodeo detrás del monte del Mosquital, pasando por la vega del Bricial y el hayedo de Palomberu, para salir finalmente a la Vega de Enol desde donde se regresa a Buferrera. Existe una versión corta de la ruta, de poco más de una hora de duración. Para ello, al llegar al Lago Ercina se debe ascender hasta el mirador Entrelagos, desde donde se baja hasta el lago Enol, y de ahí regresar al aparcamiento Buferrera, todo ello siguiendo un cómodo sendero empedrado. Esta opción es la más frecuentada por los visitantes.",
+      "points_of_interest": "Formaciones lacustres / El recorrido interior por las minas / El Centro de Visitantes Pedro Pidal y sus exposiciones / Maqueta de los Picos de Europa / El hayedo de Palomberu / Vistas de las cumbres del Macizo Occidental.",
+      "cautions": "La niebla, especialmente en el recorrido largo.",
+      "full_text": "Longitud (Length): 5 Km. (recorrido largo); 3 Km. (recorrido corto) Desnivel (Difference in altitude): 50 m. (de ascenso y descenso) Duración (Duration, in hours): 2,5 h. (recorrido largo); 1 h. (recorrido corto). Añadir 1 h. más si se incluye el Centro de Visitantes Pedro Pidal y la maqueta de los Picos de Europa. Dificultad (Difficulty): Baja Descripción (Description): Este recorrido circular en torno a los Lagos de Covadonga es uno de los más completos y visitados del Parque Nacional de los Picos de Europa. Al interés geológico de los propios lagos se le unen los valores paisajísticos que se disfrutan en toda la ruta, especialmente desde los miradores del Príncipe y Entrelagos. El recorrido largo discurre por el misterioso hayedo de Palomberu y las praderías abiertas de la Vega de Enol. Cómo hacer la ruta (How to make the trail): Partiendo del aparcamiento de Buferrera, se accede primero el Centro de Visitantes Pedro Pidal, que se recomienda visitar. Posteriormente, tras acercarse hasta el mirador del Príncipe, se regresa para adentrarse en las minas de Buferrera en dirección al lago Ercina. El recorrido se completa dando un rodeo detrás del monte del Mosquital, pasando por la vega del Bricial y el hayedo de Palomberu, para salir finalmente a la Vega de Enol desde donde se regresa a Buferrera. Existe una versión corta de la ruta, de poco más de una hora de duración. Para ello, al llegar al Lago Ercina se debe ascender hasta el mirador Entrelagos, desde donde se baja hasta el lago Enol, y de ahí regresar al aparcamiento Buferrera, todo ello siguiendo un cómodo sendero empedrado. Esta opción es la más frecuentada por los visitantes. Preste atención a (Interesting places): Formaciones lacustres / El recorrido interior por las minas / El Centro de Visitantes Pedro Pidal y sus exposiciones / Maqueta de los Picos de Europa / El hayedo de Palomberu / Vistas de las cumbres del Macizo Occidental. Precauciones: La niebla, especialmente en el recorrido largo. Caution notes: Beware of fog, especially in long tour trail. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_02_tcm30-69771.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_02_tcm30-70863.pdf",
+      "raw_metrics": {
+        "length": "5 Km. (recorrido largo); 3 Km. (recorrido corto)",
+        "duration": "2,5 h. (recorrido largo); 1 h. (recorrido corto). Añadir 1 h. más si se incluye el Centro de Visitantes Pedro Pidal y la maqueta de los Picos de Europa.",
+        "elevation": "50 m. (de ascenso y descenso)",
+        "difficulty": "Baja"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-2:long",
+          "key": "long",
+          "name": "(recorrido largo)",
+          "distance_m": 5000,
+          "duration_minutes": 150,
+          "ascent_m": 50,
+          "descent_m": 50,
+          "difficulty": "easy",
+          "layout": "circular"
+        },
+        {
+          "variant_id": "PR-PNPE-2:short",
+          "key": "short",
+          "name": "(recorrido corto)",
+          "distance_m": 3000,
+          "duration_minutes": 60,
+          "ascent_m": 50,
+          "descent_m": 50,
+          "difficulty": "easy",
+          "layout": "circular"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-20",
+      "name": "MONTE CAMBA (TIELVE-SOTRES)",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-monte-camba.html",
+      "category": "PR",
+      "description": "Tielve y Sotres son dos poblaciones vinculadas a la elaboración del queso de Cabrales, consecuencia de una actividad ganadera que sus pobladores han venido practicando desde tiempos remotos. La ruta propuesta es un circuito alrededor del Monte Camba, que separa estas dos poblaciones, pasando por algunas de las zonas ganaderas de su entorno. El recorrido se puede empezar en uno u otro pueblo. Recomendamos hacer el recorrido en el sentido de las agujas del reloj.",
+      "instructions": "Por tratarse de una ruta circular se puede iniciar en cualquiera de las dos poblaciones, Tielve o Sotres, y también en uno u otro sentido. Si se inicia aquí, en Tielve, recomendamos hacerla en sentido de las agujas del reloj, empezando por la subida hacia las majadas de Tobaos y Valfrío, de esta forma se hace primero la parte más dura del recorrido. El resto del camino es cómodo, siguiendo siempre la señalización de la ruta.",
+      "points_of_interest": "Las vistas del Naranjo de Bulnes desde Valfrío / El hayedo del Monte Camba, especialmente en otoño.",
+      "cautions": "Cuidado con el tráfico en el tramo de carretera de 1,5 Km. que hay cerca de Tielve / Atención a la señalización en el tramo entre Valfrío y Sotres.",
+      "full_text": "Longitud (Length): 14,1 Km. el circuito completo Tielve - Sotres - Tielve Desnivel (Difference in altitude): 530 m. de subida y de bajada Duración (Duration, in hours): 4 h. 30 min. (recorrido completo) Dificultad (Difficulty): Media Descripción (Description): Tielve y Sotres son dos poblaciones vinculadas a la elaboración del queso de Cabrales, consecuencia de una actividad ganadera que sus pobladores han venido practicando desde tiempos remotos. La ruta propuesta es un circuito alrededor del Monte Camba, que separa estas dos poblaciones, pasando por algunas de las zonas ganaderas de su entorno. El recorrido se puede empezar en uno u otro pueblo. Recomendamos hacer el recorrido en el sentido de las agujas del reloj. Cómo hacer la ruta (How to make the trail): Por tratarse de una ruta circular se puede iniciar en cualquiera de las dos poblaciones, Tielve o Sotres, y también en uno u otro sentido. Si se inicia aquí, en Tielve, recomendamos hacerla en sentido de las agujas del reloj, empezando por la subida hacia las majadas de Tobaos y Valfrío, de esta forma se hace primero la parte más dura del recorrido. El resto del camino es cómodo, siguiendo siempre la señalización de la ruta. Preste atención a (Interesting places): Las vistas del Naranjo de Bulnes desde Valfrío / El hayedo del Monte Camba, especialmente en otoño. Precauciones: Cuidado con el tráfico en el tramo de carretera de 1,5 Km. que hay cerca de Tielve / Atención a la señalización en el tramo entre Valfrío y Sotres. Caution notes: Be careful with road traffic near Tielve village / Attention to the signs between Valfrio and Sotres. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_20_tcm30-70947.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_20_tcm30-70948.pdf",
+      "raw_metrics": {
+        "length": "14,1 Km. el circuito completo Tielve - Sotres - Tielve",
+        "duration": "4 h. 30 min. (recorrido completo)",
+        "elevation": "530 m. de subida y de bajada",
+        "difficulty": "Media"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-20:circuit",
+          "key": "circuit",
+          "name": "el circuito completo Tielve - Sotres - Tielve",
+          "distance_m": 14100,
+          "duration_minutes": 270,
+          "ascent_m": 530,
+          "descent_m": 530,
+          "difficulty": "moderate",
+          "layout": "circular"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-21",
+      "name": "VEGA DE URRIELLU",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-vega-urriellu.html",
+      "category": "PR",
+      "description": "En 1.986, a la vez que se amplia el refugio Julián Delgado Úbeda o de la Vega de Urriellu, se decide abrir una nueva ruta de acceso al mismo, más corta y cómoda que la de Camburero, comunicando el refugio con Sotres a través del collado de Pandébano. La senda supone un brusco tránsito entre las praderías del entorno de Sotres y las moles calizas del Macizo Central de los Picos de Europa, destacando sobre todo la figura imponente del Naranjo de Bulnes, que acompañará al montañero después de superar el Collado Vallejo.",
+      "instructions": "El recorrido es lineal, por lo que necesariamente es de ida y vuelta, y puede hacerse muy largo para senderistas no preparados. Se puede hacer en dos etapas pernoctando en el refugio, de esta forma se disfrutará además de una noche bajo el cielo estrellado de los Picos de Europa. Desde el refugio se pueden plantear otras rutas de montaña hacia el interior del Macizo Central, aunque éstas no están señalizadas. Para esto se requiere un buen conocimiento del terreno, buena preparación física y equipo adecuado.",
+      "points_of_interest": "Los cambios de paisaje en el tránsito desde las zonas bajas a la alta montaña / Las majadas e invernales / La impresionante mole rocosa del Naranjo de Bulnes.",
+      "cautions": "¡ATENCIÓN! Con nieve o hielo el recorrido puede ser peligroso en el paso de Collado Vallejo / Recorrido muy largo en ida y vuelta / Calcule las fuerzas para el regreso / Lleve siempre botas de montaña.",
+      "full_text": "Longitud (Length): 12 Km. (sólo recorrido de ida entre Sotres y Urriellu) / 24 Km. el recorrido completo Desnivel (Difference in altitude): 1.070 m. de subida sentido Sotres - Urriellu. / 1.070 m. de bajada en sentido contrario Duración (Duration, in hours): 4 h. subida / 8 h. ida y vuelta Dificultad (Difficulty): Media (gran desnivel y recorrido largo) / Dificultad Alta en invierno Descripción (Description): En 1.986, a la vez que se amplia el refugio Julián Delgado Úbeda o de la Vega de Urriellu, se decide abrir una nueva ruta de acceso al mismo, más corta y cómoda que la de Camburero, comunicando el refugio con Sotres a través del collado de Pandébano. La senda supone un brusco tránsito entre las praderías del entorno de Sotres y las moles calizas del Macizo Central de los Picos de Europa, destacando sobre todo la figura imponente del Naranjo de Bulnes, que acompañará al montañero después de superar el Collado Vallejo. Cómo hacer la ruta (How to make the trail): El recorrido es lineal, por lo que necesariamente es de ida y vuelta, y puede hacerse muy largo para senderistas no preparados. Se puede hacer en dos etapas pernoctando en el refugio, de esta forma se disfrutará además de una noche bajo el cielo estrellado de los Picos de Europa. Desde el refugio se pueden plantear otras rutas de montaña hacia el interior del Macizo Central, aunque éstas no están señalizadas. Para esto se requiere un buen conocimiento del terreno, buena preparación física y equipo adecuado. Preste atención a (Interesting places): Los cambios de paisaje en el tránsito desde las zonas bajas a la alta montaña / Las majadas e invernales / La impresionante mole rocosa del Naranjo de Bulnes. Precauciones: ¡ATENCIÓN! Con nieve o hielo el recorrido puede ser peligroso en el paso de Collado Vallejo / Recorrido muy largo en ida y vuelta / Calcule las fuerzas para el regreso / Lleve siempre botas de montaña. Caution notes: WARNING! Very dangerous trail when there is snow or ice in Collado Vallejo site / Very long trail for round-trip / Good programming and good physical conditions are needed for the entire circuit / Always wear mountain shoes. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_21_tcm30-70951.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_21_tcm30-70952.pdf",
+      "raw_metrics": {
+        "length": "12 Km. (sólo recorrido de ida entre Sotres y Urriellu) / 24 Km. el recorrido completo",
+        "duration": "4 h. subida / 8 h. ida y vuelta",
+        "elevation": "1.070 m. de subida sentido Sotres - Urriellu. / 1.070 m. de bajada en sentido contrario",
+        "difficulty": "Media (gran desnivel y recorrido largo) / Dificultad Alta en invierno"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-21:outbound",
+          "key": "outbound",
+          "name": "(sólo recorrido de ida entre Sotres y Urriellu)",
+          "distance_m": 12000,
+          "duration_minutes": 240,
+          "ascent_m": 1070,
+          "descent_m": null,
+          "difficulty": "unknown",
+          "layout": "unknown"
+        },
+        {
+          "variant_id": "PR-PNPE-21:full",
+          "key": "full",
+          "name": "el recorrido completo",
+          "distance_m": 24000,
+          "duration_minutes": 480,
+          "ascent_m": null,
+          "descent_m": null,
+          "difficulty": "unknown",
+          "layout": "unknown"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-22",
+      "name": "PEÑA OVIEDO (EL CABLE-MOGROVEJO)",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-pena-oviedo.html",
+      "category": "PR",
+      "description": "La Peña Oviedo, que da nombre al recorrido señalizado, es un pequeño promontorio situado a mitad de camino entre el valle de Camaleño y los pastizales de los puertos de Áliva. Esta ubicación estratégica hace que el emplazamiento haya sido utilizado por el ser humano desde el Neolítico para el aprovechamiento alternativo de los pastos de verano (los puertos) y de invierno (los valles). En el entorno de la Peña de Oviedo se encuentra un magnífico conjunto de enterramientos tumulares de más de tres mil años de antigüedad. La ruta supone también un recorrido de tránsito entre los ecosistemas de alta montaña cantábrica y los bosques mediterráneos de Liébana, pasando por los melojares de media ladera y los bosques mixtos.",
+      "instructions": "Este cartel informativo se encuentra a mitad del recorrido entre la estación superior del teleférico (El Cable) y Mogrovejo, en el paraje conocido como la Fuente de los Asturianos. La ruta suele hacerse en sentido descendente, partiendo de El Cable, que es como está descrita aquí. El recorrido entre la Fuente de los Asturianos y Mogrovejo supone la mitad del trayecto. En cualquier caso hay que tener en cuenta la forma de regresar al punto de partida, así como los tiempos de ida y vuelta.",
+      "points_of_interest": "El tránsito desde las zonas de media montaña en Áliva hasta el entorno de los pueblos / La arquitectura tradicional y monumental en Mogrovejo / Los enterramientos neolíticos en el entorno de la Peña Oviedo.",
+      "cautions": "La ruta propuesta es lineal, hay que prever el regreso / Con niebla no abandonar la pista, y seguir siempre la señalización.",
+      "full_text": "Longitud (Length): 14,6 Km. (trayecto Estación del teleférico en El Cable - Mogrovejo). (5,8 Km. desde la Fuente de los Asturianos hasta Mogrovejo) Desnivel (Difference in altitude): 1.192 m. en descenso (El Cable - Mogrovejo). / 758 m. (Fuente de los Asturianos - Mogrovejo) Duración (Duration, in hours): 4 h. 15 min. (El Cable - Mogrovejo) / 2 h. 10 min. (Fuente de los Asturianos - Mogrovejo) Dificultad (Difficulty): Baja (en sentido descendente) / Media (en sentido ascendente) Descripción (Description): La Peña Oviedo, que da nombre al recorrido señalizado, es un pequeño promontorio situado a mitad de camino entre el valle de Camaleño y los pastizales de los puertos de Áliva. Esta ubicación estratégica hace que el emplazamiento haya sido utilizado por el ser humano desde el Neolítico para el aprovechamiento alternativo de los pastos de verano (los puertos) y de invierno (los valles). En el entorno de la Peña de Oviedo se encuentra un magnífico conjunto de enterramientos tumulares de más de tres mil años de antigüedad. La ruta supone también un recorrido de tránsito entre los ecosistemas de alta montaña cantábrica y los bosques mediterráneos de Liébana, pasando por los melojares de media ladera y los bosques mixtos. Cómo hacer la ruta (How to make the trail): Este cartel informativo se encuentra a mitad del recorrido entre la estación superior del teleférico (El Cable) y Mogrovejo, en el paraje conocido como la Fuente de los Asturianos. La ruta suele hacerse en sentido descendente, partiendo de El Cable, que es como está descrita aquí. El recorrido entre la Fuente de los Asturianos y Mogrovejo supone la mitad del trayecto. En cualquier caso hay que tener en cuenta la forma de regresar al punto de partida, así como los tiempos de ida y vuelta. Preste atención a (Interesting places): El tránsito desde las zonas de media montaña en Áliva hasta el entorno de los pueblos / La arquitectura tradicional y monumental en Mogrovejo / Los enterramientos neolíticos en el entorno de la Peña Oviedo. Precauciones: La ruta propuesta es lineal, hay que prever el regreso / Con niebla no abandonar la pista, y seguir siempre la señalización. Caution notes: Plan the tour properly, remember that you have to come back / Beware of fog. Never leave the trail, follow the marks. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_22_tcm30-70955.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_22_tcm30-70956.pdf",
+      "raw_metrics": {
+        "length": "14,6 Km. (trayecto Estación del teleférico en El Cable - Mogrovejo). (5,8 Km. desde la Fuente de los Asturianos hasta Mogrovejo)",
+        "duration": "4 h. 15 min. (El Cable - Mogrovejo) / 2 h. 10 min. (Fuente de los Asturianos - Mogrovejo)",
+        "elevation": "1.192 m. en descenso (El Cable - Mogrovejo). / 758 m. (Fuente de los Asturianos - Mogrovejo)",
+        "difficulty": "Baja (en sentido descendente) / Media (en sentido ascendente)"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-22:trayecto-estacion-del-teleferico-en-el-cable-mogrovejo",
+          "key": "trayecto-estacion-del-teleferico-en-el-cable-mogrovejo",
+          "name": "(trayecto Estación del teleférico en El Cable - Mogrovejo). (",
+          "distance_m": 14600,
+          "duration_minutes": 255,
+          "ascent_m": null,
+          "descent_m": 1192,
+          "difficulty": "unknown",
+          "layout": "unknown"
+        },
+        {
+          "variant_id": "PR-PNPE-22:desde-la-fuente-de-los-asturianos-hasta-mogrovejo",
+          "key": "desde-la-fuente-de-los-asturianos-hasta-mogrovejo",
+          "name": "desde la Fuente de los Asturianos hasta Mogrovejo)",
+          "distance_m": 5800,
+          "duration_minutes": 130,
+          "ascent_m": null,
+          "descent_m": null,
+          "difficulty": "unknown",
+          "layout": "unknown"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-23",
+      "name": "HORCADOS ROJOS",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-horcados-rojos.html",
+      "category": "PR",
+      "description": "La cumbre de los Horcados Rojos es un magnífico balcón en el interior del Macizo Central, accesible por su ladera NO, donde se llega a través de una senda de montaña que parte de la estación superior del teleférico de Fuente De. A lo largo del recorrido se aprecia la esencia de la alta montaña de los Picos de Europa: vegetación adaptada a las duras condiciones climáticas, paisaje rocoso de agudas cumbres, aves alpinas.",
+      "instructions": "Este recorrido es lineal, por lo que es necesario ir y volver por el mismo camino. El último tramo de subida hasta el collado de Horcados Rojos discurre por una senda pedregosa de fuerte pendiente, aunque la merece la pena recompensa de las vistas. Es suficiente subir hasta este collado y regresar. El acceso hasta la cumbre queda reservado a montañeros bien preparados.",
+      "points_of_interest": "Las formaciones de alta montaña caliza (valles ciegos, agudas cumbres, pedreros, lagunas glaciares, etc.) / Inmejorables vistas de cumbres del Macizo Central de los Picos de Europa.",
+      "cautions": "Recorrido de alta montaña con cierta dureza en su tramo final / Es necesario contar con equipo adecuado y preparación para caminar en estas circunstancias / En caso de nieve, hielo o niebla abstenerse de hacer la ruta / Precaución en el ascenso a la cumbre de Horcados Rojos.",
+      "full_text": "Longitud (Length): 11,4 Km. (ida y vuelta) Desnivel (Difference in altitude): 772 m. de subida y de bajada Duración (Duration, in hours): 4 h. 25 min. (ida y vuelta) Dificultad (Difficulty): Media, toda la ruta discurre por terreno de alta montaña. Desnivel elevado Descripción (Description): La cumbre de los Horcados Rojos es un magnífico balcón en el interior del Macizo Central, accesible por su ladera NO, donde se llega a través de una senda de montaña que parte de la estación superior del teleférico de Fuente De. A lo largo del recorrido se aprecia la esencia de la alta montaña de los Picos de Europa: vegetación adaptada a las duras condiciones climáticas, paisaje rocoso de agudas cumbres, aves alpinas. Cómo hacer la ruta (How to make the trail): Este recorrido es lineal, por lo que es necesario ir y volver por el mismo camino. El último tramo de subida hasta el collado de Horcados Rojos discurre por una senda pedregosa de fuerte pendiente, aunque la merece la pena recompensa de las vistas. Es suficiente subir hasta este collado y regresar. El acceso hasta la cumbre queda reservado a montañeros bien preparados. Preste atención a (Interesting places): Las formaciones de alta montaña caliza (valles ciegos, agudas cumbres, pedreros, lagunas glaciares, etc.) / Inmejorables vistas de cumbres del Macizo Central de los Picos de Europa. Precauciones: Recorrido de alta montaña con cierta dureza en su tramo final / Es necesario contar con equipo adecuado y preparación para caminar en estas circunstancias / En caso de nieve, hielo o niebla abstenerse de hacer la ruta / Precaución en el ascenso a la cumbre de Horcados Rojos. Caution notes: High mountain trail / Start walking only in the case to carry appropriate equipment / Special precautions in case of snow or fog / Always wear mountain shoes / Caution if you ascend the Horcados Rojos crest. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_23_tcm30-70959.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_23_tcm30-70781.pdf",
+      "raw_metrics": {
+        "length": "11,4 Km. (ida y vuelta)",
+        "duration": "4 h. 25 min. (ida y vuelta)",
+        "elevation": "772 m. de subida y de bajada",
+        "difficulty": "Media, toda la ruta discurre por terreno de alta montaña. Desnivel elevado"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-23:return",
+          "key": "return",
+          "name": "(ida y vuelta)",
+          "distance_m": 11400,
+          "duration_minutes": 265,
+          "ascent_m": 772,
+          "descent_m": 772,
+          "difficulty": "unknown",
+          "layout": "out_and_back"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-24",
+      "name": "PUERTOS DE ÁLIVA",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-puertos-aliva.html",
+      "category": "PR",
+      "description": "La ruta que aquí se propone permite aprovechar la subida en el teleférico de Fuente De, realizando el recorrido de bajada a través de un camino cómodo y accesible todo tipo de senderistas. Tras subir en el teleférico, se inicia la senda partiendo de la estación superior (El Cable), y tras una breve subida hasta la Horcadina de Covarrobles, se inicia el descenso por pista a través de las extensas praderías de montaña entre los macizos Central y Oriental de los Picos de Europa, conocidas como los puertos de Áliva. Dejando atrás el paso de las portillas de Áliva, se abandona la pista para pasar a una senda que se adentra en los frondosos bosques de la vertiente meridional del Pico de Valdecoro. Más abajo, este sendero se torna enseguida en cómoda y ancha pista que en suave bajada nos llevará hasta Fuente De.",
+      "instructions": "El recorrido antes descrito es el recomendado para quien ha subido en el teleférico y desea regresar andando a Fuente De. El tramo final ha sido habilitado recientemente como alternativa a la pista que baja hasta Espinama, ruta que hasta hace poco era la más utilizada como camino de regreso. Se puede optar por bajar por esta pista, aunque habrá que tener en cuenta que en Espinama hay que subir por la carretera (2,5 Km.) si se quiere llegar a Fuente De. Para quienes sólo quieran dar un paseo de ida y vuelta desde la estación superior del teleférico, se puede hacer un tramo de la ruta (hasta el hotel refugio de Áliva, por ejemplo) y volver por el mismo camino. Este recorrido de ida y vuelta se hace en algo menos de dos horas.",
+      "points_of_interest": "El paisaje de alta montaña en el entorno de la estación superior del teleférico / Las extensas praderías de Áliva / Los bosques de hayas y robles en el tramo final de recorrido.",
+      "cautions": "La niebla puede aparecer en cualquier época del año. Se debe atender siempre a la señalización sin abandonar el camino / Utilice botas de montaña / Llave agua suficiente para el recorrido.",
+      "full_text": "Longitud (Length): 14,5 Km. (tramo El Cable - Fuente De, recorrido de descenso) Desnivel (Difference in altitude): 974 m. (todos en descenso) Duración (Duration, in hours): 4 h. 15 min. (tramo El Cable - Fuente De) Dificultad (Difficulty): Baja Descripción (Description): La ruta que aquí se propone permite aprovechar la subida en el teleférico de Fuente De, realizando el recorrido de bajada a través de un camino cómodo y accesible todo tipo de senderistas. Tras subir en el teleférico, se inicia la senda partiendo de la estación superior (El Cable), y tras una breve subida hasta la Horcadina de Covarrobles, se inicia el descenso por pista a través de las extensas praderías de montaña entre los macizos Central y Oriental de los Picos de Europa, conocidas como los puertos de Áliva. Dejando atrás el paso de las portillas de Áliva, se abandona la pista para pasar a una senda que se adentra en los frondosos bosques de la vertiente meridional del Pico de Valdecoro. Más abajo, este sendero se torna enseguida en cómoda y ancha pista que en suave bajada nos llevará hasta Fuente De. Cómo hacer la ruta (How to make the trail): El recorrido antes descrito es el recomendado para quien ha subido en el teleférico y desea regresar andando a Fuente De. El tramo final ha sido habilitado recientemente como alternativa a la pista que baja hasta Espinama, ruta que hasta hace poco era la más utilizada como camino de regreso. Se puede optar por bajar por esta pista, aunque habrá que tener en cuenta que en Espinama hay que subir por la carretera (2,5 Km.) si se quiere llegar a Fuente De. Para quienes sólo quieran dar un paseo de ida y vuelta desde la estación superior del teleférico, se puede hacer un tramo de la ruta (hasta el hotel refugio de Áliva, por ejemplo) y volver por el mismo camino. Este recorrido de ida y vuelta se hace en algo menos de dos horas. Preste atención a (Interesting places): El paisaje de alta montaña en el entorno de la estación superior del teleférico / Las extensas praderías de Áliva / Los bosques de hayas y robles en el tramo final de recorrido. Precauciones: La niebla puede aparecer en cualquier época del año. Se debe atender siempre a la señalización sin abandonar el camino / Utilice botas de montaña / Llave agua suficiente para el recorrido. Caution notes: Beware of fog. Please, follow the marks and don't leave the trail / Always wear mountain shoes / You must carry water. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_24_tcm30-70962.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_24_tcm30-70963.pdf",
+      "raw_metrics": {
+        "length": "14,5 Km. (tramo El Cable - Fuente De, recorrido de descenso)",
+        "duration": "4 h. 15 min. (tramo El Cable - Fuente De)",
+        "elevation": "974 m. (todos en descenso)",
+        "difficulty": "Baja"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-24:inbound",
+          "key": "inbound",
+          "name": "(tramo El Cable - Fuente De, recorrido de descenso)",
+          "distance_m": 14500,
+          "duration_minutes": 255,
+          "ascent_m": null,
+          "descent_m": 974,
+          "difficulty": "easy",
+          "layout": "unknown"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-25",
+      "name": "VEGA DE LIORDES",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-vega-liordes.html",
+      "category": "PR",
+      "description": "Este itinerario de acceso a la Vega de la Liordes supone una transición progresiva entre la cabecera del valle Camaleño y la alta montaña, pasando de los bosques de robles y hayas en el entorno de Fuente De a los pastizales alpinos al pie de los roquedos de las Peñas de Cifuentes. La ruta transita por una de las zonas de mayor valor ecológico del Parque Nacional, con presencia de especies como el oso pardo cantábrico, lobo, venado, jabalí o rebeco, por citar solo a los mamíferos de mayor tamaño. Ya en Liordes se encuentra una rica flora de montaña en los pastizales de esta magnífica vega. El recorrido cuenta además con importantes elementos de presencia humana, como los restos de las antiguas minas de Liordes, a las que se accedía por el vertiginoso camino de los Tornos. Có mo hacer la ruta (How to make the trail): Se recomienda hacer este recorrido circular en sentido horario, es decir, empezando por la pista que se encuentra al sur de Fuente De en dirección a Pandetrave. A mitad del recorrido hay que abandonar la pista para caminar por un sendero hasta la majada de Pedabejo, y desde ahí ascender a la collada del mismo nombre para pasar a Liordes. Tras bordear la vega por la izquierda se debe alcanzar el collado que da vista a Fuente De. A partir de ese punto se inicia el largo descenso de los Tornos, que salva los 900 m. de desnivel en un interminable zigzag.",
+      "instructions": "",
+      "points_of_interest": "El tránsito desde el valle hasta la alta montaña / Las hayas del Monte Quebres / La inigualable belleza de la Vega de Liordes / Rebecos, águilas buitres en la alta montaña.",
+      "cautions": "Ruta de montaña de gran desnivel / Calcule las fuerzas para el circuito completo / Precaución especial con nieve o niebla / Abstenerse de hacer el recorrido si no se cuenta con la suficiente preparación física y equipo adecuado / Lleve siempre botas de montaña.",
+      "full_text": "Longitud (Length): 11 Km. Desnivel (Difference in altitude): 970 m. de subida y de bajada Duración (Duration, in hours): 5 h. 30 min. Dificultad (Difficulty): Media - Alta. Ruta larga y de gran desnivel Descripción (Description): Este itinerario de acceso a la Vega de la Liordes supone una transición progresiva entre la cabecera del valle Camaleño y la alta montaña, pasando de los bosques de robles y hayas en el entorno de Fuente De a los pastizales alpinos al pie de los roquedos de las Peñas de Cifuentes. La ruta transita por una de las zonas de mayor valor ecológico del Parque Nacional, con presencia de especies como el oso pardo cantábrico, lobo, venado, jabalí o rebeco, por citar solo a los mamíferos de mayor tamaño. Ya en Liordes se encuentra una rica flora de montaña en los pastizales de esta magnífica vega. El recorrido cuenta además con importantes elementos de presencia humana, como los restos de las antiguas minas de Liordes, a las que se accedía por el vertiginoso camino de los Tornos. Có mo hacer la ruta (How to make the trail): Se recomienda hacer este recorrido circular en sentido horario, es decir, empezando por la pista que se encuentra al sur de Fuente De en dirección a Pandetrave. A mitad del recorrido hay que abandonar la pista para caminar por un sendero hasta la majada de Pedabejo, y desde ahí ascender a la collada del mismo nombre para pasar a Liordes. Tras bordear la vega por la izquierda se debe alcanzar el collado que da vista a Fuente De. A partir de ese punto se inicia el largo descenso de los Tornos, que salva los 900 m. de desnivel en un interminable zigzag. Preste atención a (Interesting places): El tránsito desde el valle hasta la alta montaña / Las hayas del Monte Quebres / La inigualable belleza de la Vega de Liordes / Rebecos, águilas buitres en la alta montaña. Precauciones: Ruta de montaña de gran desnivel / Calcule las fuerzas para el circuito completo / Precaución especial con nieve o niebla / Abstenerse de hacer el recorrido si no se cuenta con la suficiente preparación física y equipo adecuado / Lleve siempre botas de montaña. Caution notes: Mountain trail of big difference of altitude / Good programming and good physical conditions are needed for the entire circuit / Special precautions in case of snow or fog / Start walking only in the case to carry appropriate equipment / Always wear mountain shoes. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_25_tcm30-70966.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_25_tcm30-70967.pdf",
+      "raw_metrics": {
+        "length": "11 Km.",
+        "duration": "5 h. 30 min.",
+        "elevation": "970 m. de subida y de bajada",
+        "difficulty": "Media - Alta. Ruta larga y de gran desnivel"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-25:main",
+          "key": "main",
+          "name": "Main route",
+          "distance_m": 11000,
+          "duration_minutes": 330,
+          "ascent_m": 970,
+          "descent_m": 970,
+          "difficulty": "unknown",
+          "layout": "unknown"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-26",
+      "name": "HAYEDO DE LAS ILCES",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-hayedo-ilces.html",
+      "category": "PR",
+      "description": "Este cómodo circuito con inicio y final en Espinama permite compaginar la belleza de los pueblos del alto valle de Camaleño con los magníficos bosques de hayas y robles que tan bien se conservan en su entorno. Tras callejear entre la cuidada arquitectura popular de Espinama y Pido la ruta se adentra en la pista de Pierga en dirección a Cosgaya, que discurre por la margen derecha del río Deva y al pie de los frondosos bosques que descienden desde las cumbres del Coriscao por los valles de Pierga y Peñalba. Sin duda esta es una de las zonas mejor conservadas del entorno de los Picos de Europa, donde se refugian algunos de los escasos osos de la Cordillera Cantábrica, entre otras especies esquivas. El circuito se completa pasando por el pequeño pueblo de Las Ilces, para regresar por la vertiente expuesta a la solana, en la que cambian las especies forestales, aunque se mantiene la espesura del bosque.",
+      "instructions": "La ruta, al ser circular, se puede hacer en uno u otro sentido, aunque recomendamos hacerla empezando en Espinama y en sentido contrario a las agujas de reloj, que es como está señalizada.",
+      "points_of_interest": "Los sonidos del bosque / Los colores de la vegetación en las distintas épocas del año / La magnífica arquitectura tradicional de los tres pueblos por los que pasa la ruta (Espinama, Pido y Las Ilces).",
+      "cautions": "Preste atención a la señalización al transitar por los núcleos rurales / Cuidado al cruzar la carretera en el acceso a las Ilces. Recorrido paso a paso Espinama, junto con Pido, constituyen la cabecera del valle de Valdebaró, cuya actividad socioeconómica eminentemente ganadera, se ve hoy en día complementada con una pujante actividad turística, lo que ha hecho de este pequeño enclave un centro ideal para la realización de excursiones por los Picos de Europa. La proximidad del teleférico de Fuente De hace que estos pueblos sean especialmente turísticos, sobre todo en los meses de verano. Primeramente podemos dar una vuelta por los caseríos de Espinama y visitar sus blasonadas casas de Cosgaya, Baldeón y Noriega, y cómo no, su iglesia, que guarda una talla policromada del siglo XVII, y una virgen con Niño del XVI. La ruta parte de Espinama (alt. 887 m.) en dirección a Pido, por el camino denominado La Gatera; para ello se atraviesa toda una galería de chopos, avellanos y sauces, antes de adentrarse entre las casas de Pido, donde hay que estar atento a las marcas de pintura para buscar la salida al otro lado del pueblo. De Pido se sale por la parte alta, hasta encontramos con una pista ancha (30 min. / alt. 950 m.) que viene de Cosgaya, y se dirige a Fuente Dé, y que se conoce como pista de Pierga, qu e hay que tomar a la derecha en dirección sureste. A lo largo de todo el recorrido discurre por un denso bosque de robles y hayas, surcados por arroyos que bajan de la Cordillera Cantábrica, hasta cuyas estribaciones llega el Parque Nacional de Picos de Europa. Tras pasar por los prados de la Navega, se dejan atrás unos repetidores de telefonía, y se continúa por la pista, siempre siguiendo el ramal principal. Dejando el cauce del Deva siempre a la izquierda, la pista entra y sale continuamente en los pequeños valles que bajan por la derecha. Se deja atrás el que lleva la riega de Pierga, para continuar por el denso bosque, salpicado de vez en cuando de algún roble de enormes dimensiones destacando entre los demás árboles. Un nuevo entrante nos lleva al invernal del Mato. Tras cruzar la riega aparecen dos bifurcaciones, una a la derecha y un poco más adelante otra a la izquierda. Se toma esto último ramal a la izquierda que desciende rápidamente hasta un puente sobre el Deva. Desde el puente sobre el río Deva existe la opción de regresar a Espinama siguiendo el curso de este río en dirección ascendente, recortando de esta forma la ruta en al más de hora y media. Si se desea continuar la ruta completa, habrá que cruzar el puente para salir a la carretera CA-185 que viene de Potes; cruzamos ésta y subimos hacia el pequeño pueblo de Las Ilces (2 h. / alt. 800 m.), donde se ven dos viejos hórreos. Desde Las Ilces, continuamos a partir de la pequeña plaza a la izquierda, y a los pocos metros nos desviamos a la derecha, bordeando una gran casa y pasando al lado de la iglesia. Al poco, empezamos a subir a la izquierda en fuerte pendiente durante un buen rato. Llegamos, así, a una pista más llana que viene de Pembes; seguimos a la izquierda durante un par de kilómetros, y sin desviarnos del camino principal, descendemos en suave pendiente hasta Espinama (4 horas 30 minutos) donde termina esta preciosa ruta por frondosos bosques atlánticos.",
+      "full_text": "Longitud : 10,4 Km. circuito completo. Desnivel acumulado : 400 m. de subida y de bajada. Duración : 4 h. 30 min. Dificultad : Media Descripción : Este cómodo circuito con inicio y final en Espinama permite compaginar la belleza de los pueblos del alto valle de Camaleño con los magníficos bosques de hayas y robles que tan bien se conservan en su entorno. Tras callejear entre la cuidada arquitectura popular de Espinama y Pido la ruta se adentra en la pista de Pierga en dirección a Cosgaya, que discurre por la margen derecha del río Deva y al pie de los frondosos bosques que descienden desde las cumbres del Coriscao por los valles de Pierga y Peñalba. Sin duda esta es una de las zonas mejor conservadas del entorno de los Picos de Europa, donde se refugian algunos de los escasos osos de la Cordillera Cantábrica, entre otras especies esquivas. El circuito se completa pasando por el pequeño pueblo de Las Ilces, para regresar por la vertiente expuesta a la solana, en la que cambian las especies forestales, aunque se mantiene la espesura del bosque. Cómo hacer la ruta : La ruta, al ser circular, se puede hacer en uno u otro sentido, aunque recomendamos hacerla empezando en Espinama y en sentido contrario a las agujas de reloj, que es como está señalizada. Preste atención a : Los sonidos del bosque / Los colores de la vegetación en las distintas épocas del año / La magnífica arquitectura tradicional de los tres pueblos por los que pasa la ruta (Espinama, Pido y Las Ilces). Precauciones: Preste atención a la señalización al transitar por los núcleos rurales / Cuidado al cruzar la carretera en el acceso a las Ilces. Recorrido paso a paso Espinama, junto con Pido, constituyen la cabecera del valle de Valdebaró, cuya actividad socioeconómica eminentemente ganadera, se ve hoy en día complementada con una pujante actividad turística, lo que ha hecho de este pequeño enclave un centro ideal para la realización de excursiones por los Picos de Europa. La proximidad del teleférico de Fuente De hace que estos pueblos sean especialmente turísticos, sobre todo en los meses de verano. Primeramente podemos dar una vuelta por los caseríos de Espinama y visitar sus blasonadas casas de Cosgaya, Baldeón y Noriega, y cómo no, su iglesia, que guarda una talla policromada del siglo XVII, y una virgen con Niño del XVI. La ruta parte de Espinama (alt. 887 m.) en dirección a Pido, por el camino denominado La Gatera; para ello se atraviesa toda una galería de chopos, avellanos y sauces, antes de adentrarse entre las casas de Pido, donde hay que estar atento a las marcas de pintura para buscar la salida al otro lado del pueblo. De Pido se sale por la parte alta, hasta encontramos con una pista ancha (30 min. / alt. 950 m.) que viene de Cosgaya, y se dirige a Fuente Dé, y que se conoce como pista de Pierga, qu e hay que tomar a la derecha en dirección sureste. A lo largo de todo el recorrido discurre por un denso bosque de robles y hayas, surcados por arroyos que bajan de la Cordillera Cantábrica, hasta cuyas estribaciones llega el Parque Nacional de Picos de Europa. Tras pasar por los prados de la Navega, se dejan atrás unos repetidores de telefonía, y se continúa por la pista, siempre siguiendo el ramal principal. Dejando el cauce del Deva siempre a la izquierda, la pista entra y sale continuamente en los pequeños valles que bajan por la derecha. Se deja atrás el que lleva la riega de Pierga, para continuar por el denso bosque, salpicado de vez en cuando de algún roble de enormes dimensiones destacando entre los demás árboles. Un nuevo entrante nos lleva al invernal del Mato. Tras cruzar la riega aparecen dos bifurcaciones, una a la derecha y un poco más adelante otra a la izquierda. Se toma esto último ramal a la izquierda que desciende rápidamente hasta un puente sobre el Deva. Desde el puente sobre el río Deva existe la opción de regresar a Espinama siguiendo el curso de este río en dirección ascendente, recortando de esta forma la ruta en al más de hora y media. Si se desea continuar la ruta completa, habrá que cruzar el puente para salir a la carretera CA-185 que viene de Potes; cruzamos ésta y subimos hacia el pequeño pueblo de Las Ilces (2 h. / alt. 800 m.), donde se ven dos viejos hórreos. Desde Las Ilces, continuamos a partir de la pequeña plaza a la izquierda, y a los pocos metros nos desviamos a la derecha, bordeando una gran casa y pasando al lado de la iglesia. Al poco, empezamos a subir a la izquierda en fuerte pendiente durante un buen rato. Llegamos, así, a una pista más llana que viene de Pembes; seguimos a la izquierda durante un par de kilómetros, y sin desviarnos del camino principal, descendemos en suave pendiente hasta Espinama (4 horas 30 minutos) donde termina esta preciosa ruta por frondosos bosques atlánticos. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_26_tcm30-70969.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_26_tcm30-70816.pdf",
+      "raw_metrics": {
+        "length": "10,4 Km. circuito completo.",
+        "duration": "4 h. 30 min.",
+        "elevation": "400 m. de subida y de bajada.",
+        "difficulty": "Media"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-26:circuit",
+          "key": "circuit",
+          "name": "circuito completo",
+          "distance_m": 10400,
+          "duration_minutes": 270,
+          "ascent_m": 400,
+          "descent_m": 400,
+          "difficulty": "moderate",
+          "layout": "circular"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-27",
+      "name": "BREZ-CANAL DE ARREDONDAS",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-brez-canal-arreondas.html",
+      "category": "PR",
+      "description": "Esta ruta circular comienza y termina en el pueblo de Brez, acercándose a las paredes verticales del Macizo Oriental. Este camino es el que se trazó como aproximación a la Canal de las Arredondas, donde se encontraban lilas minas el mismo nombre. Brez, situado en una soleada terraza sobre la comarca de Liébana a 730 m. de altitud, cuenta con un entorno muy bien conservado, en el que predominan los bosques de quejigos y alcornoques alternando con prados de siega. Esta ruta discurre entre estos paisajes a través de un cómodo camino al pie de las altas montañas de los Picos de Europa.",
+      "instructions": "Por tratarse de una senda circular, se puede hacer en uno u otro sentido. Recomendamos cruzar el pueblo de Brez y hacer la ruta en sentido contrario a las agujas del reloj, que es como ha sido señalizada.",
+      "points_of_interest": "Iglesia y la arquitectura popular de Brez / El contraste de paisajes (bosques mediterráneos, cumbres calizas, prados).",
+      "cautions": "Tener en cuenta la meteorología / Lleve siempre botas de montaña.",
+      "full_text": "Longitud (Length): 5,4 Km. (circuito completo) Desnivel (Difference in altitude): 270 m. (subida y bajada) Duración (Duration, in hours): 2 h. Dificultad (Difficulty): Baja Descripción (Description): Esta ruta circular comienza y termina en el pueblo de Brez, acercándose a las paredes verticales del Macizo Oriental. Este camino es el que se trazó como aproximación a la Canal de las Arredondas, donde se encontraban lilas minas el mismo nombre. Brez, situado en una soleada terraza sobre la comarca de Liébana a 730 m. de altitud, cuenta con un entorno muy bien conservado, en el que predominan los bosques de quejigos y alcornoques alternando con prados de siega. Esta ruta discurre entre estos paisajes a través de un cómodo camino al pie de las altas montañas de los Picos de Europa. Cómo hacer la ruta (How to make the trail): Por tratarse de una senda circular, se puede hacer en uno u otro sentido. Recomendamos cruzar el pueblo de Brez y hacer la ruta en sentido contrario a las agujas del reloj, que es como ha sido señalizada. Preste atención a (Interesting places): Iglesia y la arquitectura popular de Brez / El contraste de paisajes (bosques mediterráneos, cumbres calizas, prados). Precauciones: Tener en cuenta la meteorología / Lleve siempre botas de montaña. Caution notes: Weather conditions must be taken into account / Always wear mountain shoes. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_27_tcm30-70281.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_27_tcm30-70972.pdf",
+      "raw_metrics": {
+        "length": "5,4 Km. (circuito completo)",
+        "duration": "2 h.",
+        "elevation": "270 m. (subida y bajada)",
+        "difficulty": "Baja"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-27:circuit",
+          "key": "circuit",
+          "name": "(circuito completo)",
+          "distance_m": 5400,
+          "duration_minutes": 120,
+          "ascent_m": 270,
+          "descent_m": 270,
+          "difficulty": "easy",
+          "layout": "circular"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-28",
+      "name": "MACIZO DE ÁNDARA",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-macizo-andara.html",
+      "category": "PR",
+      "description": "El Macizo Oriental de los Picos de Europa conserva las huellas patentes de las explotaciones mineras realizadas desde la segunda mitad del siglo XIX hasta bien avanzado el siglo XX. De aquella actividad se conservan sobre todo la extensa red de caminos que se construyeron para acceder a las bocaminas y extraer el mineral, levantados a mano sobre muros de mampostería que han facilitado su conservación, aún en un terreno tan inestable como este. Esta ruta recorre una parte importante de esta red de caminos, aproximando al senderista desde la población de Bejes hasta el corazón del Macizo de Ándara, con el refugio conocido como El Casetón como referencia. El recorrido se completa bajando hasta el Hoyo del Tejo, junto a la carretera de Sotres a Tresviso. El circuito se cierra siguiendo la pista que transita al pie de la Sierra de la Corta, que recorre los hayedos de Valdediezma y La Llama, en uno de los paisajes más sorprendentes del Parque Nacional.",
+      "instructions": "Esta ruta por el Macizo de Ándara se puede hacer de muchas formas. Lo más frecuente es recorrer el circuito en torno a la Sierra de la Corta. Si se comienza en Bejes o en el aparcamiento del collado de Hoja, se sigue la pista que lleva hasta la fuente del Vao de los Lobos, donde se bifurca en dos ramales. El de la izquierda sube en continuo ascenso hasta el refugio de Ándara, donde se puede pasar la noche. Al refugio llega también la pista que viene desde el aparcamiento del Hoyo del Tejo. Una vez allí, otra pista conduce hacia el Vao de los Lobos, donde se completa el circuito. Solo quedará recorrer la pista que lleva hasta Bejes. También se puede plantear la ruta como una travesía con inicio en Bejes y final en el Hoyo del Tejo, desde donde se puede pasar a Sotres y Tresviso por carretera.",
+      "points_of_interest": "La espectacular obra de los caminos mineros abiertos sobre las laderas / Las hayas creciendo entre las rocas en Valdediezma y La Llama / Las explotaciones mineras de Ándara / Los hornos del Dobrillo.",
+      "cautions": "Planificar bien el regreso al punto de estacionamiento de su vehículo ya que se trata de un recorrido lineal. Nunca abandone el camino; siga la señalización.",
+      "full_text": "Longitud (Length): 25 Km. (circuito con inicio y final en Bejes) Desnivel (Difference in altitude): 1.110 m. de subida y bajada Duración (Duration, in hours): 7 h. 35 min. (circuito completo Bejes - Ándara - Hoyo del Tejo - Bejes) / 4 h. 30 min. (trayecto Bejes - Ándara - Hoyo del Tejo) Dificultad (Difficulty): Media. Ruta larga y con fuerte desnivel Descripción (Description): El Macizo Oriental de los Picos de Europa conserva las huellas patentes de las explotaciones mineras realizadas desde la segunda mitad del siglo XIX hasta bien avanzado el siglo XX. De aquella actividad se conservan sobre todo la extensa red de caminos que se construyeron para acceder a las bocaminas y extraer el mineral, levantados a mano sobre muros de mampostería que han facilitado su conservación, aún en un terreno tan inestable como este. Esta ruta recorre una parte importante de esta red de caminos, aproximando al senderista desde la población de Bejes hasta el corazón del Macizo de Ándara, con el refugio conocido como El Casetón como referencia. El recorrido se completa bajando hasta el Hoyo del Tejo, junto a la carretera de Sotres a Tresviso. El circuito se cierra siguiendo la pista que transita al pie de la Sierra de la Corta, que recorre los hayedos de Valdediezma y La Llama, en uno de los paisajes más sorprendentes del Parque Nacional. Cómo hacer la ruta (How to make the trail): Esta ruta por el Macizo de Ándara se puede hacer de muchas formas. Lo más frecuente es recorrer el circuito en torno a la Sierra de la Corta. Si se comienza en Bejes o en el aparcamiento del collado de Hoja, se sigue la pista que lleva hasta la fuente del Vao de los Lobos, donde se bifurca en dos ramales. El de la izquierda sube en continuo ascenso hasta el refugio de Ándara, donde se puede pasar la noche. Al refugio llega también la pista que viene desde el aparcamiento del Hoyo del Tejo. Una vez allí, otra pista conduce hacia el Vao de los Lobos, donde se completa el circuito. Solo quedará recorrer la pista que lleva hasta Bejes. También se puede plantear la ruta como una travesía con inicio en Bejes y final en el Hoyo del Tejo, desde donde se puede pasar a Sotres y Tresviso por carretera. Preste atención a (Interesting places): La espectacular obra de los caminos mineros abiertos sobre las laderas / Las hayas creciendo entre las rocas en Valdediezma y La Llama / Las explotaciones mineras de Ándara / Los hornos del Dobrillo. Precauciones: Planificar bien el regreso al punto de estacionamiento de su vehículo ya que se trata de un recorrido lineal. Nunca abandone el camino; siga la señalización. Caution notes: This is one-way tour, please remember you have to come back to the car park. Never leave the trail, follow the marks. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_28_tcm30-70974.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_28_tcm30-70975.pdf",
+      "raw_metrics": {
+        "length": "25 Km. (circuito con inicio y final en Bejes)",
+        "duration": "7 h. 35 min. (circuito completo Bejes - Ándara - Hoyo del Tejo - Bejes) / 4 h. 30 min. (trayecto Bejes - Ándara - Hoyo del Tejo)",
+        "elevation": "1.110 m. de subida y bajada",
+        "difficulty": "Media. Ruta larga y con fuerte desnivel"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-28:circuit",
+          "key": "circuit",
+          "name": "(circuito con inicio y final en Bejes)",
+          "distance_m": 25000,
+          "duration_minutes": 455,
+          "ascent_m": 1110,
+          "descent_m": 1110,
+          "difficulty": "moderate",
+          "layout": "circular"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-29",
+      "name": "PASÁ DE PICAYO",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-pasa-picayo.html",
+      "category": "PR",
+      "description": "Tresviso y San Esteban son poblaciones próximas, separadas únicamente por la Sierra de Cocón, de pendiente relativamente suave hacia el S (Tresviso) pero prácticamente vertical hacia el E (desfiladero de la Hermida) y hacia el N (San Esteban). Por esta intrincada orografía discurre el único camino que una ambas poblaciones, antaño muy utilizado por pastores de uno y otro lado, luego casi desaparecido, y recuperado hace pocos años como ruta montañera. La belleza del paisaje a lo largo del trayecto no debe impedir prestar toda la atención a determinados pasos en los que la senda se encuentra literalmente tallada en la roca, con precipicios verticales que hacen de esta senda una de las más peligrosas de los Picos de Europa.",
+      "instructions": "Este trayecto lineal se puede hacer en uno u otro sentido, empezando en Tresviso o en San Esteban. En cualquiera de los dos casos hay que tener en cuenta el viaje de regreso, considerando que ambas poblaciones se encuentran muy distantes por carretera. Algunos colectivos montañeros deciden combinar esta ruta con el PR-PNPE-30 (Urdón - Tresviso), aunque en este caso hay que tener en cuenta el enlace necesario entre San Esteban y Urdón, recorrido que se hace por carretera, con un tramo muy peligroso para los peatones (Rumenes - Urdón).",
+      "points_of_interest": "Los bosques de hayas de la cara N de la sierra de Cocón / El vertiginoso paisaje del desfiladero de La Hermida en el paso del Picayo / El contraste de paisajes a lo largo de todo el recorrido.",
+      "cautions": "¡ATENCIÓN! RUTA DE MONTAÑA DE ALTA DIFICULTAD / Este recorrido ha sido descatalogado como ruta de pequeño recorrido por su extrema peligrosidad y elevado desnivel / Precipicio sin protección lateral / Absténgase de hacer la ruta si no se cuenta con suficiente preparación física y equipo adecuado / Precaución especial con nieve o niebla.",
+      "full_text": "Longitud (Length): 6,7 Km. (trayecto San Esteban - Tresviso) / 13,4 Km. (ida y vuelta) Desnive l (Difference in altitude): 700 m. (descenso) Duración (Duration, in hours): 3 h. 20 min. / 6 h. 40 min. (ida y vuelta) Dificultad (Difficulty): ALTA. Tramos expuestos y peligrosos Descripción (Description): Tresviso y San Esteban son poblaciones próximas, separadas únicamente por la Sierra de Cocón, de pendiente relativamente suave hacia el S (Tresviso) pero prácticamente vertical hacia el E (desfiladero de la Hermida) y hacia el N (San Esteban). Por esta intrincada orografía discurre el único camino que una ambas poblaciones, antaño muy utilizado por pastores de uno y otro lado, luego casi desaparecido, y recuperado hace pocos años como ruta montañera. La belleza del paisaje a lo largo del trayecto no debe impedir prestar toda la atención a determinados pasos en los que la senda se encuentra literalmente tallada en la roca, con precipicios verticales que hacen de esta senda una de las más peligrosas de los Picos de Europa. Cómo hacer la ruta (How to make the trail): Este trayecto lineal se puede hacer en uno u otro sentido, empezando en Tresviso o en San Esteban. En cualquiera de los dos casos hay que tener en cuenta el viaje de regreso, considerando que ambas poblaciones se encuentran muy distantes por carretera. Algunos colectivos montañeros deciden combinar esta ruta con el PR-PNPE-30 (Urdón - Tresviso), aunque en este caso hay que tener en cuenta el enlace necesario entre San Esteban y Urdón, recorrido que se hace por carretera, con un tramo muy peligroso para los peatones (Rumenes - Urdón). Preste atención a (Interesting places): Los bosques de hayas de la cara N de la sierra de Cocón / El vertiginoso paisaje del desfiladero de La Hermida en el paso del Picayo / El contraste de paisajes a lo largo de todo el recorrido. Precauciones: ¡ATENCIÓN! RUTA DE MONTAÑA DE ALTA DIFICULTAD / Este recorrido ha sido descatalogado como ruta de pequeño recorrido por su extrema peligrosidad y elevado desnivel / Precipicio sin protección lateral / Absténgase de hacer la ruta si no se cuenta con suficiente preparación física y equipo adecuado / Precaución especial con nieve o niebla. Caution notes: WARNING! MOUNTAIN TRAIL OF HIGH DIFFICULTY / Very big difference of altitude / This route is out of the list of the short tour trail because is extremely hard and dangerous / The trail goes down the canyon and has not side fence Start walking only in case you carry appropriate equipment and you have good physical condition / Special precautions in case of snow or fog. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_29_tcm30-70993.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_29_tcm30-70994.pdf",
+      "raw_metrics": {
+        "length": "6,7 Km. (trayecto San Esteban - Tresviso) / 13,4 Km. (ida y vuelta)",
+        "duration": "3 h. 20 min. / 6 h. 40 min. (ida y vuelta)",
+        "elevation": "700 m. (descenso)",
+        "difficulty": "ALTA. Tramos expuestos y peligrosos"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-29:main",
+          "key": "main",
+          "name": "(trayecto San Esteban - Tresviso)",
+          "distance_m": 6700,
+          "duration_minutes": null,
+          "ascent_m": null,
+          "descent_m": 700,
+          "difficulty": "hard",
+          "layout": "unknown"
+        },
+        {
+          "variant_id": "PR-PNPE-29:return",
+          "key": "return",
+          "name": "(ida y vuelta)",
+          "distance_m": 13400,
+          "duration_minutes": 400,
+          "ascent_m": 700,
+          "descent_m": 700,
+          "difficulty": "hard",
+          "layout": "out_and_back"
+        }
+      ],
+      "warnings": [
+        "Duration is ambiguous or missing for main"
+      ],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-3",
+      "name": "RUTA DEL CARES",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-cares.html",
+      "category": "PR",
+      "description": "Entre los macizos central y occidental se abre paso la ruta del Cares, el sendero más conocido del Parque Nacional de los Picos de Europa. En su recorrido pasa por las poblaciones de Posada de Valdeón, Cordiñanes, y Caín, en la provincia de León, y Poncebos en el Principado de Asturias. La ruta aporta interesantes recursos culturales e históricos, como la necrópolis de Barrejo, el Chorco de los Lobos, o la Ermita de Corona, así como la propia senda que desde Caín se abre paso, tallada en la caliza hasta Poncebos. Un singular recorrido que a su vez contiene importantes singularidades botánicas y geológicas, y de gran espectacularidad paisajística, lo que le ha valido el apodo de \"La Garganta Divina del Cares\".",
+      "instructions": "La ruta del Cares es uno de los senderos más frecuentados de España. Sin embargo, no siempre se tiene en cuenta que se trata de un camino de montaña con piedras sueltas. Si usted carece de entrenamiento, recomendamos hacer sólo una parte del trayecto planificando el regreso en función de sus posibilidades. La variante que se inicia desde este punto es la propuesta más larga, con inicio en Posada de Valdeón y final en Poncebos (21 Km.), recorrido para el que es necesario planificar el regreso en algún medio de transporte.",
+      "points_of_interest": "Las vistas desde el Mirador del Tombo / El Chorco de los Lobos / Pradería e invernales de Corona / Todo el paisaje del desfiladero. / La fabulosa obra de ingeniería del canal a lo largo de toda la garganta / Encinares sobre las rocas en el desfiladero.",
+      "cautions": "El trayecto entre Caín y Poncebos discurre junto a un precipicio sin protección lateral / Peligro de caída de piedras por efectos naturales o de los animales que pastan sobre la senda / Se debe llevar provisión suficiente de agua, pues no hay agua potable disponible a lo largo del recorrido. / Lleve siempre botas de montaña.",
+      "full_text": "Longitud (Length): 21 Km. (Trayecto Posada de Valdeón - Poncebos) Desnivel (Difference in altitude): 899 m. de descenso y 160 m. de ascenso Duración (Duration, in hours): 3 h. 20 min. 5 h 30 min. (Trayecto Posada de Valdeón - Poncebos) Dificultad (Difficulty): Media. Trazado sencillo aunque ruta larga, especialmente para senderistas poco preparados Descripción (Description): Entre los macizos central y occidental se abre paso la ruta del Cares, el sendero más conocido del Parque Nacional de los Picos de Europa. En su recorrido pasa por las poblaciones de Posada de Valdeón, Cordiñanes, y Caín, en la provincia de León, y Poncebos en el Principado de Asturias. La ruta aporta interesantes recursos culturales e históricos, como la necrópolis de Barrejo, el Chorco de los Lobos, o la Ermita de Corona, así como la propia senda que desde Caín se abre paso, tallada en la caliza hasta Poncebos. Un singular recorrido que a su vez contiene importantes singularidades botánicas y geológicas, y de gran espectacularidad paisajística, lo que le ha valido el apodo de \"La Garganta Divina del Cares\". Cómo hacer la ruta (How to make the trail): La ruta del Cares es uno de los senderos más frecuentados de España. Sin embargo, no siempre se tiene en cuenta que se trata de un camino de montaña con piedras sueltas. Si usted carece de entrenamiento, recomendamos hacer sólo una parte del trayecto planificando el regreso en función de sus posibilidades. La variante que se inicia desde este punto es la propuesta más larga, con inicio en Posada de Valdeón y final en Poncebos (21 Km.), recorrido para el que es necesario planificar el regreso en algún medio de transporte. Preste atención a (Interesting places): Las vistas desde el Mirador del Tombo / El Chorco de los Lobos / Pradería e invernales de Corona / Todo el paisaje del desfiladero. / La fabulosa obra de ingeniería del canal a lo largo de toda la garganta / Encinares sobre las rocas en el desfiladero. Precauciones: El trayecto entre Caín y Poncebos discurre junto a un precipicio sin protección lateral / Peligro de caída de piedras por efectos naturales o de los animales que pastan sobre la senda / Se debe llevar provisión suficiente de agua, pues no hay agua potable disponible a lo largo del recorrido. / Lleve siempre botas de montaña. Caution notes: The trail between Cain and Poncebos goes down the canyon and has not side fence / Danger falling rocks / You must carry water / No potable water in this trail / Always wear mountain shoes. Por seguridad para los senderistas , NO SE PERMITE RECORRER ESTE SENDERO EN BICICLETA For your safety , CYCLING IS STRICTLY FORBIDDEN IN THIS TRAIL ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_03_tcm30-70762.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_03_tcm30-70908.pdf",
+      "raw_metrics": {
+        "length": "21 Km. (Trayecto Posada de Valdeón - Poncebos)",
+        "duration": "3 h. 20 min. 5 h 30 min. (Trayecto Posada de Valdeón - Poncebos)",
+        "elevation": "899 m. de descenso y 160 m. de ascenso",
+        "difficulty": "Media. Trazado sencillo aunque ruta larga, especialmente para senderistas poco preparados"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-3:main",
+          "key": "main",
+          "name": "(Trayecto Posada de Valdeón - Poncebos)",
+          "distance_m": 21000,
+          "duration_minutes": 330,
+          "ascent_m": 160,
+          "descent_m": 899,
+          "difficulty": "moderate",
+          "layout": "unknown"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-30",
+      "name": "URDÓN-TRESVISO",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/urdon-tresviso.html",
+      "category": "PR",
+      "description": "La población cántabra de Tresviso se encuentra localizada en la parte alta del barranco del Urdón, uno de los rincones más espectaculares de los Picos de Europa. Este camino fue abierto en la segunda mitad del siglo XIX para extraer el mineral de las minas de Ándara y Tresviso. El propio camino supone una increíble obra de ingeniería, con muros de sujeción realizados a mano con piedra de mampostería en un emplazamiento imposible.",
+      "instructions": "Este sendero es lineal, lo que obliga a hacerlo de ida y vuelta por el mismo camino, por lo que habrá que planificar el trayecto de subida y de bajada (algo más de 5 h. en total). Si usted no está suficientemente preparado para el recorrido completo de ida y vuelta, bien puede plantearse hacer sólo una parte del trayecto y regresar cuando considere necesario. En cualquier caso, el senderista y el montañero encuentran aquí una de las rutas más apreciadas de los Picos de Europa. En la subida bien merece la pena pararse, no sólo a tomar fuerzas, también a apreciar del espectacular paisaje, así que tómeselo con calma y disfrute de esta maravilla de camino. También es posible combinar esta ruta con el PR-PNPE-29, añadiendo al recorrido de Urdón a Tresviso, el trayecto de Tresviso a San Esteban (3 h. 20 min). Esta otra ruta tiene mayor dificultad, ya que transcurre por un sendero con tramos expuestos y peligrosos, por lo que está reservada a montañeros que no padezcan vértigo. Al trayecto señalizado hay que añadir el enlace entre San Esteban y Urdón, recorrido que se hace por carretera, con un tramo muy peligroso para los peatones (Rumenes - Urdón).",
+      "points_of_interest": "Impresionante paisaje del desfiladero a medida que se va ascendiendo / La espectacular obra del camino minero abierto sobre la ladera.",
+      "cautions": "Precipicio sin protección lateral / Gran desnivel. Absténgase de hacer la ruta si no se cuenta con suficiente preparación física y equipo adecuado / Precaución especial con nieve o niebla.",
+      "full_text": "Longitud (Length): 5,8 Km. (trayecto Urdón - Tresviso) / 11,6 Km. (ida y vuelta) Desnivel (Difference in altitude): 825 m. de subida / (+ 825 m. de bajada en el regreso) Duración (Duration, in hours): 2 h. 45 min (trayecto Urdón - Tresviso) / 5 h. 15 min. (ida y vuelta) Dificultad (Difficulty): Media. Gran desnivel. Camino que discurre en parte por un precipicio sin protección lateral Descripción (Description): La población cántabra de Tresviso se encuentra localizada en la parte alta del barranco del Urdón, uno de los rincones más espectaculares de los Picos de Europa. Este camino fue abierto en la segunda mitad del siglo XIX para extraer el mineral de las minas de Ándara y Tresviso. El propio camino supone una increíble obra de ingeniería, con muros de sujeción realizados a mano con piedra de mampostería en un emplazamiento imposible. Cómo hacer la ruta (How to make the trail): Este sendero es lineal, lo que obliga a hacerlo de ida y vuelta por el mismo camino, por lo que habrá que planificar el trayecto de subida y de bajada (algo más de 5 h. en total). Si usted no está suficientemente preparado para el recorrido completo de ida y vuelta, bien puede plantearse hacer sólo una parte del trayecto y regresar cuando considere necesario. En cualquier caso, el senderista y el montañero encuentran aquí una de las rutas más apreciadas de los Picos de Europa. En la subida bien merece la pena pararse, no sólo a tomar fuerzas, también a apreciar del espectacular paisaje, así que tómeselo con calma y disfrute de esta maravilla de camino. También es posible combinar esta ruta con el PR-PNPE-29, añadiendo al recorrido de Urdón a Tresviso, el trayecto de Tresviso a San Esteban (3 h. 20 min). Esta otra ruta tiene mayor dificultad, ya que transcurre por un sendero con tramos expuestos y peligrosos, por lo que está reservada a montañeros que no padezcan vértigo. Al trayecto señalizado hay que añadir el enlace entre San Esteban y Urdón, recorrido que se hace por carretera, con un tramo muy peligroso para los peatones (Rumenes - Urdón). Preste atención a (Interesting places): Impresionante paisaje del desfiladero a medida que se va ascendiendo / La espectacular obra del camino minero abierto sobre la ladera. Precauciones: Precipicio sin protección lateral / Gran desnivel. Absténgase de hacer la ruta si no se cuenta con suficiente preparación física y equipo adecuado / Precaución especial con nieve o niebla. Caution notes: The trail goes down the canyon and has not side fence / Great difference in altitude. Start walking only in case you carry appropriate equipment and you have good physical condition / Special precautions in case of snow or fog. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_30_tcm30-70765.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_30_tcm30-70766.pdf",
+      "raw_metrics": {
+        "length": "5,8 Km. (trayecto Urdón - Tresviso) / 11,6 Km. (ida y vuelta)",
+        "duration": "2 h. 45 min (trayecto Urdón - Tresviso) / 5 h. 15 min. (ida y vuelta)",
+        "elevation": "825 m. de subida / (+ 825 m. de bajada en el regreso)",
+        "difficulty": "Media. Gran desnivel. Camino que discurre en parte por un precipicio sin protección lateral"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-30:main",
+          "key": "main",
+          "name": "(trayecto Urdón - Tresviso)",
+          "distance_m": 5800,
+          "duration_minutes": 165,
+          "ascent_m": 825,
+          "descent_m": null,
+          "difficulty": "moderate",
+          "layout": "unknown"
+        },
+        {
+          "variant_id": "PR-PNPE-30:return",
+          "key": "return",
+          "name": "(ida y vuelta)",
+          "distance_m": 11600,
+          "duration_minutes": 315,
+          "ascent_m": 825,
+          "descent_m": 825,
+          "difficulty": "moderate",
+          "layout": "out_and_back"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-4",
+      "name": "VEGA DE ARIO",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-vega-ario.html",
+      "category": "PR",
+      "description": "Este recorrido se aproxima a la zona de alta montaña del Macizo Occidental. En la Vega de Ario se encuentra una de las majadas más altas de los Picos de Europa, siendo además un excelente mirador hacia las cumbres del Macizo Central y el valle de Valdeón. En Ario se encuentra el refugio del \"Marqués de Villaviciosa\" punto de referencia para realizar actividades de alta montaña.",
+      "instructions": "Este sendero es lineal, por lo que necesariamente hay que regresar al punto de partida. Se debe tener en cuenta el tiempo de regreso. Recomendamos hacer la ruta sólo con buena meteorología, e iniciando el recorrido temprano para regresar con tiempo suficiente. También se pude pernoctar en el refugio de Ario, desde donde se puede ascender a algunas cumbres cercanas, como el Pico del Jultayu.",
+      "points_of_interest": "Vistas del Lago Ercina al inicio del recorrido / Majada de Las Bobias / El tránsito de la media a la alta montaña / Vistas del Macizo Central desde el Mirador del Jito.",
+      "cautions": "¡Atención al desvío del Llaguiellu en el camino de regreso! Preste especial atención a la señalización de marcas de pintura/ La nieve puede impedir el tránsito, especialmente en la zona alta. / Con niebla abstenerse de hacer la ruta. / Lleve provisión de agua para el recorrido. / Lleve siempre botas de montaña.",
+      "full_text": "Longitud (Length): 7'6 Km. (solo ida) / 15,2 Km. (ida y vuelta) Desnivel (Difference in altitude): 610 m (ascenso y descenso para el recorrido completo) Duración (Duration, in hours): 3 h. 30 min. (ida, partiendo de Buferrera) / 6 h. 30 min. (ida y vuelta) Dificultad (Difficulty): Media: Ruta relativamente dura si se hace en una sola jornada la ida y la vuelta. Descripción (Description): Este recorrido se aproxima a la zona de alta montaña del Macizo Occidental. En la Vega de Ario se encuentra una de las majadas más altas de los Picos de Europa, siendo además un excelente mirador hacia las cumbres del Macizo Central y el valle de Valdeón. En Ario se encuentra el refugio del \"Marqués de Villaviciosa\" punto de referencia para realizar actividades de alta montaña. Cómo hacer la ruta (How to make the trail): Este sendero es lineal, por lo que necesariamente hay que regresar al punto de partida. Se debe tener en cuenta el tiempo de regreso. Recomendamos hacer la ruta sólo con buena meteorología, e iniciando el recorrido temprano para regresar con tiempo suficiente. También se pude pernoctar en el refugio de Ario, desde donde se puede ascender a algunas cumbres cercanas, como el Pico del Jultayu. Preste atención a (Interesting places): Vistas del Lago Ercina al inicio del recorrido / Majada de Las Bobias / El tránsito de la media a la alta montaña / Vistas del Macizo Central desde el Mirador del Jito. Precauciones: ¡Atención al desvío del Llaguiellu en el camino de regreso! Preste especial atención a la señalización de marcas de pintura/ La nieve puede impedir el tránsito, especialmente en la zona alta. / Con niebla abstenerse de hacer la ruta. / Lleve provisión de agua para el recorrido. / Lleve siempre botas de montaña. Caution notes: Pay attention in \"Llaguiellu\" site on your way back! Pay special attention to the paint marks / Snow can block the passage, especially in high zones / With fog don´t start walking / You must carry water / Always wear mountain shoes. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_04_tcm30-70890.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_04_tcm30-70891.pdf",
+      "raw_metrics": {
+        "length": "7'6 Km. (solo ida) / 15,2 Km. (ida y vuelta)",
+        "duration": "3 h. 30 min. (ida, partiendo de Buferrera) / 6 h. 30 min. (ida y vuelta)",
+        "elevation": "610 m (ascenso y descenso para el recorrido completo)",
+        "difficulty": "Media: Ruta relativamente dura si se hace en una sola jornada la ida y la vuelta."
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-4:outbound",
+          "key": "outbound",
+          "name": "(solo ida)",
+          "distance_m": 7600,
+          "duration_minutes": 210,
+          "ascent_m": null,
+          "descent_m": null,
+          "difficulty": "moderate",
+          "layout": "unknown"
+        },
+        {
+          "variant_id": "PR-PNPE-4:return",
+          "key": "return",
+          "name": "(ida y vuelta)",
+          "distance_m": 15200,
+          "duration_minutes": 390,
+          "ascent_m": 610,
+          "descent_m": 610,
+          "difficulty": "moderate",
+          "layout": "out_and_back"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-5",
+      "name": "BUFERRERA - ORDIALES",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-buferrera-ordiales.html",
+      "category": "PR",
+      "description": "Esta ruta se adentra en la alta montaña del Macizo Occidental, tomando como referencia el refugio de Vegarredonda. Con inicio en el entorno de los Lagos, recorre algunas de las majadas del concejo de Cangas de Onís. El refugio de Vegarredonda es punto intermedio del recorrido, desde el que se inicia el ascenso al mirador de Ordiales, donde descansan los restos del Marqués de Villaviciosa, fundador del Parque Nacional de la Montaña de Covadonga. Las vistas desde este mirador natural son impresionantes.",
+      "instructions": "Se puede optar por hacer sólo el trayecto hasta el refugio de Vegarredonda y regresar. También se puede pernoctar en el refugio desde donde parten otros recorridos hacia la alta montaña del Macizo Occidental. Recomendamos hacer el recorrido completo hasta Ordiales, siempre que haya visibilidad, para disfrutar del entorno alpino y de las maravillosas vistas.",
+      "points_of_interest": "Majadas y cabañas de pastores (Vega de Enol, Vega La Cueva, Vega La Piedra, Canraso) / Aproximación a las cumbres calizas del Macizo Occidental / Las vistas desde el mirador de Ordiales en días claros.",
+      "cautions": "Con nieve abstenerse de hacer el recorrido si no se tiene preparación suficiente o si no se lleva el equipo adecuado. / La niebla puede ser también un impedimento importante. / Lleve suficiente provisión de agua para el recorrido. / Lleve siempre botas de montaña.",
+      "full_text": "Longitud (Length): Partiendo de Buferrera: 10'2 Km. (ida) / 20,4 Km. (ida y vuelta) / Partiendo de Pandecarmen: 7,7 Km. (ida) / 15,4 Km. (ida y vuelta) Desnivel (Difference in altitude): 641 m (de ascenso a la ida, y de descenso a la vuelta) Duración (Duration, in hours): Partiendo de Buferrera: 3 h. 40 min. (ida) / 6 h. 30 min. (ida y vuelta) Partiendo de Pandecarmen: 2 h. 50 min. (ida) / 5 h. 40 min. (ida y vuelta) Dificultad (Difficulty): Media. Ruta relativamente dura si se hace en una sola jornada la ida y la vuelta Descripción (Description): Esta ruta se adentra en la alta montaña del Macizo Occidental, tomando como referencia el refugio de Vegarredonda. Con inicio en el entorno de los Lagos, recorre algunas de las majadas del concejo de Cangas de Onís. El refugio de Vegarredonda es punto intermedio del recorrido, desde el que se inicia el ascenso al mirador de Ordiales, donde descansan los restos del Marqués de Villaviciosa, fundador del Parque Nacional de la Montaña de Covadonga. Las vistas desde este mirador natural son impresionantes. Cómo hacer la ruta (How to make the trail): Se puede optar por hacer sólo el trayecto hasta el refugio de Vegarredonda y regresar. También se puede pernoctar en el refugio desde donde parten otros recorridos hacia la alta montaña del Macizo Occidental. Recomendamos hacer el recorrido completo hasta Ordiales, siempre que haya visibilidad, para disfrutar del entorno alpino y de las maravillosas vistas. Preste atención a (Interesting places): Majadas y cabañas de pastores (Vega de Enol, Vega La Cueva, Vega La Piedra, Canraso) / Aproximación a las cumbres calizas del Macizo Occidental / Las vistas desde el mirador de Ordiales en días claros. Precauciones: Con nieve abstenerse de hacer el recorrido si no se tiene preparación suficiente o si no se lleva el equipo adecuado. / La niebla puede ser también un impedimento importante. / Lleve suficiente provisión de agua para el recorrido. / Lleve siempre botas de montaña. Caution notes: With snow or snowing before start walking you must carry appropriate equipment and you have good physical condition / Fog can be dangerous / You must carry water / Always wear mountain shoes. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_05_tcm30-69766.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_05_tcm30-69767.pdf",
+      "raw_metrics": {
+        "length": "Partiendo de Buferrera: 10'2 Km. (ida) / 20,4 Km. (ida y vuelta) / Partiendo de Pandecarmen: 7,7 Km. (ida) / 15,4 Km. (ida y vuelta)",
+        "duration": "Partiendo de Buferrera: 3 h. 40 min. (ida) / 6 h. 30 min. (ida y vuelta) Partiendo de Pandecarmen: 2 h. 50 min. (ida) / 5 h. 40 min. (ida y vuelta)",
+        "elevation": "641 m (de ascenso a la ida, y de descenso a la vuelta)",
+        "difficulty": "Media. Ruta relativamente dura si se hace en una sola jornada la ida y la vuelta"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-5:buferrera-outbound",
+          "key": "buferrera-outbound",
+          "name": "Partiendo de Buferrera:  (ida)",
+          "distance_m": 10200,
+          "duration_minutes": 220,
+          "ascent_m": 641,
+          "descent_m": null,
+          "difficulty": "moderate",
+          "layout": "unknown"
+        },
+        {
+          "variant_id": "PR-PNPE-5:buferrera-return",
+          "key": "buferrera-return",
+          "name": "(ida y vuelta)",
+          "distance_m": 20400,
+          "duration_minutes": 390,
+          "ascent_m": 641,
+          "descent_m": 641,
+          "difficulty": "moderate",
+          "layout": "out_and_back"
+        },
+        {
+          "variant_id": "PR-PNPE-5:pandecarmen-outbound",
+          "key": "pandecarmen-outbound",
+          "name": "Partiendo de Pandecarmen:  (ida)",
+          "distance_m": 7700,
+          "duration_minutes": 170,
+          "ascent_m": 641,
+          "descent_m": null,
+          "difficulty": "moderate",
+          "layout": "unknown"
+        },
+        {
+          "variant_id": "PR-PNPE-5:pandecarmen-return",
+          "key": "pandecarmen-return",
+          "name": "(ida y vuelta)",
+          "distance_m": 15400,
+          "duration_minutes": 340,
+          "ascent_m": 641,
+          "descent_m": 641,
+          "difficulty": "moderate",
+          "layout": "out_and_back"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-6",
+      "name": "VEGA DE ORANDI",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-vega-orandi.html",
+      "category": "PR",
+      "description": "El acceso más cómodo a la Vega de Orandi se realiza partiendo de la carretera de Covadonga a los Lagos (Km. 3), en el lugar conocido como Moferos. Este recorrido pasa por algunas de las majadas del puerto bajo de Covadonga, como las de Bastañar, Las Llacerias y Las Mestas, hasta llegar a la bucólica Vega de Orandi, donde el río del mismo nombre se sume en una cueva para realizar un recorrido subterráneo que le llevará hasta la surgencia de la Cueva de Covadonga. La ruta se completa con la bajada de \"La Matona\", sendero que discurre bajo el magnífico dosel arbóreo del Monte Auseva.",
+      "instructions": "Dado que el recorrido propuesto es lineal, hay que programar el regreso a por el vehículo. La opción más recomendable es dejar el coche en Covadonga y contratar un transporte público para llegar a Moferos.",
+      "points_of_interest": "Algunas majadas del puerto bajo / La cueva de Orandi / El bosque mixto del Monte Auseva / Surgencia en la Cueva de Covadonga.",
+      "cautions": "Hay que programar el regreso si se hace el recorrido en un solo sentido / Con tiempo humedo, extremar las precauciones en la bajada a Covadonga.",
+      "full_text": "Longitud (Length): 4'3 Km. (recorrido Moferos - Covadonga) Desnivel (Difference in altitude): 140 m. de subida / 430 m. de bajada Duración (Duration, in hours): 2 h 35 min. (recorrido Moferos - Covadonga) Dificultad (Difficulty): Baja Descripción (Description): El acceso más cómodo a la Vega de Orandi se realiza partiendo de la carretera de Covadonga a los Lagos (Km. 3), en el lugar conocido como Moferos. Este recorrido pasa por algunas de las majadas del puerto bajo de Covadonga, como las de Bastañar, Las Llacerias y Las Mestas, hasta llegar a la bucólica Vega de Orandi, donde el río del mismo nombre se sume en una cueva para realizar un recorrido subterráneo que le llevará hasta la surgencia de la Cueva de Covadonga. La ruta se completa con la bajada de \"La Matona\", sendero que discurre bajo el magnífico dosel arbóreo del Monte Auseva. Cómo hacer la ruta (How to make the trail): Dado que el recorrido propuesto es lineal, hay que programar el regreso a por el vehículo. La opción más recomendable es dejar el coche en Covadonga y contratar un transporte público para llegar a Moferos. Preste atención a (Interesting places): Algunas majadas del puerto bajo / La cueva de Orandi / El bosque mixto del Monte Auseva / Surgencia en la Cueva de Covadonga. Precauciones: Hay que programar el regreso si se hace el recorrido en un solo sentido / Con tiempo humedo, extremar las precauciones en la bajada a Covadonga. Caution notes: Plan the tour properly, remember that you have to come back / Under wet conditions pay special attention going down to Covadonga. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_06_tcm30-70910.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_06_tcm30-70911.pdf",
+      "raw_metrics": {
+        "length": "4'3 Km. (recorrido Moferos - Covadonga)",
+        "duration": "2 h 35 min. (recorrido Moferos - Covadonga)",
+        "elevation": "140 m. de subida / 430 m. de bajada",
+        "difficulty": "Baja"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-6:main",
+          "key": "main",
+          "name": "(recorrido Moferos - Covadonga)",
+          "distance_m": 4300,
+          "duration_minutes": 155,
+          "ascent_m": 140,
+          "descent_m": 430,
+          "difficulty": "easy",
+          "layout": "unknown"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-7",
+      "name": "LA JOCICA - BEZA",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-jocica-beza.html",
+      "category": "PR",
+      "description": "Esta ruta recorre parte de la cuenca del río Dobra, en el concejo de Amieva. Partiendo del collado de Angón se accede al valle del mismo nombre, paraje de enorme belleza y al pie de las paredes rocosas del Macizo Occidental de los Picos de Europa. A partir del Restaño la ruta se adentra en el desfiladero del Dobra, primero por una pista que asciende hasta la presa de La Jocica, y después por una senda paralela al río hasta la majada de Carombo, ubicada en una de las zonas mejor conservadas del Parque Nacional, junto a frondosos bosques de haya y roble. Sin duda es una de las rutas de mayor belleza de los Picos de Europa.",
+      "instructions": "Se puede plantear un paseo sencillo desde el Collado Angón al Restaño y desde aquí subir hasta la presa de la Jocica y regresar (3 h. ida y vuelta) Este mismo recorrido se puede ampliar bordeando el embalse hasta la majada de Carombo, regresando desde este punto hasta Angón (5 h. 30 min. ida y vuelta). La opción más montañera se completa subiendo desde Carombo al Collado Barcinera, desde donde se puede ir a pernoctar al refugio de Vegabaño, o bien continuar hasta la portilla de Beza. En este último caso lo más recomendable es regresar al collado de Angón por el GR-201, ó Senda del Arcediano (8 h. 30 min.). En este último caso se recomienda madrugar y contar con buen tiempo, pues se trata ya de una ruta larga de montaña en la que se alcanzan los 1.500 m. de altitud. Este recorrido se puede hacer también en sentido inverso.",
+      "points_of_interest": "La belleza del paisaje en todo el recorrido / La monumental obra de la presa de la Jocica / La belleza de las aguas del Dobra aguas arriba de la presa / Los bosques de hayas y robles en el entorno de Carombo.",
+      "cautions": "Recorrido muy largo si se programa el circuito completo / Lleve provisión suficiente de agua y alimentos energéticos / Tenga en cuenta la meteorología. / Lleve siempre botas de montaña.",
+      "full_text": "Longitud (Length): 13,5 Km. (Tramo Collado de Angón - Carombo - Portilla de Beza) / 22,8 Km. (Circuito completo Angón - Carombo - Beza - Angón) Desnivel (Difference in altitude): 64 m. de descenso y 573 m. de subida (Tramo Collado de Angón - La Jocica - Carombo - Portilla de Beza) / Se añaden 509 de descenso en el circuito completo Duración (Duration, in hours): 3 h. (Tramo Collado de Angón - Carombo) / 5 h 15 min. (Tramo Collado de Angón- Carombo - Portilla de Beza) / 8 h. 45 min. (Completando el regreso por el GR-201, ó Senda del Arcediano) Dificultad (Difficulty): Baja, Media o Alta, en función del tramo que se recorra. El circuito completo regresando por la Senda del Arcediano es largo (8 h. 30 min.) y requiere buena preparación física Descripción (Description): Esta ruta recorre parte de la cuenca del río Dobra, en el concejo de Amieva. Partiendo del collado de Angón se accede al valle del mismo nombre, paraje de enorme belleza y al pie de las paredes rocosas del Macizo Occidental de los Picos de Europa. A partir del Restaño la ruta se adentra en el desfiladero del Dobra, primero por una pista que asciende hasta la presa de La Jocica, y después por una senda paralela al río hasta la majada de Carombo, ubicada en una de las zonas mejor conservadas del Parque Nacional, junto a frondosos bosques de haya y roble. Sin duda es una de las rutas de mayor belleza de los Picos de Europa. Cómo hacer la ruta (How to make the trail): Se puede plantear un paseo sencillo desde el Collado Angón al Restaño y desde aquí subir hasta la presa de la Jocica y regresar (3 h. ida y vuelta) Este mismo recorrido se puede ampliar bordeando el embalse hasta la majada de Carombo, regresando desde este punto hasta Angón (5 h. 30 min. ida y vuelta). La opción más montañera se completa subiendo desde Carombo al Collado Barcinera, desde donde se puede ir a pernoctar al refugio de Vegabaño, o bien continuar hasta la portilla de Beza. En este último caso lo más recomendable es regresar al collado de Angón por el GR-201, ó Senda del Arcediano (8 h. 30 min.). En este último caso se recomienda madrugar y contar con buen tiempo, pues se trata ya de una ruta larga de montaña en la que se alcanzan los 1.500 m. de altitud. Este recorrido se puede hacer también en sentido inverso. Preste atención a (Interesting places): La belleza del paisaje en todo el recorrido / La monumental obra de la presa de la Jocica / La belleza de las aguas del Dobra aguas arriba de la presa / Los bosques de hayas y robles en el entorno de Carombo. Precauciones: Recorrido muy largo si se programa el circuito completo / Lleve provisión suficiente de agua y alimentos energéticos / Tenga en cuenta la meteorología. / Lleve siempre botas de montaña. Caution notes: The entire circuit is a very long tour / You must carry water and food / Always wear mountain shoes. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_07_tcm30-70914.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_07_tcm30-70915.pdf",
+      "raw_metrics": {
+        "length": "13,5 Km. (Tramo Collado de Angón - Carombo - Portilla de Beza) / 22,8 Km. (Circuito completo Angón - Carombo - Beza - Angón)",
+        "duration": "3 h. (Tramo Collado de Angón - Carombo) / 5 h 15 min. (Tramo Collado de Angón- Carombo - Portilla de Beza) / 8 h. 45 min. (Completando el regreso por el GR-201, ó Senda del Arcediano)",
+        "elevation": "64 m. de descenso y 573 m. de subida (Tramo Collado de Angón - La Jocica - Carombo - Portilla de Beza) / Se añaden 509 de descenso en el circuito completo",
+        "difficulty": "Baja, Media o Alta, en función del tramo que se recorra. El circuito completo regresando por la Senda del Arcediano es largo (8 h. 30 min.) y requiere buena preparación física"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-7:main",
+          "key": "main",
+          "name": "(Tramo Collado de Angón - Carombo - Portilla de Beza)",
+          "distance_m": 13500,
+          "duration_minutes": 315,
+          "ascent_m": 573,
+          "descent_m": 64,
+          "difficulty": "unknown",
+          "layout": "unknown"
+        },
+        {
+          "variant_id": "PR-PNPE-7:circuit",
+          "key": "circuit",
+          "name": "(Circuito completo Angón - Carombo - Beza - Angón)",
+          "distance_m": 22800,
+          "duration_minutes": 525,
+          "ascent_m": null,
+          "descent_m": null,
+          "difficulty": "unknown",
+          "layout": "circular"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-8",
+      "name": "DEMUÉS - LOS LAGOS",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-demues-lagos.html",
+      "category": "PR",
+      "description": "Este es el camino más frecuentado por pastores y ganados del concejo de Onís para acceder al puerto, comunicando las poblaciones del valle con las majadas del puerto, (Bobia, Demués, Gamonedo de Onís) Gran parte del recorrido discurre por una pista que en continuo ascenso va ganado altura hasta entrar en el Parque Nacional por el Cantón de Soñín. A mitad de la subida se puede tomar un desvío a la izquierda que sube hasta el poblado de Cabañayu, un antiguo asentamiento de cabañas circulares que han sido parcialmente. Este recorrido se incorpora más arriba a la pista que sube hasta Soñín, que más adelante se convierte en sendero para llegar a las majadas de Las Mantegas y Belbín. De ahí, una cómoda pista llega hasta el entorno de los Lagos de Covadonga.",
+      "instructions": "Este recorrido parte de Demués en dirección al Cantón de Soñín para de ahí entrar al Parque Nacional por Belbín, y llegar hasta los Lagos de Covadonga. Si se opta por hacer la ruta completa, ida y vuelta, hay que tener en cuenta el regreso (6 h. 20 min. en total), o contar con un vehículo para volver. Recomendamos hacer la subida por la variante que pasa por la majada de Cabañayu. Se puede optar por hacer una parte de la subida hasta el final de la pista, y regresar por Cabañayu, reduciendo así el trayecto (4 h.) con la ventaja de salir de Demués y regresar al punto de partida.",
+      "points_of_interest": "Los cambios progresivos del paisaje entre el valle y la montaña / Las majadas, especialmente Belbín, como asentamientos de verano para los pastores y su ganado.",
+      "cautions": "Considerar cómo se hace el recorrido para programar el regreso / Llevar agua / tener en cuenta la meteorología.",
+      "full_text": "Longitud (Length): 10,1 Km. (recorrido Demués - Los Lagos) / 20,2 Km. (ida y vuelta) Desnivel (Difference in altitude): 698 m. de subida (recorrido Demués - Los Lagos) / 698 m. de bajada recorrido inverso Duración (Duration, in hours): 3 h 20 min. (sentido ascendente) / 3 h. (sentido descendente) / 6 h. 20 min. (ida y vuelta) Dificultad (Difficulty): Baja. Dificultad media si se hace el recorrido completo ida y vuelta Descripción (Description): Este es el camino más frecuentado por pastores y ganados del concejo de Onís para acceder al puerto, comunicando las poblaciones del valle con las majadas del puerto, (Bobia, Demués, Gamonedo de Onís) Gran parte del recorrido discurre por una pista que en continuo ascenso va ganado altura hasta entrar en el Parque Nacional por el Cantón de Soñín. A mitad de la subida se puede tomar un desvío a la izquierda que sube hasta el poblado de Cabañayu, un antiguo asentamiento de cabañas circulares que han sido parcialmente. Este recorrido se incorpora más arriba a la pista que sube hasta Soñín, que más adelante se convierte en sendero para llegar a las majadas de Las Mantegas y Belbín. De ahí, una cómoda pista llega hasta el entorno de los Lagos de Covadonga. Cómo hacer la ruta (How to make the trail): Este recorrido parte de Demués en dirección al Cantón de Soñín para de ahí entrar al Parque Nacional por Belbín, y llegar hasta los Lagos de Covadonga. Si se opta por hacer la ruta completa, ida y vuelta, hay que tener en cuenta el regreso (6 h. 20 min. en total), o contar con un vehículo para volver. Recomendamos hacer la subida por la variante que pasa por la majada de Cabañayu. Se puede optar por hacer una parte de la subida hasta el final de la pista, y regresar por Cabañayu, reduciendo así el trayecto (4 h.) con la ventaja de salir de Demués y regresar al punto de partida. Preste atención a (Interesting places): Los cambios progresivos del paisaje entre el valle y la montaña / Las majadas, especialmente Belbín, como asentamientos de verano para los pastores y su ganado. Precauciones: Considerar cómo se hace el recorrido para programar el regreso / Llevar agua / tener en cuenta la meteorología. Caution notes: Plan the tour properly, remember that you have to come back / You must carry water / Weather conditions must be taken into account. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_08_tcm30-70918.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_08_tcm30-70919.pdf",
+      "raw_metrics": {
+        "length": "10,1 Km. (recorrido Demués - Los Lagos) / 20,2 Km. (ida y vuelta)",
+        "duration": "3 h 20 min. (sentido ascendente) / 3 h. (sentido descendente) / 6 h. 20 min. (ida y vuelta)",
+        "elevation": "698 m. de subida (recorrido Demués - Los Lagos) / 698 m. de bajada recorrido inverso",
+        "difficulty": "Baja. Dificultad media si se hace el recorrido completo ida y vuelta"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-8:main",
+          "key": "main",
+          "name": "(recorrido Demués - Los Lagos)",
+          "distance_m": 10100,
+          "duration_minutes": null,
+          "ascent_m": 698,
+          "descent_m": null,
+          "difficulty": "easy",
+          "layout": "unknown"
+        },
+        {
+          "variant_id": "PR-PNPE-8:return",
+          "key": "return",
+          "name": "(ida y vuelta)",
+          "distance_m": 20200,
+          "duration_minutes": 380,
+          "ascent_m": null,
+          "descent_m": null,
+          "difficulty": "moderate",
+          "layout": "out_and_back"
+        }
+      ],
+      "warnings": [
+        "Duration is ambiguous or missing for main"
+      ],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "route_id": "PR-PNPE-9",
+      "name": "SOTO - VEGABAÑO",
+      "url": "https://www.miteco.gob.es/es/red-parques-nacionales/nuestros-parques/picos-europa/guia-visitante/ruta-soto-vegabano.html",
+      "category": "PR",
+      "description": "Esta senda se aproxima a los bosques y praderías de Vegabaño, partiendo de la localidad de Soto de Sajambre, en la que destaca su cuidada arquitectura tradicional. El recorrido circular se inicia siguiendo el que se conoce como camino viejo, que va ascendiendo entre praderías del entorno de Soto. Enseguida el camino se adentra en el hayedo, que no se abandona hasta las inmediaciones de la majada de Vegabaño. En su entorno, entre praderas naturales y bosques de hayas, se encuentra el refugio del mismo nombre, desde donde se inician algunas de las rutas de acceso a la alta montaña del Macizo Occidental.",
+      "instructions": "Al ser circular se puede hacer en un sentido o en otro, pero también se puede ir y volver por el camino viejo, que es el recorrido más corto, o bien hacer el circuito completo y volver a Soto siguiendo la pista que desciende suavemente por el interior del bosque y pasando por el mirador de los Porrros. La ruta marca también el acceso a pie al refugio de Vegabaño, donde se puede pernoctar y hacer desde allí otras rutas de montaña (consultar en el refugio).",
+      "points_of_interest": "La perfecta sintonía del pueblo de Soto con su entorno forestal / La magia del hayedo en las distintas épocas del año / El entorno de Vegabaño y sus magníficos bosques.",
+      "cautions": "Tener en cuenta la meteorología.",
+      "full_text": "Longitud (Length): 9,8 Km. (recorrido circular) Desnivel (Difference in altitude): 391 m. de subida y de bajada Duración (Duration, in hours): 3 h 15 min. Dificultad (Difficulty): Baja Descripción (Description): Esta senda se aproxima a los bosques y praderías de Vegabaño, partiendo de la localidad de Soto de Sajambre, en la que destaca su cuidada arquitectura tradicional. El recorrido circular se inicia siguiendo el que se conoce como camino viejo, que va ascendiendo entre praderías del entorno de Soto. Enseguida el camino se adentra en el hayedo, que no se abandona hasta las inmediaciones de la majada de Vegabaño. En su entorno, entre praderas naturales y bosques de hayas, se encuentra el refugio del mismo nombre, desde donde se inician algunas de las rutas de acceso a la alta montaña del Macizo Occidental. Cómo hacer la ruta (How to make the trail): Al ser circular se puede hacer en un sentido o en otro, pero también se puede ir y volver por el camino viejo, que es el recorrido más corto, o bien hacer el circuito completo y volver a Soto siguiendo la pista que desciende suavemente por el interior del bosque y pasando por el mirador de los Porrros. La ruta marca también el acceso a pie al refugio de Vegabaño, donde se puede pernoctar y hacer desde allí otras rutas de montaña (consultar en el refugio). Preste atención a (Interesting places): La perfecta sintonía del pueblo de Soto con su entorno forestal / La magia del hayedo en las distintas épocas del año / El entorno de Vegabaño y sus magníficos bosques. Precauciones: Tener en cuenta la meteorología. Caution notes: Weather conditions must be taken into account. ",
+      "source_language": "es",
+      "map_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/ruta_pr_09_tcm30-70922.pdf",
+      "profile_url": "https://www.miteco.gob.es/content/dam/miteco/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/perfil_pr_09_tcm30-70923.pdf",
+      "raw_metrics": {
+        "length": "9,8 Km. (recorrido circular)",
+        "duration": "3 h 15 min.",
+        "elevation": "391 m. de subida y de bajada",
+        "difficulty": "Baja"
+      },
+      "variants": [
+        {
+          "variant_id": "PR-PNPE-9:circuit",
+          "key": "circuit",
+          "name": "(recorrido circular)",
+          "distance_m": 9800,
+          "duration_minutes": 195,
+          "ascent_m": 391,
+          "descent_m": 391,
+          "difficulty": "easy",
+          "layout": "circular"
+        }
+      ],
+      "warnings": [],
+      "parser_version": "2",
+      "etag": null,
+      "last_modified": null
+    }
+  ]
+}

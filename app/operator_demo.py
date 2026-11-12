@@ -10,11 +10,21 @@ if __name__ == '__main__':
     configure_logging('operator-demo')
 
 import uvicorn
-from fastapi import FastAPI, Response
+from fastapi import Depends, FastAPI, Header, HTTPException, Response
+from pydantic import ValidationError
 
 from app.models.contracts import BookingRequest, GuideQuery, InventoryQuery
 from app.route_catalog.store import CatalogStore, database_path
-from app.tools.operator import MockOperator, confirmation
+from app.tools.operator import confirmation
+from app.simulation.presets import ManualPreset, preset_operator
+
+
+async def manual_preset(x_manual_preset: str = Header(default='normal'),
+                  x_manual_preset_date: str | None = Header(default=None)):
+    try:
+        return ManualPreset(name=x_manual_preset, date=x_manual_preset_date)
+    except ValidationError as exc:
+        raise HTTPException(422, 'Invalid manual operator conditions') from exc
 
 @asynccontextmanager
 async def lifespan(app):
@@ -35,7 +45,7 @@ async def health():
 
 
 @app.post("/guides")
-async def guides(query: GuideQuery, response: Response):
+async def guides(query: GuideQuery, response: Response, preset: ManualPreset = Depends(manual_preset)):
     response.headers["X-Reservation-Idempotency"] = "request-id"
     supported = query.route_id == "PR-PNPE-2"
     if not supported and database_path().exists():
@@ -44,19 +54,13 @@ async def guides(query: GuideQuery, response: Response):
             supported = True
         except (ValueError, sqlite3.Error):
             pass
-    provider = MockOperator({str(query.date): ["ines", "luis"]}, {}, [query.route_id] if supported else [])
+    provider = preset_operator(preset, [query.route_id] if supported else [])
     return await provider.guides(query)
 
 
 @app.post("/inventory")
-async def inventory(query: InventoryQuery):
-    provider = MockOperator(
-        {},
-        dict.fromkeys(
-            ["boots", "water", "rain jacket", "first aid kit", "warm layer", "poles"], 4
-        ),
-        [],
-    )
+async def inventory(query: InventoryQuery, preset: ManualPreset = Depends(manual_preset)):
+    provider = preset_operator(preset, [])
     return await provider.inventory(query)
 
 

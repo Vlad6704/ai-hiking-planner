@@ -23,7 +23,9 @@ tool contract in the parent design and is separate from this route feature.
   SQL and SQLite FTS5 full-text queries.
 - Support an explicit refresh command and at most one automatic refresh
   attempt per calendar day, triggered by the first catalog request.
-- Preserve deterministic mock-mode fixtures without network access.
+- Preserve deterministic mock-mode fixtures without network access. Both modes
+  use the complete SQLite retrieval path; only live source refresh is disabled
+  in mock mode.
 
 Source index: [Official Picos de Europa itinerary catalog](https://www.miteco.gob.es/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/picos-europa/guia-visitante/itinerarios.html).
 
@@ -185,6 +187,22 @@ explicitly supplied filters; an omitted or null filter imposes no restriction.
 
 For content search:
 
+Agent-facing tool content uses a compact projection of the database result.
+Search returns only exact variant ID, name, difficulty, distance, duration,
+ascent/descent and a short match excerpt when keywords were supplied. Keep
+all filters and existing pagination semantics. The selected route's details
+return full description, directions, points of interest, cautions and source,
+without repeating these fields in an additional full_text aggregate.
+The planner must retrieve details before preparing an operational proposal.
+Choose a candidate using the summaries and customer preferences first. Retrieve
+another candidate's details when needed to resolve suitability or a requested
+comparison, rather than expanding every search result. Equipment advice is
+computed for the proposed route/date.
+Retain complete normalized records in SQLite and original tool results in
+trajectory events under the existing redaction/size limits. Runtime observed
+results also retain their original form for validation. Errors and degraded
+status remain visible to the model.
+
 - Use FTS5 MATCH for lexical keyword/phrase matching, combined with numeric
   filters through SQL AND conditions.
 - Escape keywords as literal terms/phrases and bound query size. Do not
@@ -195,8 +213,9 @@ For content search:
   explain matches. Full details remain available through the details tool.
 - Disclose that a match in a route page is evidence of a textual mention;
   shared page text does not prove that every variant contains that feature.
-- Return freshness, source URL and content identity alongside results, and
-  record the catalog/route version used in the run trajectory.
+- Preserve freshness, source URL and content identity in the full result
+  recorded in the trajectory; expose source in selected-route details and
+  degraded status to the model.
 
 For example, a waterfall preference may become the source-language keyword
 `cascada`, combined with an easy-difficulty filter and a four-hour limit.
@@ -222,8 +241,21 @@ The current work does not require an embedding service or vector database.
 
 ## Integration and verification
 
-- Preserve existing mock fixtures and real/mock tool-interface parity while
-  updating contracts for variants, content search and freshness metadata.
+- Keep the normalized source snapshot in `snapshots/routes.json` (seed version
+  and identity plus source records). The initial seed captures the 31 routes
+  and 50 variants already imported on November 9, 2026; this is a fixed dataset,
+  not a claim about today's source contents.
+- Each mock run publishes the seed into its own temporary SQLite database with
+  the production schema and FTS index. Use the scenario clock for check dates
+  and freshness; clean up the database when the run ends, including cancellation.
+  Ignore `ROUTE_CATALOG_DB` in mock mode and make no source HTTP requests.
+- Use the same catalog service and store for both modes. Disable refresh for a
+  seeded service, including explicit refresh attempts. Use the same validated
+  `RouteDetails` fields for search and details, including instructions, points
+  of interest, full text and parser warnings. Search may omit full content.
+- Remove the separate hand-written JSON route-search implementation. Preserve
+  exact variant IDs through mock guide qualifications, booking and evaluation;
+  do not replace them with their parent source route ID.
 - Align the demo operator's accepted route identities with discovered,
   validated variants so newly searchable routes can complete the demo flow.
 - Add fixture-backed parser and temporary-database tests for route discovery,

@@ -16,11 +16,11 @@ if __name__ == '__main__':
     role = sys.argv[1] if len(sys.argv) > 1 and sys.argv[1] in ('operator', 'customer') else 'launcher'
     configure_logging('manual-' + role)
 
-from app.evaluation.checks import evaluate
 from app.humans.simulator import HumanSimulator
 from app.simulation.config import Settings
 from app.simulation.launcher import launch, write_status
 from app.simulation.manual_services import operator_backend
+from app.simulation.outcome import manual_outcome
 from app.simulation.runner import SimulationRunner
 from app.simulation.scenario import load_scenario, scenarios
 
@@ -84,6 +84,7 @@ class CustomerConsole(HumanSimulator):
 
 class ManualRun(SimulationRunner):
     async def resolve_interrupt(self, actor, item):
+        event = self.present_interrupt(actor, item)
         if actor == "agent_a":
             print(f"\nPlanner: {item.value['question']}", flush=True)
             answer = await asyncio.to_thread(input, "Customer: ")
@@ -94,7 +95,7 @@ class ManualRun(SimulationRunner):
             if not line:
                 raise RuntimeError("Operator terminal disconnected")
             answer = json.loads(line)
-        return self.human_reply(actor, item, answer.strip())
+        return self.human_reply(actor, item, answer.strip(), interrupt_event=event)
 
 
 async def customer_console(port, scenario, ready_file=None, mode="mock"):
@@ -130,10 +131,12 @@ async def connected_customer(port, scenario, ready_file, mode):
         run.humans["agent_a"] = CustomerConsole({})
         print("Planner is working. Answer the manager prompts in the other terminal.", flush=True)
         await run.run()
-        outcome = run.error or run.result.status
+        report = manual_outcome(run)
+        outcome = report['status']
         print(f"Session ended: {outcome}")
-        report = evaluate(run)
-        path = run.trace.write(Path("trajectories/manual"), report)
+        path = run.trace.write(
+            Path("trajectories/manual"), report, group_by_scenario=False
+        )
         print(f"Trajectory: {path}")
         writer.write((json.dumps({"finished": outcome}) + "\n").encode())
         await writer.drain()

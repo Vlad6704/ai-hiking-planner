@@ -1,46 +1,108 @@
-# Baseline evaluation
+# Evaluation summary
 
-## OpenAI GPT-6 Luna
+## Current model-backed results
 
-Revision `855e338` used `openai:gpt-6-luna` through Chat Completions with reasoning effort `none`. The nine runs used mock providers, the same five fixture definitions, seed 42, a 180-second global deadline and a 90-second peer deadline. The five happy-path runs were consecutive in one CLI process. Each run received fresh graph threads, queues and booking state.
+On November 12, 2026, the six-scenario sweep passed **5/6** checks. Four
+additional `guide_unavailable` runs then passed **4/4**. Across these two
+batches, 9/10 runs passed; the guide scenario's combined result was 4/5.
+The follow-up was selected after a failure, so this is a record of those
+executions, not an unbiased estimate of production reliability.
 
-**9/9 runs passed all scenario checks.** Confirmed trips were delivered in 9/9 runs. The happy path passed 5/5 repetitions.
+Both batches used `openai:gpt-6-luna`, temperature 1, mock services, seed 42,
+a 90-second peer timeout and a 300-second session timeout. Runs within each
+batch executed concurrently in one process. No extra failure override was
+applied; each scenario retained its authored conditions and fault behavior.
+Mock mode still calls the real LLM provider.
 
-| Run | Case | Checks | Terminal outcome | Seconds | Model calls | Input / output tokens | Evidence |
-|---:|---|---|---|---:|---:|---:|---|
-| 1 | happy_path | Pass | confirmed | 27.4 | 15 | 27137 / 1588 | [JSON](../trajectories/luna-release/happy_path/e7efe192-9d9a-4118-b4cb-2cffbadc38c5.json) |
-| 2 | happy_path | Pass | confirmed | 21.8 | 14 | 21517 / 1113 | [JSON](../trajectories/luna-release/happy_path/213ea2d8-28df-4fdf-a9ac-ab73d67df615.json) |
-| 3 | happy_path | Pass | confirmed | 22.1 | 12 | 17585 / 1062 | [JSON](../trajectories/luna-release/happy_path/19cd3512-865f-4198-97e3-ca7896249afb.json) |
-| 4 | happy_path | Pass | confirmed | 43.6 | 29 | 65281 / 2051 | [JSON](../trajectories/luna-release/happy_path/3deba861-3b07-4c22-a107-3c20bf38dced.json) |
-| 5 | happy_path | Pass | confirmed | 20.0 | 12 | 17861 / 1040 | [JSON](../trajectories/luna-release/happy_path/1ff0caeb-0207-4605-b2b9-56daf29f262f.json) |
-| 6 | bad_weather | Pass | confirmed | 24.2 | 14 | 23114 / 1295 | [JSON](../trajectories/luna-release/bad_weather/0f8d72a6-951f-41b8-974b-b13d91fd55da.json) |
-| 7 | guide_unavailable | Pass | confirmed | 22.0 | 12 | 17510 / 1092 | [JSON](../trajectories/luna-release/guide_unavailable/15b04bb2-5200-47ff-b8a0-088263915314.json) |
-| 8 | hitl_rejection | Pass | confirmed | 26.6 | 17 | 27872 / 1396 | [JSON](../trajectories/luna-release/hitl_rejection/71d574ff-bbce-43bb-8e0d-824e7d301ab5.json) |
-| 9 | external_service_failure | Pass | confirmed | 24.6 | 14 | 21581 / 1114 | [JSON](../trajectories/luna-release/external_service_failure/29effd99-e12f-42d3-a875-3b8658981df0.json) |
+| Scenario | Initial sweep | Additional runs | Initial outcome |
+|---|---:|---:|---|
+| `happy_path` | 1/1 | — | Confirmed |
+| `bad_weather` | 1/1 | — | Confirmed on the suitable date |
+| `external_service_failure` | 1/1 | — | Recovered and confirmed |
+| `equipment_shortage` | 1/1 | — | Substitute accepted; confirmed |
+| `hitl_rejection` | 1/1 | — | Revised terms approved; confirmed |
+| `guide_unavailable` | 0/1 | 4/4 | Controlled failed trip; no booking |
 
-One raw trajectory reported a failed approval-order check. The operator received fresh approvals for identical terms and retrieved the same reservation. The original evaluator compared the last approval with the first booking attempt. The corrected evaluator checks the approval in force at each attempt and was applied to all nine recorded event streams. The table shows the corrected verdicts. The original JSON retains its initial verdict. [Affected trajectory](../trajectories/luna-release/happy_path/3deba861-3b07-4c22-a107-3c20bf38dced.json)
+The initial guide run failed because B described the revised terms in prose
+without a complete structured `trip_offer`. Customer consent could not be
+recorded for the offer. The run delivered a generic failure message and had
+no runtime error. The later successes do not demonstrate that this failure
+mode has been eliminated.
 
-## Observations
+Local batch reports are `logs/fresh-six-20261112.jsonl` and
+`logs/guide-four-retries-20261112.jsonl`. They record all ten outcomes, including
+the failure and successes whose trajectories were not retained. Runtime logs
+and these reports are ignored by Git.
 
-The representative successful trajectory records customer delivery at step 40. The completion event refers to that delivery ID. [Successful trajectory](../trajectories/luna-release/happy_path/e7efe192-9d9a-4118-b4cb-2cffbadc38c5.json)
+## Retained trajectories
 
-The batch made 139 model calls, sent 24 peer messages and recorded 3 failed attempts out of 72 domain-tool attempts. Median elapsed time was 24.2 seconds. The simulator returned clarification on 3 of 43 recorded human responses.
+The checkout contains one selected successful automatic example per scenario.
+The initial failed guide trace and three successful guide repetitions were
+removed during cleanup. **The six selected successes are not a 6/6 sweep.**
 
+These traces predate the pre-commit correction to B's booking-outcome decision
+reference: outcomes after a customer decision contain a null `decision_message_id`
+even though the decision message is recorded earlier. A deterministic regression
+test now verifies that new outcomes carry the received decision's message ID.
+Historical trajectories are preserved unchanged; no new paid runs were made for
+this correction.
 
-The outage case recorded a successful read fallback with strategy `approved_snapshot` after bounded retries.
+| Scenario | Successful example |
+|---|---|
+| `happy_path` | [Trajectory](../trajectories/automatic/happy_path/eff941d4-ba18-4f19-a347-20a7f7071a0e.json) |
+| `bad_weather` | [Trajectory](../trajectories/automatic/bad_weather/6a880282-c8a2-4969-9c90-3afb5fef9543.json) |
+| `external_service_failure` | [Trajectory](../trajectories/automatic/external_service_failure/1dfaaef2-3171-4599-8beb-b23bf176b881.json) |
+| `equipment_shortage` | [Trajectory](../trajectories/automatic/equipment_shortage/9b7f151a-3579-4045-9f60-53294c6b8c8c.json) |
+| `hitl_rejection` | [Trajectory](../trajectories/automatic/hitl_rejection/cba73f87-6b50-4f31-899f-82b7b6b6743a.json) |
+| `guide_unavailable` | [Trajectory](../trajectories/automatic/guide_unavailable/11d8cbf4-8c45-4a99-9d8a-43b471ed5d30.json) |
 
-## Live integration check
+The latest manual real-mode trajectory is retained locally under
+`trajectories/manual/4f6aae57-b3df-4979-906e-cc4d3c1bd37c.json`. It records a
+confirmed trip using real weather and the catalog with a demonstration
+operator. It contains an actual conversation and travel preferences and is
+not recommended as a public evaluation artifact.
 
-The separate real-mode run at revision `26f939f` used Open-Meteo and HTTP requests to the stateless operator demo. Lifecycle outcome: completed. Scenario checks: passed. Terminal reason or trip status: confirmed. [Real-mode trajectory](../trajectories/luna-final-real/happy_path/d9b57f86-3f1c-48cc-9a27-83a1f5c61593.json)
+## Reproduction
 
-## Earlier local-model baseline
+```sh
+uv run --env-file .env python -m app.simulation --all --runs 1 --parallel --mode mock --peer-timeout 90 --timeout 300
+uv run --env-file .env python -m app.simulation --scenario guide_unavailable --runs 4 --parallel --mode mock --peer-timeout 90 --timeout 300
+```
 
-Ollama `gemma4:26b` passed 6/9 runs at revision `b89e885`. The five happy-path repetitions all passed. The local run used different deadlines and preceded the peer-correlation fix. [Ollama trajectories](../trajectories/acceptance/)
+Each invocation creates new run/request IDs and independent agent states.
+Seed 42 controls the simulated environment, not LLM decisions. Repeating these
+commands can produce different tool choices and outcomes. Evaluate every run,
+including failures, rather than only selected successful examples.
 
-## Next experiments
+## Scenario reliability
 
-1. Compare typed proposal and reply payloads against the free-text exchange. An observed Luna diagnostic run exhausted the exchange limit after a peer notification left the first request pending. Keep the measured fixtures and count outstanding requests and peer sends.
-2. Compare a smaller tool result projection against the current full route and forecast payloads. Use total input tokens, call count and scenario pass rate from the table to measure the effect.
-3. Repeat the outage and rejection cases with additional failure schedules. Each has only one measured run in this batch.
+The historical 30-run inventory-fault experiment recorded a three-way tie:
 
-The automated suite uses deterministic model doubles for offline end-to-end coverage. Hosted LangSmith trace ingestion was not exercised because no LangSmith credential was configured. The enabled tracing adapter, redaction and local JSON export have automated coverage.
+| Scenario | Passed | Observed pass rate |
+|---|---:|---:|
+| `happy_path` | 5/5 | 100% |
+| `bad_weather` | 5/5 | 100% |
+| `equipment_shortage` | 5/5 | 100% |
+
+That experiment used Luna at temperature 1, mock services, five concurrent
+repetitions per scenario, inventory timeout probability 0.3, seed 1 and the
+same 90/300-second timeouts. The other three scenarios each passed 4/5.
+This ranking describes that historical implementation and small sample;
+it is not a measured ranking of the current code. The original raw artifacts
+are no longer retained. See the
+[archived experiment](evaluation-history.md#thirty-concurrent-model-runs-with-inventory-faults).
+
+## Limits of the evidence
+
+- One initial run per scenario does not establish a stable success rate.
+- The latest sweep does not verify five consecutive happy-path successes;
+  earlier implementations had that result, recorded in the archive.
+- Passing means all authored scenario checks passed, not just that a final
+  message was delivered. A safe failed trip can fail a booking-success scenario.
+- Guide-offer coordination remains a demonstrated intermittent failure.
+- These automated runs use mock domain services and real model inference;
+  they do not verify a production tour operator or restart durability.
+
+Older model comparisons, token/cache measurements, fault-injection experiments
+and migration checks remain in the [evaluation history](evaluation-history.md).
+They are historical observations, not additional current-run evidence.

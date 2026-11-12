@@ -1,6 +1,5 @@
 import json
 import math
-import re
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
@@ -11,8 +10,6 @@ from app.models.contracts import (
     ForecastDay,
     GearAdvice,
     GearQuery,
-    RouteDetails,
-    RouteQuery,
     WeatherQuery,
 )
 
@@ -21,41 +18,6 @@ ROOT = Path(__file__).resolve().parents[2]
 
 def catalog(name):
     return json.loads((ROOT / "catalogs" / f"{name}.json").read_text(encoding="utf-8"))
-
-
-def search(q: RouteQuery):
-    routes = [RouteDetails(**r) for r in catalog("routes")]
-    if q.location and q.location.casefold() != "picos de europa":
-        return []
-    selected = []
-    for route in routes:
-        if q.difficulty and route.difficulty != q.difficulty.casefold():
-            continue
-        bounds = (("hours", route.duration_hours), ("km", route.distance_km),
-                  ("gain_m", route.elevation_gain_m), ("loss_m", route.elevation_loss_m))
-        if any((getattr(q, "min_" + field) is not None and (value is None or value < getattr(q, "min_" + field)))
-               or (getattr(q, "max_" + field) is not None and (value is None or value > getattr(q, "max_" + field)))
-               for field, value in bounds):
-            continue
-        text = (route.name + " " + route.description + " " + " ".join(route.constraints)).casefold()
-        matches = [bool(re.search(r"\b" + re.escape(word.casefold()) + (r"\w*\b" if q.prefix else r"\b"), text)) for word in q.keywords]
-        if matches and not (all(matches) if q.keyword_match == "all" else any(matches)):
-            continue
-        selected.append(route)
-    fields = {"name": "name", "distance": "distance_km", "duration": "duration_hours", "ascent": "elevation_gain_m", "descent": "elevation_loss_m"}
-    if q.sort in fields:
-        field = fields[q.sort]
-        selected.sort(key=lambda route: (getattr(route, field) is None, getattr(route, field), route.route_id))
-    else:
-        selected.sort(key=lambda route: route.route_id)
-    return selected[q.offset:q.offset + q.limit]
-
-
-def details(route_id):
-    for row in catalog("routes"):
-        if row["route_id"] == route_id:
-            return RouteDetails(**row)
-    raise ValueError("route_not_found")
 
 
 def gear(q: GearQuery):
@@ -74,6 +36,13 @@ def gear(q: GearQuery):
             for i in required
         },
     )
+
+
+def mock_forecast(forecast: Forecast, q: WeatherQuery):
+    aliases = {"picos de europa", "lagos de covadonga", "picos de europa, lagos de covadonga"}
+    if forecast.location.casefold() == "picos de europa" and q.location.strip().casefold() in aliases:
+        q = q.model_copy(update={"location": forecast.location})
+    return select_forecast(forecast, q)
 
 
 def select_forecast(forecast: Forecast, q: WeatherQuery):

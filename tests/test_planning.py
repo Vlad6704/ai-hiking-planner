@@ -1,17 +1,44 @@
 import asyncio
+import pytest
 
 from app.models.contracts import RouteQuery
 from app.observability.trace import TraceRecorder
 from app.simulation.config import Settings
 from app.tools.execution import execute
-from app.tools.planning import details, search
+from app.route_catalog.seed import seed_store
+from app.route_catalog.store import CatalogStore
 
 
-def test_route_and_gear_rules():
-    q = RouteQuery(location="Picos de Europa", difficulty="easy", max_hours=4)
-    assert search(q)[0].route_id == "PR-PNPE-2"
-    assert details("PR-PNPE-2").elevation_gain_m == 50
-    assert search(q.model_copy(update={"max_km": 2})) == []
+@pytest.mark.parametrize("location", ["Picos de Europa", "Lagos de Covadonga", "Picos de Europa, Lagos de Covadonga"])
+def test_mock_forecast_accepts_known_location_names(location):
+    from app.models.contracts import Forecast, WeatherQuery
+    from app.simulation.scenario import load_scenario
+    from app.tools.planning import mock_forecast
+    forecast = Forecast.model_validate(load_scenario("bad_weather")["weather"])
+    result = mock_forecast(forecast, WeatherQuery(location=location, date="2026-11-10"))
+    assert result.days[0].wind_kmh == 75
+    with pytest.raises(ValueError, match="unsupported_forecast"):
+        mock_forecast(forecast, WeatherQuery(location="Madrid", date="2026-11-10"))
+    with pytest.raises(ValueError, match="unsupported_forecast"):
+        mock_forecast(forecast, WeatherQuery(location=location, date="2027-01-01"))
+
+
+def test_baseline_customer_can_answer_structured_offer():
+    from app.humans.simulator import HumanSimulator
+    from app.simulation.scenario import load_scenario
+    human = HumanSimulator(load_scenario("happy_path")["rules"])
+    reply = human.answer("Do you accept these exact terms?", intent="substitution")
+    assert reply["matched_intent"] == ["substitution"]
+    assert reply["text"] == "Yes, I accept the proposed guided hike and rental equipment."
+
+
+def test_route_and_gear_rules(tmp_path):
+    store = CatalogStore(tmp_path / 'routes.sqlite3')
+    seed_store(store, checked_at='2026-11-08T12:00:00+00:00')
+    q = RouteQuery(location="Picos de Europa", difficulty="easy", max_hours=4, keywords=['Enol'])
+    assert 'PR-PNPE-2:long' in {row['route_id'] for row in store.search(q)}
+    assert store.details("PR-PNPE-2:long")['elevation_gain_m'] == 50
+    assert store.search(q.model_copy(update={"max_km": 2})) == []
 
 
 def test_retry_schedule():
