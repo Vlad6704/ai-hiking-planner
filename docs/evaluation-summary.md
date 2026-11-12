@@ -56,11 +56,11 @@ this correction.
 | `hitl_rejection` | [Trajectory](../trajectories/automatic/hitl_rejection/cba73f87-6b50-4f31-899f-82b7b6b6743a.json) |
 | `guide_unavailable` | [Trajectory](../trajectories/automatic/guide_unavailable/11d8cbf4-8c45-4a99-9d8a-43b471ed5d30.json) |
 
-The latest manual real-mode trajectory is retained locally under
-`trajectories/manual/4f6aae57-b3df-4979-906e-cc4d3c1bd37c.json`. It records a
+The selected [manual real-mode trajectory](../trajectories/manual/4f6aae57-b3df-4979-906e-cc4d3c1bd37c.json) is included by explicit user request. It records a
 confirmed trip using real weather and the catalog with a demonstration
-operator. It contains an actual conversation and travel preferences and is
-not recommended as a public evaluation artifact.
+operator. It contains an actual conversation and travel preferences. This is
+a manual example, not an additional automated scenario measurement. Other
+generated manual trajectories remain ignored by default.
 
 ## Reproduction
 
