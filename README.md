@@ -30,8 +30,9 @@ dataset. Each repetition gets new request, checkpoint, messaging, approval and
 booking state. The CLI prints structured checks, metrics and the trajectory
 path for every run. A failed check returns exit code 1.
 
-The six authored customer fixtures prefer the Covadonga long loop, specify one
-adult and support a next-day alternative. The deterministic human matcher
+The six authored customer fixtures prefer the Covadonga long loop and specify
+one adult. Happy Path permits only its expected date; the other cases support
+a next-day alternative. The deterministic human matcher
 combines distinct recognized topics in a question and retains clarification
 for competing rules with identical evidence. Substitution answers use the
 question and structured offered terms together and are constrained by the
@@ -295,8 +296,9 @@ Automated trajectories appear under `trajectories/automatic/<scenario>/<run-id>.
 `--output` replaces the root directory. Browser and console manual sessions both
 write `trajectories/manual/<run-id>.json`, without scenario subdirectories.
 The default `trajectories/` root contains only `manual/` and `automatic/`.
-The current checkout retains six selected successful automatic examples and one
-local manual trajectory. See the [evaluation summary](docs/evaluation-summary.md)
+Git includes six selected successful automatic examples, only the latest five
+successful consecutive happy-path trajectories and one selected manual trajectory.
+Earlier experimental happy-path batches remain local and ignored. See the [evaluation summary](docs/evaluation-summary.md)
 for the complete batch outcomes, including the initial guide failure. Old
 artifacts were removed; `trajectories/` is ignored by default. Explicitly publish
 selected examples with `git add -f <trajectory-path>`; already tracked examples

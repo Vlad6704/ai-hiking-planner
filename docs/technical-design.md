@@ -526,6 +526,25 @@ The interaction uses LangGraph:
 5. The runner obtains a response from the assigned human's simulator or terminal.
 6. Runner resumes the graph using `Command(resume=answer)`.
 
+After validating a human response, trusted code checkpoints its complete record
+in the owning agent's `interactions` and the relevant consent/approval fields,
+and records the full `human.response` audit event. Only then does the tool
+return a compact model-facing result in `state.messages`:
+
+- Customer questions, revised-offer replies and `send_to_customer`: verbatim
+  human text only. A still interprets acceptance/refusal and returns its decision
+  using the existing proposal-bound tool.
+- Manager guide selection: `text` and the validated `guide_id`.
+- Manager approval/rejection: `text` and boolean `approved`, preserving any
+  rejection explanation in the text.
+
+Interaction/event IDs, matching intents/scores, approval references and copied
+proposal records remain in private business state and audit events, not the
+model-facing tool content. The ordinary LangChain ToolMessage name, role and
+tool-call ID remain intact. Validation failures keep their existing error
+results. This projection is identical for simulated and manual answers and
+does not change checkpoint/resume, consent checks or booking authorization.
+
 In manual mode the planner asks questions in the customer terminal. The operator displays questions, numbered guide IDs and proposed booking terms in the manager terminal. The manager chooses a displayed number, then types `approve` or `reject` when asked about the specific proposal. A rejection can include a requested change. Both interaction modes use the same validation and B's checkpointed approval records.
 
 ## 5.2 Human Simulator
@@ -562,9 +581,10 @@ Proposed matching algorithm:
 
 General questions do not select the structured substitution-consent rule.
 Scenario rule overrides merge with the base snapshot rules. The six current
-cases include a definite preference for the Covadonga long loop, one adult,
-and an acceptable next-day alternative. Specific alternative-date patterns
-answer with that alternative instead of repeatedly restating the preferred date.
+cases include a definite preference for the Covadonga long loop and one adult.
+Happy Path allows only its expected date; the other cases support a next-day
+alternative. Alternative-date patterns follow that case's policy rather than
+repeatedly restating a preferred date or accepting a forbidden change.
 Real-mode date answers use the same dynamically selected forecast-window dates.
 Authored substitution decisions are constrained to the fixture's preferred
 route when that preference has been communicated, allowed dates and
@@ -718,6 +738,14 @@ can still use a separately started service. This remains a demonstration
 service rather than a production booking integration.
 
 **Mock source:** Recorded weather-response snapshots.
+
+For a Picos de Europa snapshot only, the mock adapter normalizes known
+comma-separated location components: Picos de Europa, Lagos de Covadonga,
+Asturias and Spain. A query must name Picos de Europa or Lagos de Covadonga;
+Asturias/Spain alone and any unknown component remain unsupported. Ignore case,
+extra whitespace and component order. Preserve the snapshot's canonical
+location and existing date/range validation. This alias handling is mock-only;
+the real Open-Meteo adapter and its accepted location remain unchanged.
 
 **Possible errors:** timeout, service unavailable, invalid location, unsupported forecast date, malformed response.
 
@@ -1212,13 +1240,27 @@ The no-fallback variant of External Service Failure is an optional extension.
 
 ### Scenario 1 — Happy Path
 
-**Input:** Beginner requests an easy four-hour hike.
+**Input:** Beginner explicitly requests the Lagos de Covadonga long loop
+(`PR-PNPE-2:long`), about 2.5 hours, within a four-hour limit. Include this route
+in the initial message so every repetition receives the same preference even
+when the model asks different follow-up questions. Real-mode date adaptation
+retains the explicit route requirement.
 
 **Environment:** Good weather, suitable routes, two available guides and sufficient equipment.
 
 **Human B:** Selects guide option 2 and approves.
 
-**Expected:** Confirmed reservation with a suitable route, selected guide and exactly one booking operation.
+**Expected:** Confirmed reservation with `PR-PNPE-2:long`, the selected guide and
+exactly one booking operation. The scenario sets `expected_route_id`; evaluation
+requires that ID and successful verification through route search or exact
+route details. A known exact ID need not be searched before its details are
+retrieved. Merely naming an ID without tool evidence is insufficient.
+Scenarios without an explicit expected route still require verified tool evidence
+but do not pin one route ID.
+Happy Path sets `allow_alternative_date=false`: its initial message and human
+date answers allow only `expected_date`, and proposal-bound consent rejects
+another date. Real-mode date adaptation keeps this single-date constraint on
+the generated date. Other scenarios retain their existing date alternatives.
 
 ### Scenario 2 — Bad Weather
 

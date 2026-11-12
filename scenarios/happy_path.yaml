@@ -1,6 +1,9 @@
 {
   "id": "happy_path",
-  "initial": "I would like an easy hike in Picos de Europa on November 10, 2026, up to four hours.",
+  "initial": "I would like the Lagos de Covadonga long loop (PR-PNPE-2:long), about 2.5 hours, on November 10, 2026. I am a beginner and want an easy hike of up to four hours.",
   "snapshot": "baseline.json",
-  "expected_date": "2026-11-10"
+  "expected_date": "2026-11-10",
+  "expected_route_id": "PR-PNPE-2:long",
+  "allow_alternative_date": false,
+  "substitution_equipment": {"rain jacket": 1}
 }

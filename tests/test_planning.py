@@ -9,7 +9,12 @@ from app.route_catalog.seed import seed_store
 from app.route_catalog.store import CatalogStore
 
 
-@pytest.mark.parametrize("location", ["Picos de Europa", "Lagos de Covadonga", "Picos de Europa, Lagos de Covadonga"])
+@pytest.mark.parametrize("location", [
+    "Picos de Europa", "Lagos de Covadonga", "Picos de Europa, Lagos de Covadonga",
+    "Lagos de Covadonga, Picos de Europa", "Picos de Europa, Asturias, Spain",
+    "Lagos de Covadonga, Asturias, Spain", "Lagos de Covadonga, Picos de Europa, Asturias, Spain",
+    "  LAGOS  DE COVADONGA ,  PICOS DE EUROPA  ",
+])
 def test_mock_forecast_accepts_known_location_names(location):
     from app.models.contracts import Forecast, WeatherQuery
     from app.simulation.scenario import load_scenario
@@ -21,6 +26,30 @@ def test_mock_forecast_accepts_known_location_names(location):
         mock_forecast(forecast, WeatherQuery(location="Madrid", date="2026-11-10"))
     with pytest.raises(ValueError, match="unsupported_forecast"):
         mock_forecast(forecast, WeatherQuery(location=location, date="2027-01-01"))
+
+
+@pytest.mark.parametrize('location', ['Asturias, Spain', 'Madrid, Picos de Europa',
+                                     'Not Picos de Europa', 'Lagos de Covadonga, Madrid'])
+def test_mock_location_normalization_does_not_accept_unknown_or_ambiguous_places(location):
+    from app.models.contracts import Forecast, WeatherQuery
+    from app.simulation.scenario import load_scenario
+    from app.tools.planning import mock_forecast
+    forecast = Forecast.model_validate(load_scenario('happy_path')['weather'])
+    with pytest.raises(ValueError, match='unsupported_forecast'):
+        mock_forecast(forecast, WeatherQuery(location=location, date='2026-11-10'))
+
+
+def test_mock_alias_date_range_preserves_input_and_snapshot_location():
+    from app.models.contracts import Forecast, WeatherQuery
+    from app.simulation.scenario import load_scenario
+    from app.tools.planning import mock_forecast
+    forecast = Forecast.model_validate(load_scenario('happy_path')['weather'])
+    query = WeatherQuery(location='Lagos de Covadonga, Picos de Europa',
+                         date='2026-11-10', end_date='2026-11-11')
+    result = mock_forecast(forecast, query)
+    assert result.location == 'Picos de Europa' and len(result.days) == 2
+    assert query.location == 'Lagos de Covadonga, Picos de Europa'
+    assert forecast.model_dump() == Forecast.model_validate(load_scenario('happy_path')['weather']).model_dump()
 
 
 def test_baseline_customer_can_answer_structured_offer():

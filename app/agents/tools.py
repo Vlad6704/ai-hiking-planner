@@ -32,6 +32,15 @@ class ApprovedTerms(Proposal):
     """Booking terms already presented to the manager."""
 
 
+def human_reply_for_model(kind, reply):
+    """Expose human words and required business results, not internal audit data."""
+    if kind == 'selection':
+        return {'text': reply['text'], 'guide_id': reply['guide_id']}
+    if kind == 'approval':
+        return {'text': reply['text'], 'approved': reply['approval_ref'] is not None}
+    return reply['text']
+
+
 def bind_tools(actor, context):
     @tool
     def ask_human(
@@ -52,7 +61,8 @@ def bind_tools(actor, context):
         data = dict(question=question, kind=kind, options=options or [],
                     proposal=proposal.model_dump(mode='json') if proposal else None)
         data['_source_message_id'] = (context.incoming or {}).get('message_id')
-        return context.process_human_reply(data, interrupt(data))
+        reply = context.process_human_reply(data, interrupt(data))
+        return human_reply_for_model(data['kind'], reply)
 
     @tool(return_direct=True)
     async def send_to_agent(
@@ -93,7 +103,8 @@ def bind_tools(actor, context):
         if context.has_pending_request:
             return {'error': 'Resolve the outstanding operator request before waiting for another customer message.'}
         data = dict(question=content, kind='information', options=[], proposal=None)
-        return context.process_human_reply(data, interrupt(data))
+        reply = context.process_human_reply(data, interrupt(data))
+        return human_reply_for_model(data['kind'], reply)
 
     def domain(name, description, schema, function):
         async def invoke(**kwargs):
@@ -187,7 +198,8 @@ def bind_tools(actor, context):
         data = dict(question=question, kind='substitution' if proposal else 'question', options=[], proposal=terms)
         data['_source_message_id'] = (context.incoming or {}).get('message_id')
         data['_original_proposal'] = context.state.get('original_proposal')
-        return context.process_human_reply(data, interrupt(data))
+        reply = context.process_human_reply(data, interrupt(data))
+        return human_reply_for_model(data['kind'], reply)
 
     shared = [ask_customer if actor == "agent_a" else ask_human, send_to_agent, acknowledge_message]
     if actor == "agent_a":

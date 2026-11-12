@@ -39,8 +39,11 @@ def gear(q: GearQuery):
 
 
 def mock_forecast(forecast: Forecast, q: WeatherQuery):
-    aliases = {"picos de europa", "lagos de covadonga", "picos de europa, lagos de covadonga"}
-    if forecast.location.casefold() == "picos de europa" and q.location.strip().casefold() in aliases:
+    places = {"picos de europa", "lagos de covadonga"}
+    supported_parts = places | {"asturias", "spain"}
+    parts = {" ".join(part.casefold().split()) for part in q.location.split(',')}
+    if (forecast.location.casefold() == "picos de europa"
+            and parts <= supported_parts and parts & places):
         q = q.model_copy(update={"location": forecast.location})
     return select_forecast(forecast, q)
 

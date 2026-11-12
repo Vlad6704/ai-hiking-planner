@@ -25,13 +25,18 @@ QUESTIONS = [
 @pytest.mark.parametrize("name", scenarios())
 @pytest.mark.parametrize("question, expected", QUESTIONS)
 def test_scenario_answers_observed_questions(name, question, expected):
-    human = HumanSimulator(load_scenario(name)["rules"])
+    case = load_scenario(name)
+    human = HumanSimulator(case["rules"])
     reply = human.answer(question)
     assert expected <= set(reply["matched_intent"]), reply
     if "route" in expected:
         assert "long loop" in reply["text"]
     if "alternative_date" in expected:
-        assert "November 11" in reply["text"]
+        if case.get('allow_alternative_date') is False:
+            assert case['expected_date'] in reply['text']
+            assert 'No, I cannot change the date.' in reply['text']
+        else:
+            assert "November 11" in reply["text"]
     assert "Could you clarify" not in reply["text"]
     assert "substitution" not in reply["matched_intent"]
 

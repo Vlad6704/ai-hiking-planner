@@ -33,6 +33,8 @@ def load_scenario(name, mode="mock"):
         case["initial"] = (
             f"Arrange an easy hike in Picos de Europa on {first}, maximum four hours."
         )
+        if case.get('expected_route_id'):
+            case['initial'] += f" Use route {case['expected_route_id']}."
         case["rules"]["date"][1] = (
             f"I prefer {first}, or {first + timedelta(days=1)} if needed."
         )
@@ -49,6 +51,12 @@ def load_scenario(name, mode="mock"):
             ]
         case["expected_date"] = str(first)
         case["acceptable_dates"] = [str(first), str(first + timedelta(days=1))]
+    if case.get('allow_alternative_date') is False:
+        only_date = case['expected_date']
+        case['acceptable_dates'] = [only_date]
+        case['initial'] += f" Only {only_date} works; I cannot change the date."
+        case['rules']['date'][1] = f"I can only hike on {only_date}; other dates do not work."
+        case['rules']['alternative_date'][1] = f"No, I cannot change the date. Only {only_date} works."
     if "substitution_equipment" in case:
         case["substitution_terms"] = dict(
             route_id=case["preferred_route_id"],

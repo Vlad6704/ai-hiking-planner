@@ -3,6 +3,53 @@ import copy
 import pytest
 
 
+def test_evaluator_enforces_explicit_expected_route_but_allows_unconstrained_routes():
+    import asyncio
+    from app.evaluation.checks import evaluate
+    from app.simulation.runner import SimulationRunner
+    from app.simulation.scenario import load_scenario
+    from app.simulation.config import Settings
+    from test_integration import ScriptedModel
+
+    run = SimulationRunner(load_scenario('happy_path'), Settings(timeout=15), 42, ScriptedModel())
+    asyncio.run(run.run())
+    assert evaluate(run)['passed']
+    run.case['expected_route_id'] = 'PR-PNPE-2:short'
+    assert evaluate(run)['checks']['route'] is False
+    run.case.pop('expected_route_id')
+    assert evaluate(run)['checks']['route'] is True
+
+
+def test_route_details_are_sufficient_evidence_but_an_id_alone_is_not():
+    import asyncio
+    from app.evaluation.checks import evaluate
+    from app.simulation.runner import SimulationRunner
+    from app.simulation.scenario import load_scenario
+    from app.simulation.config import Settings
+    from test_integration import ScriptedModel
+
+    run = SimulationRunner(load_scenario('happy_path'), Settings(timeout=15), 42, ScriptedModel())
+    asyncio.run(run.run())
+    assert evaluate(run)['passed']
+    search = next(event for event in run.trace.events if event['type'] == 'tool.completed'
+                  and event['data'].get('tool') == 'search_hiking_routes')
+    details = copy.deepcopy(search)
+    details['data']['tool'] = 'get_route_details'
+    details['data']['output']['data'] = next(route for route in search['data']['output']['data']
+                                            if route['route_id'] == run.result.route_id)
+    run.trace.events.insert(run.trace.events.index(search), details)
+    run.trace.events = [event for event in run.trace.events if not (
+        event['type'] == 'tool.completed' and event['data'].get('tool') == 'search_hiking_routes')]
+    assert evaluate(run)['checks']['route'] is True
+    details['data']['output']['status'] = 'error'
+    assert evaluate(run)['checks']['route'] is False
+    details['data']['output']['status'] = 'degraded'
+    assert evaluate(run)['checks']['route'] is True
+    run.trace.events = [event for event in run.trace.events if not (
+        event['type'] == 'tool.completed' and event['data'].get('tool') == 'get_route_details')]
+    assert evaluate(run)['checks']['route'] is False
+
+
 def test_evaluation_does_not_require_runner_business_state():
     import time
     from types import SimpleNamespace

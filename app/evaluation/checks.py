@@ -209,7 +209,9 @@ def evaluate(run):
         data = event["data"]
         if event["type"] == "tool.completed":
             value = data.get("output", {}).get("data")
-            if value is not None:
+            route_error = (data.get('tool') in ('search_hiking_routes', 'get_route_details')
+                           and data.get('output', {}).get('status') == 'error')
+            if value is not None and not route_error:
                 observed.setdefault(data["tool"], []).append(value)
                 if data["tool"] == "create_tour_reservation":
                     booking = value
@@ -224,6 +226,8 @@ def evaluate(run):
                 approval = data if data["approval_ref"] else None
     deliveries = [e for e in events if e["type"] == "human.message_delivered"]
     confirmed = bool(result and result.status == "confirmed")
+    verified_routes = [route for group in observed.get('search_hiking_routes', []) for route in group]
+    verified_routes.extend(observed.get('get_route_details', []))
     checks = dict(
         confirmed=confirmed,
         expected_date=bool(
@@ -231,9 +235,11 @@ def evaluate(run):
             and str(result.date)
             in run.case.get("acceptable_dates", [run.case["expected_date"]])
         ),
-        route=bool(confirmed and any(
+        route=bool(confirmed
+            and (not run.case.get('expected_route_id') or result.route_id == run.case['expected_route_id'])
+            and any(
             route["route_id"] == result.route_id
-            for group in observed.get("search_hiking_routes", []) for route in group)),
+            for route in verified_routes)),
         guide=bool(
             confirmed
             and result.guide_id == selected
