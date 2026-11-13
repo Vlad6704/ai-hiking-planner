@@ -30,7 +30,11 @@ uv run --env-file .env python -m app.simulation --scenario happy_path --mode moc
 
 In the published five-run GPT-6 Luna batch, each hike used **42k–101k input tokens** and **0.8k–2.0k output tokens**, with averages of 62.4k and 1.25k respectively. About **90% of input tokens were served from cache** across the batch. Five runs used 312k input and 6.3k output tokens in total. These measured figures provide a budget reference; usage and cache hits vary between runs and providers. Cached tokens are included in input totals.
 
-Use `uv run pytest -q` to run the offline test suite.
+To run in parallel use:
+
+```sh
+--parallel
+```
 
 ## Simulate a service failure
 
@@ -55,6 +59,9 @@ uv run --env-file .env python -m app.simulation.web
 ```
 
 The launcher opens the browser. Request a hike in the customer chat, then select a guide and approve or reject the proposal in the manager chat. The live trajectory shows how the agents reach a booking decision. The UI starts in **Real data** mode using Open-Meteo and the maintained route catalog. Select **Simulation** before starting a trip to use fixture data. By default the local operator demo supplies guides, equipment and reservations.
+
+## Offline tests
+Use `uv run pytest -q` to run the offline test suite.
 
 ## Further reading
 
