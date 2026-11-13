@@ -156,3 +156,22 @@ def test_live_trajectory_snapshot_is_ordered_redacted_and_detached(tmp_path):
     trip.trace.emit('tool.completed', 'agent_a', {'tool': 'weather'})
     assert len(first['events']) == 1
     assert [event['seq'] for event in trip.snapshot()['events']] == [1, 2]
+
+
+def test_browser_guide_labels_preserve_ids_and_selection(tmp_path):
+    web = importlib.import_module('app.simulation.web')
+    async def check():
+        trip = web.BrowserRun('Request', 'happy_path', 'mock', tmp_path)
+        trip.trace.emit('tool.completed', 'agent_b', dict(tool='check_guide_availability', output=dict(status='success',data=[{'guide_id':'guide-42','name':'María de la Cruz'},{'guide_id':'luis','name':'Luis'}])))
+        item = SimpleNamespace(id='choose', value=dict(question='Choose',kind='selection',options=['luis','guide-42','unknown'],proposal=None))
+        task = asyncio.create_task(trip.resolve_interrupt('agent_b',item))
+        await asyncio.sleep(0)
+        prompt = trip.snapshot()['pending']['agent_b']
+        assert prompt['option_labels'] == ['Luis','María de la Cruz','unknown']
+        assert prompt['options'] == ['luis','guide-42','unknown']
+        trip.reply('agent_b','choose','2')
+        reply = await task
+        assert reply['text'] == '2'
+        interrupt = next(e for e in trip.trace.events if e['type'] == 'human.interrupt')
+        assert reply['interrupt_event_id'] == interrupt['event_id']
+    asyncio.run(check())

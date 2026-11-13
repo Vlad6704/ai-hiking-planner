@@ -60,6 +60,17 @@ class BrowserRun(SimulationRunner):
     async def resolve_interrupt(self, actor, item):
         event = self.present_interrupt(actor, item)
         prompt = dict(item.value, id=str(item.id))
+        if prompt['kind'] == 'selection':
+            guide_names = {}
+            for tool_event in reversed(self.trace.events):
+                data = tool_event['data']
+                if tool_event['type'] == 'tool.completed' and tool_event['actor'] == actor and data.get('tool') == 'check_guide_availability':
+                    output = data.get('output') or {}
+                    if output.get('status') in ('success', 'degraded'):
+                        guide_names = {guide['guide_id']: guide.get('name') or guide['guide_id']
+                                       for guide in output.get('data') or []}
+                        break
+            prompt['option_labels'] = [guide_names.get(gid, gid) for gid in prompt['options']]
         future = asyncio.get_running_loop().create_future()
         self.pending[actor], self.answers[actor] = prompt, future
         self.messages[actor].append(dict(role='agent', text=prompt['question']))

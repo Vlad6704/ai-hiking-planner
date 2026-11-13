@@ -51,10 +51,10 @@ The seed controls the injected failure sequence. After exhausted retries, the ag
 ## Try a trip in the browser
 
 ```sh
-uv run --env-file .env python -m app.simulation.web --mode mock
+uv run --env-file .env python -m app.simulation.web
 ```
 
-The launcher opens the browser. Request a hike in the customer chat, then select a guide and approve or reject the proposal in the manager chat. The live trajectory shows how the agents reach a booking decision. Choose **Real data** before starting a trip to use Open-Meteo and the maintained route catalog. By default the local operator demo supplies guides, equipment and reservations.
+The launcher opens the browser. Request a hike in the customer chat, then select a guide and approve or reject the proposal in the manager chat. The live trajectory shows how the agents reach a booking decision. The UI starts in **Real data** mode using Open-Meteo and the maintained route catalog. Select **Simulation** before starting a trip to use fixture data. By default the local operator demo supplies guides, equipment and reservations.
 
 ## Further reading
 

@@ -1978,7 +1978,9 @@ scenario data. Hide this notice in real mode.
 
 The customer starts a trip with an initial
 request; each pending question has an ID, and replies must match its actor
-and ID. Show numbered guide choices and exact proposal terms with Approve /
+and ID. Numbered guide choices display the provider's `Guide.name`. Keep the
+original guide IDs and ordering for selection validation and booking. If a guide
+name is unavailable, display its ID as a fallback. Show exact proposal terms with Approve /
 Reject controls and a rejection reason. Display errors, terminal outcome,
 final customer message and a downloadable trajectory. Render all messages
 as text, not HTML. Refreshing the page reconnects to the current trip.
